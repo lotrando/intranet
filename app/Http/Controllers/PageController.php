@@ -1,0 +1,869 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Addon;
+use App\Models\Bulletin;
+use App\Models\Category;
+use App\Models\Department;
+use App\Models\Document;
+use App\Models\Employee;
+use App\Models\Notification;
+use App\Models\Paint;
+use App\Models\Type;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use LaravelFileViewer;
+use RealRashid\SweetAlert\Facades\Alert;
+
+class PageController extends Controller
+{
+    // HOMEPAGE
+    public function home()
+    {
+        $types = Type::all();
+
+        if (Auth::user()) {
+            $important = Notification::with('user', 'type')->where('type_id', '=', 8)->latest()->get();
+            $notificationLong = Notification::with('user', 'type')->where('type_id', '=', 9)->latest()->get();
+            $notifications = Notification::with('user', 'type')
+                ->where('type_id', '>=', 2)
+                ->where('type_id', '<', 8)->latest()->get();
+            $notificationsServis = Notification::with('user', 'type')->where('type_id', '=', 1)->latest()->get();
+        } else {
+            $important = Notification::with('user', 'type')->where('type_id', '=', 8)->latest()->get();
+            $notificationLong = Notification::with('user', 'type')->where('type_id', '=', 9)->latest()->get();
+            $notifications = Notification::with('user', 'type')->whereStatus('Zobrazeno')
+                ->where('type_id', '>=', 2)
+                ->where('type_id', '<', 8)->latest()->get();
+            $notificationsServis = Notification::with('user', 'type')->whereStatus('Zobrazeno')->where('type_id', '=', 1)->latest()->get();
+        }
+
+        return view('home', [
+            'pretitle'              => 'Aktuality',
+            'title'                 => 'Všechna oznámení',
+            'types'                 => $types,
+            'important'             => $important,
+            'notifications'         => $notifications,
+            'notificationLong'      => $notificationLong,
+            'notificationsServis'   => $notificationsServis
+        ]);
+    }
+
+    // OZNÁMENÍ
+
+    // Přehledy
+    public function prehledy()
+    {
+        return view('prehledy', ['pretitle' => 'Oznámení', 'title' => 'Přehledy']);
+    }
+
+    // Změny standardů
+    public function zmenyStandardu()
+    {
+        $documents = Document::with('category', 'user')
+            ->where('category_id', '<', '13')
+            // ->where('category_id', '<', '25')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        $addons = Addon::with('category', 'document', 'user')
+            ->where('category_id', '<', '13')
+            // ->where('category_id', '<', '25')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        if ($documents->isNotEmpty() or $addons->isNotEmpty()) {
+
+            return view('zmeny-dokumentace', [
+                'pretitle'  => 'Oznámení',
+                'title'     => 'Změny ve standardech',
+                'documents' => $documents,
+                'addons'    => $addons
+            ]);
+        }
+
+        return view('empty-dokumentace', [
+            'pretitle'  => 'Oznámení',
+            'title'     => 'Změny v dokumentaci'
+        ]);
+    }
+
+    // Změny v dokumentaci
+    public function zmenyDokumentu()
+    {
+        $documents = Document::with('category', 'user')
+            ->where('category_id', '>', '12')
+            // ->where('category_id', '<', '25')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        $addons = Addon::with('category', 'document', 'user')
+            ->where('category_id', '>', '12')
+            // ->where('category_id', '<', '25')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        if ($documents->isNotEmpty() or $addons->isNotEmpty()) {
+
+            return view('zmeny-dokumentace', [
+                'pretitle'  => 'Oznámení',
+                'title'     => 'Změny v dokumentaci',
+                'documents' => $documents,
+                'addons'    => $addons
+            ]);
+        }
+
+        return view('empty-dokumentace', [
+            'pretitle'  => 'Oznámení',
+            'title'     => 'Změny v dokumentaci'
+        ]);
+    }
+
+    public function akord()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(5)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('5')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('5')->latest()->get();
+        }
+
+        return view('informace', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Akord',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function important()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(8)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('8')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('8')->latest()->get();
+        }
+
+        return view('important', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Důležité',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function servis()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(1)->get(['type_color', 'svg_icon']);
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('1')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('1')->latest()->get();
+        }
+
+        return view('servis', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Odstávky servis',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function seminare()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(4)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('4')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('4')->latest()->get();
+        }
+
+        return view('seminare', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Seminare',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function sluzby()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(2)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('2')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('2')->latest()->get();
+        }
+
+        return view('sluzby', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Změny služeb',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function informace()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(3)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('3')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('3')->latest()->get();
+        }
+
+        return view('informace', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Informace',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function kultura()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(6)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('6')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('6')->latest()->get();
+        }
+
+        return view('kultura', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Kultura',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    public function normalni()
+    {
+        $types = Type::all();
+
+        $typ = Type::whereId(7)->get();
+
+        if (Auth::user()) {
+            $notifications = Notification::with('user')->whereTypeId('7')->latest()->get();
+        } else {
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('7')->latest()->get();
+        }
+
+        return view('normalni', [
+            'pretitle' => 'Oznámení',
+            'title' => 'Normální',
+            'notifications' => $notifications,
+            'types' => $types,
+            'typ' => $typ
+        ]);
+    }
+
+    // Stravování
+    public function obedy()
+    {
+        return redirect()->away('http://akordapp/SISAkord/Login.aspx?ReturnUrl=%2fSISAkord%2f');
+    }
+
+    public function kantyna()
+    {
+        $now            = Carbon::now();
+        $weekStartDate  = $now->startOfWeek()->format('Y-m-d');
+        $weekEndDate    = $now->endOfWeek()->format('Y-m-d');
+        $from           = $now->startOfWeek()->format('d. m.');
+        $to             = $now->endOfWeek()->subDays(2)->format('d. m.');
+
+        $daylist        = DB::table('calendar')
+            ->where('date', '>=', $weekStartDate)
+            ->where('date', '<=', $weekEndDate)
+            ->simplePaginate(7);
+
+        return view('kantyna', [
+            'pretitle'  => 'Stravování',
+            'title'     => 'Nabídka kantýny',
+            'daylist'   => $daylist,
+            'od'        => $from,
+            'do'        => $to
+        ]);
+    }
+
+    // Akreditacní stadnardy
+    public function akreditacni($id)
+    {
+        $accordion_groups = Document::where('status', 'Schváleno')->where('category_id', $id)->pluck('accordion_group');
+        $allDocuments = Document::where('category_id', '>', 12)->pluck('category_id');
+        $allAddons = Addon::pluck('document_id');
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        $documents1  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 1)->orderBy('position')->get();
+        $documents2  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 2)->orderBy('position')->get();
+        $documents3  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 3)->orderBy('position')->get();
+        $documents4  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 4)->orderBy('position')->get();
+        $documents5  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 5)->orderBy('position')->get();
+        $documents6  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 6)->orderBy('position')->get();
+        $documents7  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 7)->orderBy('position')->get();
+        $documents8  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 8)->orderBy('position')->get();
+        $documents9  = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 9)->orderBy('position')->get();
+        $documents10 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 10)->orderBy('position')->get();
+        $documents11 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 11)->orderBy('position')->get();
+        $documents12 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 12)->orderBy('position')->get();
+
+        return view('standardy.akreditacni', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Standardy',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'doctors'           => $doctors,
+            'groups'            => $accordion_groups,
+            'allDocuments'      => $allDocuments,
+            'allAddons'         => $allAddons,
+            'lastpos'           => $last,
+            'documents1'        => $documents1,
+            'documents2'        => $documents2,
+            'documents3'        => $documents3,
+            'documents4'        => $documents4,
+            'documents5'        => $documents5,
+            'documents6'        => $documents6,
+            'documents7'        => $documents7,
+            'documents8'        => $documents8,
+            'documents9'        => $documents9,
+            'documents10'       => $documents10,
+            'documents11'       => $documents11,
+            'documents12'       => $documents12
+        ]);
+    }
+
+    // Dokument
+    public function document($id)
+    {
+        $allDocuments = Document::where('category_id', '>', 12)->pluck('category_id');
+        $standards = Document::where('onscreen', $id)->orderBy('category_id')->get();
+        $bozppos = Document::with('category')->where('onscreen', $id)->orderBy('category_id')->get();
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $addons = Addon::with('category')->where('document_id', '!=', 0)->where('onscreen', $id)->orderBy('category_id')->get();
+        $warehouse = Addon::where('document_id', 0)->where('onscreen', $id)->orderBy('description')->get();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'addons', 'user')->where('category_id', $id)->orderBy('position')->get();
+        } else {
+            $documents = Document::with('category', 'addons', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position')->get();
+        }
+
+        return view('dokumenty.dokument', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Dokumentace',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'allDocuments'      => $allDocuments,
+            'doctors'           => $doctors,
+            'standards'         => $standards,
+            'bozppos'           => $bozppos,
+            'addons'            => $addons,
+            'warehouse'         => $warehouse
+        ]);
+    }
+
+    // Standardy
+    public function standard($id)
+    {
+        $allDocuments = Document::where('category_id', '<', 12)->pluck('category_id');
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'addons', 'user')->where('category_id', $id)->orderBy('position')->get();
+        } else {
+            $documents = Document::with('category', 'addons', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position')->get();
+        }
+
+        return view('standardy.standard', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Standardy',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'allDocuments'      => $allDocuments,
+            'doctors'           => $doctors
+        ]);
+    }
+
+    // ISP
+    public function isp()
+    {
+        $id = 43;
+        $allDocuments = Document::where('category_id', '<', 12)->pluck('category_id');
+        $categorie  = Category::where('id', $id)->first();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+
+        if (
+            $last == null
+        ) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'addons', 'user')->where('category_id', $id)->get()->sortBy(['position', 'name']);
+            $grouped = $documents->groupBy(function ($item, $key) {
+                return $item->name[0];
+            })->sortBy(function ($item, $key) {
+                return $key;
+            });
+        } else {
+            $documents = Document::with('category', 'addons', 'user')->where('status', 'Schváleno')->where('category_id', $id)->get()->sortBy(['position', 'name']);
+            $grouped = $documents->groupBy(function ($item, $key) {
+                return $item->name[0];
+            })->sortBy(function ($item, $key) {
+                return $key;
+            });
+        }
+
+        return view('isp.isp', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'ISP',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'lastpos'           => $last,
+            'documents'         => $grouped,
+            'allDocuments'      => $allDocuments,
+        ]);
+    }
+
+    // BOZP = PO
+    public function bozp($id)
+    {
+        $allDocuments = Document::where('category_id', '>', '24')->pluck('category_id');
+        $categorie  = Category::where('id', $id)->first();
+        $standards = Document::where('onscreen', $id)->where('category_id', '<', 12)->orderBy('category_id')->get();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $warehouse = Addon::where('document_id', 0)->where('onscreen', $id)->orderBy('description')->get();
+        $doctors = Employee::orderBy('last_name')->get();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('position')->get();
+            $oopps = Document::with('category', 'user')->where('category_id', 47)->orderBy('position')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position')->get();
+            $oopps = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', 47)->orderBy('position')->get();
+        }
+
+        return view('bozp.index', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'BOZP - PO',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'standards'         => $standards,
+            'warehouse'         => $warehouse,
+            'doctors'           => $doctors,
+            'allDocuments'      => $allDocuments,
+            'oopps'             => $oopps
+        ]);
+    }
+
+    // Indikátory kvality
+    public function indikatory($id)
+    {
+        $allDocuments = Document::where('category_id', '>', '36')->pluck('category_id');
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('year', 'desc')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('year', 'desc')->get();
+        }
+
+        return view('indikatory.index', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Indikátory kvality',
+            'categorie'         => $categorie,
+            'icon'              => $categorie->fa_icon,
+            'lastpos'           => $last,
+            'doctors'           => $doctors,
+            'documents'         => $documents,
+            'allDocuments'      => $allDocuments
+        ]);
+    }
+
+    // Řídící akty
+    public function acts($id)
+    {
+        $allDocuments = Document::whereCategoryId(['49', '50', '51', '52', '53', '54'])->pluck('category_id');
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+
+        if (
+            $last == null
+        ) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('position', 'desc')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position', 'desc')->get();
+        }
+
+        return view('ridici-akty.index', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Řédící akty',
+            'categorie'         => $categorie,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'doctors'           => $doctors,
+            'allDocuments'      => $allDocuments
+        ]);
+    }
+
+    // Řídící akty
+    public function akreditace($id)
+    {
+        $allDocuments = Document::whereCategoryId(['55', '56', '57', '58', '59'])->pluck('category_id');
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+
+        if (
+            $last == null
+        ) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('position', 'desc')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position', 'desc')->get();
+        }
+
+        return view('akreditace.index', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Akreditace',
+            'categorie'         => $categorie,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'doctors'           => $doctors,
+            'allDocuments'      => $allDocuments
+        ]);
+    }
+
+    // Služby
+    public function rozpisSluzeb($id)
+    {
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::with('department')->whereTitlePreffix('MUDr.')->where('department_id', '=', 1)->orderBy('last_name')->get();
+        $doctorsJip = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->where('department_id', '>=', 8)
+            ->where('department_id', '<=', 9)
+            ->orderBy('last_name')->get();
+        $doctorsOs = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->where('department_id', '>=', 16)
+            ->where('department_id', '<=', 16)
+            ->orderBy('last_name')->get();
+        $doctorsAll = Employee::with('department')->whereTitlePreffix('MUDr.')->orderBy('last_name')->get();
+        $now = Carbon::now();
+        $from = $now->startOfMonth()->format('d. m. Y');
+        $to = $now->endOfMonth()->format('d. m. Y');
+        $monthStartDate     = $now->startOfMonth()->format('Y-m-d');
+        $monthEndDate       = $now->endOfMonth()->format('Y-m-d');
+
+
+        $daylistPrev = DB::table('calendar')
+            ->where('date', '>=', $now->startOfMonth()->subMonth()->format('Y-m-d'))
+            ->where('date', '<=', $now->endOfMonth()->format('Y-m-d'))
+            ->get();
+
+        $daylist = DB::table('calendar')
+            ->where('date', '>=', $monthStartDate)
+            ->where('date', '<=', $monthEndDate)
+            ->get();
+
+        $daylistNext = DB::table('calendar')
+            ->where('date', '>', $now->endOfMonth()->addMonth()->format('Y-m-d'))
+            ->where('date', '<', $now->endOfMonth()->addMonth()->format('Y-m-d'))
+            ->get();
+
+        $today = DB::table('calendar')->where('date', Carbon::now()->format('y-m-d'))->get();
+
+        return view('rozpisy-sluzeb.' . $categorie->folder_name . '', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Rozpis služeb',
+            'categorie'         => $categorie,
+            'daylist'           => $daylist,
+            'daylistPrev'       => $daylistPrev,
+            'daylistNext'       => $daylistNext,
+            'doctors'           => $doctors,
+            'doctorsJip'        => $doctorsJip,
+            'doctorsOs'         => $doctorsOs,
+            'doctorsAll'        => $doctorsAll,
+            'from'              => $from,
+            'to'                => $to,
+            'today'             => $today
+        ]);
+    }
+
+    // Zápisy z porad
+    public function porady($id)
+    {
+        $allDocuments = Document::whereCategoryId(['47', '48'])->pluck('category_id');
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+
+        if (
+            $last == null
+        ) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('revision_date', 'desc')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('revision_date', 'desc')->get();
+        }
+
+        return view('porady.index', [
+            'title'             => $categorie->category_name,
+            'pretitle'          => 'Zápisy z porad',
+            'categorie'         => $categorie,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'doctors'           => $doctors,
+            'allDocuments'      => $allDocuments
+        ]);
+    }
+
+    // Radio
+    public function radio()
+    {
+        return redirect()->away('http://192.168.81.121:8000/radio.m3u');
+    }
+
+    // Video
+    public function video()
+    {
+        return view('videa', ['pretitle' => 'Média', 'title' => 'Videa']);
+    }
+
+    // Video-lekis
+    public function videoLekis()
+    {
+        return view('videa-lekis', ['pretitle' => 'Média', 'title' => 'Lekis']);
+    }
+
+    // Video-bozp
+    public function videoBozp()
+    {
+        return view('videa-bozp', ['pretitle' => 'Média', 'title' => 'BOZP']);
+    }
+
+    // Edukační materiály
+    public function edukace($id)
+    {
+        $allDocuments = Document::where('category_id', '>', '44')->pluck('category_id');
+        $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
+        $categorie  = Category::where('id', $id)->first();
+        $doctors = Employee::orderBy('last_name')->get();
+
+        if ($last == null) {
+            $last = 0;
+        } else {
+            $position = $last->position;
+            $last = $position;
+        }
+
+        if (Auth::user()) {
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('name')->get();
+        } else {
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('name')->get();
+        }
+
+        return view('edukace.index', [
+            'title'             => $categorie->category_name,
+            'categorie'         => $categorie,
+            'pretitle'          => $categorie->category_file,
+            'lastpos'           => $last,
+            'documents'         => $documents,
+            'doctors'           => $doctors,
+            'allDocuments'      => $allDocuments
+        ]);
+    }
+
+    // Překladatelé
+    public function prekladatele()
+    {
+        return view('prekladatele', ['pretitle' => 'Média', 'title' => 'Překladatelé']);
+    }
+
+    // Pneumatiky
+    public function tires()
+    {
+        return redirect()->away('https://docs.google.com/spreadsheets/d/19Tzhxrq7tVBpZ7LhZ5qEL6ehI3om3q6b/edit#gid=1690889270');
+    }
+
+    // ZVOS
+    public function zvos()
+    {
+        $bulletins = Bulletin::orderBy('date_edition')->get();
+        return view('zvos.index', ['pretitle' => 'Odbory', 'title' => 'ZV OS', 'bulletins' => $bulletins]);
+    }
+
+    // Profil
+    public function profile()
+    {
+        return view('profile.profile', ['pretitle' => 'Profil', 'title' => 'Uživatele']);
+    }
+
+    // Interna change sluyby
+    public function changeDoctorInterna(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'interna'  => $request->interna,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    // Zurnal change sluzby
+    public function changeDoctorZurnal(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'zurnalni_sluzby'   => $request->zurnalni_sluzby,
+                    'mobile'            => $request->mobile
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    // Jip change sluzby
+    public function changeDoctorJip(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'jip' => $request->jip,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+    }
+
+    // Jip change sluzby
+    public function changeDoctorOperacniSaly(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'operacni_saly'               => $request->operacni_saly,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+}
