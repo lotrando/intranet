@@ -1,3 +1,7 @@
+@php
+  $i = 1;
+@endphp
+
 @extends('layouts.blank')
 
 @section('favicon')
@@ -12,10 +16,10 @@
 
       <div class="container-fluid">
         <div class="row align-items-center">
-          @foreach ($akreditace as $category)
-            <div class="col ps-0 m-0">
+          @foreach ($stands as $category)
+            <div class="col-2 col-sm-2 col-md-2 col-xl-2 col-xxl-2 ps-0 m-0">
               <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100 m-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-original-title="{{ __(ucfirst($category->category_file) . ' - ' . $category->category_name . '') }}"
+                data-bs-original-title="{{ __('' . $category->category_name . '') }}"
                 href="/{{ $category->category_file }}/{{ $category->folder_name . '/' . $category->id }}">
                 <span class="d-inline d-sm-inline d-md-none d-lg-inline d-xl-inline">{!! $category->svg_icon !!}</span>
                 <span class="d-none d-md-inline d-lg-inline d-xl-inline pe-1">{{ $category->category_name }}</span>
@@ -28,7 +32,7 @@
           <div class="col-12">
             @if ($allDocuments->count() > 0)
               <div class="progress mt-2">
-                @foreach ($akreditace as $category)
+                @foreach ($stands as $category)
                   <div class="progress-bar progress-sm bg-{{ $category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     data-bs-original-title="{{ $category->category_name . ' ' . round(($category->documents->count() * 100) / $allDocuments->count()) . '%' }}"
                     role="progressbar" aria-label="{{ $category->category_name }}"
@@ -57,7 +61,7 @@
 
           {{-- Searched events --}}
           <div>
-            <div class="display mt-2 mb-2" id="display"></div>
+            <div class="display mt-2 mb-1" id="display"></div>
           </div>
 
           {{-- Page title --}}
@@ -100,7 +104,7 @@
         </div>
 
         <!-- Page -->
-        <div class="row mt-2">
+        <div class="row">
           <div class="col-12">
             {{-- documents --}}
             @foreach ($documents as $document)
@@ -110,19 +114,24 @@
                     <div class="list-group list-group-flush list-group-hoverable py-2">
                       <div class="list-group-item border-0 p-0">
                         <div class="row align-items-center g-3 mx-1">
-                          <div class="avatar bg-{{ $document->category->color }}-lt col-auto" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-original-title="{{ $document->category->button }} {{ $document->category->category_type }}">
-                            {{-- <a href="/{{ $document->category->category_file }}/{{ $document->category->folder_name }}/{{ $document->category->id }}"> --}}
+                          <div class="avatar bg-{{ $document->category->color }}-lt col-auto">
                             <div class="text-uppercase">
                               {!! $document->category->svg_icon !!}
                             </div>
-                            {{-- </a> --}}
                           </div>
                           <div class="col-auto">
                             <a href="{{ route('soubory.' . $document->category->category_type . '.download', $document->id) }}" target="_blank">
-                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="Stáhnout {{ $document->category->category_type }}">
-                                <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                                @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                  <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                  <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                  <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                  <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                                @endif
                               </span>
                             </a>
                           </div>
@@ -131,15 +140,19 @@
                               <p class="show d-inline text-primary text-decoration-none cursor-pointer" id="{{ $document->id }}" data-bs-toggle="tooltip"
                                 data-bs-placement="top" data-bs-original-title="Více informací o dokumentu {{ $document->description }}"
                                 style="margin-bottom: 0;">
+                                @if ($categorie->id != 3)
+                                  {{ $i++ . '.' }}
+                                @endif
                                 {{ $document->name }}
                                 @if ($document->addons->count() > 0)
-                                  <span class="description text-blue text-truncate"> - celkem
-                                    {{ $document->addons->count() }} příloh</span>
+                                  <span class="description text-blue text-truncate"> - celkem příloh ({{ $document->addons->count() }})</span>
                                 @endif
                               </p>
                             </span>
                             <div class="d-block description text-muted text-truncate">
-                              {{ $document->description }}</div>
+                              <span class="text-{{ $document->category->color }}">{{ ucfirst($document->category->button) }}
+                                {{ $document->category->category_type }}</span> - {{ $document->description }}
+                            </div>
                           </div>
                           @auth
                             <div class="col-auto">
@@ -199,27 +212,6 @@
                       <div class="list-group-item py-1 px-1">
                         <div class="row d-flex justify-content-between">
                           <div class="col-auto">
-                            @auth
-                              @if (Carbon\Carbon::parse($document->created_at)->addDays(1) >= Carbon\Carbon::today())
-                                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">Nový
-                                  !</span>
-                              @endif
-                              @if ($document->status == 'Rozpracováno')
-                                <span class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">Rozpracováno</span>
-                              @else
-                                <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Schváleno</span>
-                              @endif
-                              @if ($document->onscreen != 0)
-                                <span class="badge badge-sm bg-orange-lt text-uppercase ms-auto">Zobrazeno také v
-                                  dokumentaci -
-                                  {{ App\Models\Category::whereId($document->onscreen)->pluck('category_name')->first() }}</span>
-                              @endif
-                            @endauth
-                            @if (Carbon\Carbon::parse($document->updated_at)->addDays(7) >= Carbon\Carbon::now())
-                              <span class="badge badge-sm bg-lime-lt text-uppercase ms-auto">Aktualizováno
-                                !</span>
-                            @endif
-                            <span class="text-muted description">{{ Carbon\Carbon::parse($document->updated_at)->diffForHumans() }}</span>
                             <svg class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"
                               fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -234,6 +226,23 @@
                             </svg>
                             <span class="text-muted description">Revize:
                               {{ $document->revision }}</span>
+                            @if (Carbon\Carbon::parse($document->created_at)->addDays(1) >= Carbon\Carbon::today())
+                              <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">Nový!</span>
+                            @endif
+                            @if ($document->status == 'Rozpracováno')
+                              <span class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">Rozpracováno</span>
+                            @else
+                              <span class="badge badge-sm bg-green-lt text-uppercase ms-auto">Schváleno</span>
+                            @endif
+                            <span class="text-muted description">{{ Carbon\Carbon::parse($document->updated_at)->diffForHumans() }}</span>
+                            @if ($document->onscreen != 0)
+                              <span class="badge badge-sm bg-orange-lt text-uppercase ms-auto">Zobrazeno také v dokumentaci -
+                                {{ App\Models\Category::whereId($document->onscreen)->pluck('category_name')->first() }}</span>
+                            @endif
+                            @if (Carbon\Carbon::parse($document->updated_at)->addDays(7) >= Carbon\Carbon::now())
+                              <span class="badge badge-sm bg-lime-lt text-uppercase ms-auto">Aktualizováno
+                                !</span>
+                            @endif
                           </div>
                           <div class="d-xs-none d-sm-none d-lg-inline col-auto">
                             @auth
@@ -286,8 +295,7 @@
                     @foreach ($document->addons as $add)
                       <div class="row align-items-center g-3 mx-1 mb-1">
                         <div class="avatar bg-{{ $document->category->color }}-lt col-auto">
-                          <div class="text-uppercase" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-original-title="ID #{{ $document->id }}#{{ $add->id }}">
+                          <div class="text-uppercase">
                             <svg class="icon icon-tabler icon-tabler-plus text-{{ $document->category->color }}" width="24" height="24"
                               viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -297,10 +305,18 @@
                           </div>
                         </div>
                         <div class="col-auto">
-                          <a href="{{ route('soubory.bozp.addon.download', $add->id) }}">
-                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                              data-bs-original-title="Stáhnout přílohu">
-                              <img src="{{ asset('img/files/pdf-add.png') }}" alt="PDF" height="32px">
+                          <a href="/soubory/{{ $document->category->category_type}}/priloha/{{ $add->id }}">
+                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($add->file, strpos($add->file, '.') + 1) }}">
+                              @if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf')
+                                <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                              @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'xlsx')
+                                <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                              @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'docx')
+                                <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                              @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'pptx')
+                                <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                              @endif
                             </span>
                           </a>
                         </div>
@@ -406,7 +422,7 @@
 @section('modals')
   {{-- Main Form Modal --}}
   <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-full-width mx-3" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-full-width mx-1" role="document">
       <div class="modal-content shadow-lg">
         <div id="modal-header">
           <h5 class="modal-title"></h5>
@@ -501,9 +517,6 @@
                 <input class="form-control" id="efficiency" name="efficiency" type="date" placeholder="{{ __('Datum platnosti') }}">
               </div>
             </div>
-            <div class="mb-2 mt-2">
-              <div id="pdf-preview"></div>
-            </div>
             <div class="row">
               <div class="col-12 col-lg-5 mb-2">
                 <label class="form-label">{{ __('Soubor') }}</label>
@@ -536,6 +549,9 @@
                 <label class="form-label">{{ __('Založil / upravil') }}</label>
                 <input class="form-control" id="user_name" name="user_name" type="text" readonly>
               </div>
+            </div>
+            <div class="mt-2">
+              <div id="pdf-preview"></div>
             </div>
           </div>
           <input id="action" name="action" type="hidden" />
@@ -605,9 +621,6 @@
                 <input class="form-control" id="add_revision" name="add_revision" type="text" placeholder="{{ __('Číslo nebo datum') }}">
               </div>
             </div>
-            <div class="mb-2 mt-2">
-              <div id="pdf-preview"></div>
-            </div>
             <div class="row">
               <div class="col-12 col-lg-6 mb-2">
                 <label class="form-label">{{ __('Soubor') }}</label>
@@ -633,6 +646,9 @@
                 <label class="form-label">{{ __('Založil/upravil') }}</label>
                 <input class="form-control" id="add_user_name" name="add_user_name" type="text" readonly>
               </div>
+            </div>
+            <div class="mb-2 mt-2">
+              <div id="pdf-preview"></div>
             </div>
           </div>
           <input id="add_action" name="add_action" type="hidden" />
@@ -665,7 +681,7 @@
                   <path d="M15 16l3 -3l3 3"></path>
                   <path d="M18 13v9"></path>
                 </svg>
-                Upravit BOZP-PO dokument
+                Upravit dokument
               </button>
             </div>
           </div>
@@ -676,7 +692,7 @@
 
   {{-- Document Show Modal --}}
   <div class="modal fade" id="showModal" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
       <div class="modal-content shadow-lg">
         <div id="show-modal-header">
           <h5 class="modal-title"></h5>
@@ -685,96 +701,15 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-
-              <div class="row">
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Position') }}</label>
-                  <input class="form-control" id="show-position" type="text" readonly>
-                </div>
-                <div class="col-7 mb-3">
-                  <label class="form-label">{{ __('Name') }} standardu</label>
-                  <input class="form-control" id="show-name" type="text" readonly>
-                </div>
-                <div class="col-3 mb-3">
-                  <label class="form-label">{{ __('Revision') }}</label>
-                  <input class="form-control" id="show-revision" type="text" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12 mb-3">
-                  <label class="form-label">{{ __('Popis standardu') }} </label>
-                  <input class="form-control" id="show-description" type="text" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Datum revize') }}</label>
-                  <input class="form-control" id="show-revision_date" type="date" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Datum další revize') }}</label>
-                  <input class="form-control" id="show-next_revision_date" type="date" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Platnost standardu od') }}</label>
-                  <input class="form-control" id="show-efficiency" type="date" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Zpracoval/a') }}</label>
-                  <input class="form-control" id="show-processed" type="text" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Schválil/a') }}</label>
-                  <input class="form-control" id="show-authorize" type="text" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Kontrolu provedl/a') }}</label>
-                  <input class="form-control" id="show-examine" type="text" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-8 mb-3">
-                  <label class="form-label">{{ __('Soubor') }}</label>
-                  <input class="form-control" id="show-file" name="show-file" type="text" readonly>
-                </div>
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Status') }}</label>
-                  <input class="form-control" id="show-status" readonly>
-                </div>
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Založil / upravil') }}</label>
-                  <input class="form-control" id="show-user_name" name="user_name" type="text" readonly>
-                </div>
-              </div>
-              <div class="col-12 p-1">
-                <div id="pdf-preview-show"></div>
-                <input id="category_id" name="category_id" type="hidden">
-                <input id="action" name="action" type="hidden" />
-                <input id="hidden_id" name="hidden_id" type="hidden" />
-                <input id="user_id" name="user_id" type="hidden" />
-              </div>
+              <div id="pdf-preview-show"></div>
+              <input id="category_id" name="category_id" type="hidden">
+              <input id="action" name="action" type="hidden" />
+              <input id="hidden_id" name="hidden_id" type="hidden" />
+              <input id="user_id" name="user_id" type="hidden" />
             </div>
           </div>
         </div>
-
         <div class="modal-footer">
-          <div class="align-content-end flex">
-            <a class="btn btn-red ms-auto hover-shadow" id="download-btn" type="button" href="">
-              <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
-                <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
-                <path d="M15 19l3 3l3 -3"></path>
-                <path d="M18 22v-9"></path>
-              </svg>
-              {{ __('Download file') }}</a>
-          </div>
           <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
             <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
               stroke-linecap="round" stroke-linejoin="round">
@@ -784,15 +719,24 @@
             </svg>
             {{ __('Close') }}
           </button>
+          <a class="btn btn-red ms-auto hover-shadow" id="download-btn" type="button" href="">
+            <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
+              <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
+              <path d="M15 19l3 3l3 -3"></path>
+              <path d="M18 22v-9"></path>
+            </svg>
+            {{ __('Download file') }}</a>
         </div>
-
       </div>
     </div>
   </div>
 
   {{-- Addon Show Modal --}}
   <div class="modal fade" id="addShowModal" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
       <div class="modal-content shadow-lg">
         <div id="add-show-modal-header">
           <h5 class="modal-title"></h5>
@@ -801,41 +745,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-
-              <div class="row">
-                <div class="col-2 mb-3 mt-3">
-                  <label class="form-label">{{ __('Position') }}</label>
-                  <input class="form-control" id="add-show-position" type="text" readonly>
-                </div>
-                <div class="col-8 mb-3 mt-3">
-                  <label class="form-label">{{ __('Popis dokumentu') }} </label>
-                  <input class="form-control" id="add-show-description" type="text" readonly>
-                </div>
-                <div class="col-2 mb-3 mt-3">
-                  <label class="form-label">{{ __('Revision') }}</label>
-                  <input class="form-control" id="add-show-revision" type="text" readonly>
-                </div>
-              </div>
-
               <div id="pdf-preview-addon-show"></div>
-
-              <div class="row">
-                <div class="col-12 mb-3">
-                  <label class="form-label">{{ __('Soubor') }}</label>
-                  <input class="form-control" id="add-show-file" type="text" readonly>
-                </div>
-                <div class="col-6 mb-3">
-                  <label class="form-label">{{ __('Status') }}</label>
-                  <input class="form-control" id="add-show-status" readonly>
-                </div>
-                <div class="col-6 mb-3">
-                  <label class="form-label">{{ __('Založil / upravil') }}</label>
-                  <input class="form-control" id="add-show-user-name" readonly>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-5 p-1">
               <input id="category_id" name="category_id" type="hidden">
               <input id="action" name="action" type="hidden" />
               <input id="hidden_id" name="hidden_id" type="hidden" />
@@ -843,20 +753,7 @@
             </div>
           </div>
         </div>
-
         <div class="modal-footer">
-          <div class="align-content-end flex">
-            <a class="btn btn-red ms-auto hover-shadow" id="add-download-btn" type="button" href="">
-              <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
-                <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
-                <path d="M15 19l3 3l3 -3"></path>
-                <path d="M18 22v-9"></path>
-              </svg>
-              {{ __('Download file') }}</a>
-          </div>
           <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
             <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
               stroke-linecap="round" stroke-linejoin="round">
@@ -867,8 +764,17 @@
             </svg>
             {{ __('Close') }}
           </button>
+          <a class="btn btn-red ms-auto hover-shadow" id="add-download-btn" type="button" href="">
+            <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
+              <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
+              <path d="M15 19l3 3l3 -3"></path>
+              <path d="M18 22v-9"></path>
+            </svg>
+            {{ __('Download file') }}</a>
         </div>
-
       </div>
     </div>
   </div>
@@ -948,6 +854,7 @@
 
 @section('scripts')
   <script src="{{ asset('js/pdfobject.js') }}"></script>
+  <script src="{{ asset('js/ViewerJS') }}"></script>
   <script>
     $(document).ready(function() {
 
@@ -1030,7 +937,7 @@
             $('#next_revision_date').val(nextRevisionDate)
           })
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#pdf-preview", {
-            height: "25rem"
+            height: "30rem"
           })
         }
       })
@@ -1064,16 +971,16 @@
           $('#add_user_name').val(html.data.user.name);
           $('#add_hidden_id').val(html.data.id);
           $('#add_hidden_file').val(html.data.file);
-          PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#add-pdf-preview", {
-            height: "25rem"
-          })
+          PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
+            "#pdf-preview-show", {
+              height: "41rem"
+            })
         }
       })
     });
 
     $(document).on('click', '.show', function() {
       id = $(this).attr('id');
-      $('#unique_code').prop('readonly', true);
       $('#form_result_modal, #form_result_window').html('');
       $.ajax({
         url: "/documents/" + id,
@@ -1090,26 +997,11 @@
           $('#category_id').val(html.data.category_id)
           $('#show-folder_name').val(html.data.category.folder_name)
           $('#show-name').val(html.data.name)
-          $('#show-processed').val(html.data.processed)
-          $('#show-authorize').val(html.data.authorize)
-          $('#show-examine').val(html.data.examine)
-          $('#show-efficiency').val(html.data.efficiency)
-          $('#show-revision').val(html.data.revision)
-          $('#show-revision_date').val(html.data.revision_date)
-          $('#show-next_revision_date').val(html.data.next_revision_date)
-          $('#show-tags').val(html.data.tags)
-          $('#show-description').val(html.data.description)
-          $('#show-position').val(html.data.position)
-          $('#show-file').val(html.data.file)
-          $('#show-status').val(html.data.status)
-          $('#show-user_id').val('{{ auth()->user()->id ?? null }}')
-          $('#show-user_name').val(html.data.user.name)
-          $('#attachment, #action_button').addClass('d-none')
           $('#show-hidden_id').val(html.data.id)
-          $('#download-btn').attr("href", "/soubory/bozp/" + html.data.id + "")
+          $('#download-btn').attr("href", "/soubory/" + html.data.category.category_type + "/" + html.data.id + "")
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
             "#pdf-preview-show", {
-              height: "25rem"
+              height: "41rem"
             })
         }
       })
@@ -1130,18 +1022,18 @@
             "modal-header bg-{{ $categorie->color }}-lt")
           $('.modal-title').html("Příloha - " + html.data.description)
           $('#add-show-description').val(html.data.description)
-          $('#add-show-position').val(html.data.position)
-          $('#add-show-file').val(html.data.file)
-          $('#add-show-revision').val(html.data.revision)
-          $('#add-show-status').val(html.data.status)
-          $('#user_id').val('{{ auth()->user()->id ?? null }}')
-          $('#add-show-user-name').val(html.data.user.name)
           $('#add-show-hidden_id').val(html.data.id)
           $('#add-download-btn').attr("href", "/soubory/{{ $categorie->category_type }}/priloha/" + html.data.id)
-          PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-            "#pdf-preview-addon-show", {
-              height: "28rem"
-            })
+          val = html.data.file;
+          file_type = val.substr(val.lastIndexOf('.')).toLowerCase();
+          if (file_type === '.pdf') {
+            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
+              "#pdf-preview-addon-show", {
+                height: "41rem"
+              })
+          } if (file_type !== '.pdf') {
+            $('#pdf-preview-addon-show').html('Náhled souboru typu *' + file_type + ' nenelze zobrazit. Klikněte na stáhnout soubor.')
+          }
         }
       })
     });

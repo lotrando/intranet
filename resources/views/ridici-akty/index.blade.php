@@ -120,9 +120,17 @@
                           </div>
                           <div class="col-auto">
                             <a href="{{ route('soubory.' . $document->category->category_type . '.download', $document->id) }}" target="_blank">
-                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="Stáhnout {{ $document->category->category_type }}">
-                                <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                                @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                  <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                  <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                  <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                  <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                                @endif
                               </span>
                             </a>
                           </div>
@@ -298,10 +306,18 @@
                         </div>
                         <div class="col-auto">
                           <a href="{{ route('soubory.bozp.addon.download', $add->id) }}">
-                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                              data-bs-original-title="Stáhnout přílohu">
-                              <img src="{{ asset('img/files/pdf-add.png') }}" alt="PDF" height="32px">
-                            </span>
+                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                                @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                  <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                  <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                  <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                                @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                  <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                                @endif
+                              </span>
                           </a>
                         </div>
                         <div class="col text-truncate" id="{{ $add->id }}">
@@ -676,7 +692,7 @@
 
   {{-- Document Show Modal --}}
   <div class="modal fade" id="showModal" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
       <div class="modal-content shadow-lg">
         <div id="show-modal-header">
           <h5 class="modal-title"></h5>
@@ -685,73 +701,6 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-
-              <div class="row">
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Position') }}</label>
-                  <input class="form-control" id="show-position" type="text" readonly>
-                </div>
-                <div class="col-7 mb-3">
-                  <label class="form-label">{{ __('Name') }} standardu</label>
-                  <input class="form-control" id="show-name" type="text" readonly>
-                </div>
-                <div class="col-3 mb-3">
-                  <label class="form-label">{{ __('Revision') }}</label>
-                  <input class="form-control" id="show-revision" type="text" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12 mb-3">
-                  <label class="form-label">{{ __('Popis standardu') }} </label>
-                  <input class="form-control" id="show-description" type="text" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Datum revize') }}</label>
-                  <input class="form-control" id="show-revision_date" type="date" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Datum další revize') }}</label>
-                  <input class="form-control" id="show-next_revision_date" type="date" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Platnost standardu od') }}</label>
-                  <input class="form-control" id="show-efficiency" type="date" readonly>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Zpracoval/a') }}</label>
-                  <input class="form-control" id="show-processed" type="text" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Schválil/a') }}</label>
-                  <input class="form-control" id="show-authorize" type="text" readonly>
-                </div>
-                <div class="col-4 mb-3">
-                  <label class="form-label">{{ __('Kontrolu provedl/a') }}</label>
-                  <input class="form-control" id="show-examine" type="text" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-8 mb-3">
-                  <label class="form-label">{{ __('Soubor') }}</label>
-                  <input class="form-control" id="show-file" name="show-file" type="text" readonly>
-                </div>
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Status') }}</label>
-                  <input class="form-control" id="show-status" readonly>
-                </div>
-                <div class="col-2 mb-3">
-                  <label class="form-label">{{ __('Založil / upravil') }}</label>
-                  <input class="form-control" id="show-user_name" name="user_name" type="text" readonly>
-                </div>
-              </div>
-              <div class="col-12 p-1">
                 <div id="pdf-preview-show"></div>
                 <input id="category_id" name="category_id" type="hidden">
                 <input id="action" name="action" type="hidden" />
@@ -759,9 +708,7 @@
                 <input id="user_id" name="user_id" type="hidden" />
               </div>
             </div>
-          </div>
         </div>
-
         <div class="modal-footer">
           <div class="align-content-end flex">
             <a class="btn btn-red ms-auto hover-shadow" id="download-btn" type="button" href="">
@@ -802,37 +749,6 @@
           <div class="row">
             <div class="col-12">
 
-              <div class="row">
-                <div class="col-2 mb-3 mt-3">
-                  <label class="form-label">{{ __('Position') }}</label>
-                  <input class="form-control" id="add-show-position" type="text" readonly>
-                </div>
-                <div class="col-8 mb-3 mt-3">
-                  <label class="form-label">{{ __('Popis dokumentu') }} </label>
-                  <input class="form-control" id="add-show-description" type="text" readonly>
-                </div>
-                <div class="col-2 mb-3 mt-3">
-                  <label class="form-label">{{ __('Revision') }}</label>
-                  <input class="form-control" id="add-show-revision" type="text" readonly>
-                </div>
-              </div>
-
-              <div id="pdf-preview-addon-show"></div>
-
-              <div class="row">
-                <div class="col-12 mb-3">
-                  <label class="form-label">{{ __('Soubor') }}</label>
-                  <input class="form-control" id="add-show-file" type="text" readonly>
-                </div>
-                <div class="col-6 mb-3">
-                  <label class="form-label">{{ __('Status') }}</label>
-                  <input class="form-control" id="add-show-status" readonly>
-                </div>
-                <div class="col-6 mb-3">
-                  <label class="form-label">{{ __('Založil / upravil') }}</label>
-                  <input class="form-control" id="add-show-user-name" readonly>
-                </div>
-              </div>
             </div>
 
             <div class="col-5 p-1">
@@ -1037,35 +953,34 @@
     });
 
     $(document).on('click', '.add-edit', function() {
-      id = $(this).attr('id');
-      $('#add_form_result_modal, #form_result_window').html('');
+      id = $(this).attr('id')
       $.ajax({
         url: "/documents/addons/" + id + "/edit",
         dataType: "json",
         success: function(html) {
-          $('#addInputForm')[0].reset();
-          $('.modal-title').val('');
-          $('#add_action_button, #add-pdf-preview').removeClass('d-none');
+          $('#addInputForm')[0].reset()
+          $('.modal-title').val('')
+          $('#add_action_button, #add-pdf-preview').removeClass('d-none')
           $('#addFormModal').modal('show');
-          $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt');
-          $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
+          $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt')
+          $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
           $('#add_action_button, .modal-title').text("{{ __('Upravit přílohu') }}")
-          $('#add_action').val("Edit");
-          $('#add_category_id').val(html.data.category_id);
-          $('#add_folder_name').val(html.data.category.folder_name);
-          $('#add_category_file').val(html.data.category.category_file);
-          $('#add_revision').val(html.data.revision);
-          $('#add_description').val(html.data.description);
-          $('#add_position').val(html.data.position);
-          $('#add_status').val(html.data.status);
-          $('#add_onscreen').val(html.data.onscreen);
-          $('#add_user_id').val('{{ auth()->user()->id ?? null }}');
-          $('#add_id').val(html.data.document_id);
-          $('#add_user_name').val(html.data.user.name);
-          $('#add_hidden_id').val(html.data.id);
-          $('#add_hidden_file').val(html.data.file);
+          $('#add_action').val("Edit")
+          $('#add_category_id').val(html.data.category_id)
+          $('#add_folder_name').val(html.data.category.folder_name)
+          $('#add_category_file').val(html.data.category.category_file)
+          $('#add_revision').val(html.data.revision)
+          $('#add_description').val(html.data.description)
+          $('#add_position').val(html.data.position)
+          $('#add_status').val(html.data.status)
+          $('#add_onscreen').val(html.data.onscreen)
+          $('#add_user_id').val('{{ auth()->user()->id ?? null }}')
+          $('#add_id').val(html.data.document_id)
+          $('#add_user_name').val(html.data.user.name)
+          $('#add_hidden_id').val(html.data.id)
+          $('#add_hidden_file').val(html.data.file)
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#add-pdf-preview", {
-            height: "25rem"
+            height: "41rem"
           })
         }
       })
@@ -1073,15 +988,13 @@
 
     $(document).on('click', '.show', function() {
       id = $(this).attr('id');
-      $('#unique_code').prop('readonly', true);
-      $('#form_result_modal, #form_result_window').html('');
       $.ajax({
         url: "/documents/" + id,
         dataType: "json",
         success: function(html) {
           $('#inputForm')[0].reset()
-          $('.modal-title, #pdf-preview-show, #pdf-preview').val('')
-          $('#pdf-preview-show, #pdf-preview, #pdf-preview-addon-show').removeClass('d-none')
+          $('.modal-title, #pdf-preview-show').val('')
+          $('#pdf-preview-show').removeClass('d-none')
           $('#showModal').modal('show')
           $('#show-modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
             'bg-{{ $categorie->color }}-lt')
@@ -1090,26 +1003,12 @@
           $('#category_id').val(html.data.category_id)
           $('#show-folder_name').val(html.data.category.folder_name)
           $('#show-name').val(html.data.name)
-          $('#show-processed').val(html.data.processed)
-          $('#show-authorize').val(html.data.authorize)
-          $('#show-examine').val(html.data.examine)
-          $('#show-efficiency').val(html.data.efficiency)
-          $('#show-revision').val(html.data.revision)
-          $('#show-revision_date').val(html.data.revision_date)
-          $('#show-next_revision_date').val(html.data.next_revision_date)
-          $('#show-tags').val(html.data.tags)
-          $('#show-description').val(html.data.description)
-          $('#show-position').val(html.data.position)
-          $('#show-file').val(html.data.file)
-          $('#show-status').val(html.data.status)
-          $('#show-user_id').val('{{ auth()->user()->id ?? null }}')
-          $('#show-user_name').val(html.data.user.name)
-          $('#attachment, #action_button').addClass('d-none')
+          $('#action_button').addClass('d-none')
           $('#show-hidden_id').val(html.data.id)
           $('#download-btn').attr("href", "/soubory/bozp/" + html.data.id + "")
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
             "#pdf-preview-show", {
-              height: "25rem"
+              height: "40rem"
             })
         }
       })

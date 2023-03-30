@@ -65,15 +65,14 @@ class PageController extends Controller
     public function zmenyStandardu()
     {
         $documents = Document::with('category', 'user')
-            ->where('category_id', '<', '13')
-            // ->where('category_id', '<', '25')
+            ->where('category_id', '<', '11')
             ->where('updated_at', '>=', Carbon::now()->subHours(24))
             ->orderBy('category_id')
             ->orderByDesc('updated_at')
             ->get();
 
         $addons = Addon::with('category', 'document', 'user')
-            ->where('category_id', '<', '13')
+            ->where('category_id', '<', '11')
             // ->where('category_id', '<', '25')
             ->where('updated_at', '>=', Carbon::now()->subHours(24))
             ->orderBy('category_id')
@@ -82,7 +81,7 @@ class PageController extends Controller
 
         if ($documents->isNotEmpty() or $addons->isNotEmpty()) {
 
-            return view('zmeny-dokumentace', [
+            return view('zmeny-standardu', [
                 'pretitle'  => 'Oznámení',
                 'title'     => 'Změny ve standardech',
                 'documents' => $documents,
@@ -90,9 +89,9 @@ class PageController extends Controller
             ]);
         }
 
-        return view('empty-dokumentace', [
+        return view('empty-standardy', [
             'pretitle'  => 'Oznámení',
-            'title'     => 'Změny v dokumentaci'
+            'title'     => 'Změny ve standardech'
         ]);
     }
 
@@ -556,9 +555,9 @@ class PageController extends Controller
         }
 
         if (Auth::user()) {
-            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('year', 'desc')->get();
+            $documents = Document::with('category', 'user')->where('category_id', $id)->orderBy('position', 'asc')->get();
         } else {
-            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('year', 'desc')->get();
+            $documents = Document::with('category', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position', 'asc')->get();
         }
 
         return view('indikatory.index', [
@@ -610,7 +609,7 @@ class PageController extends Controller
     // Řídící akty
     public function akreditace($id)
     {
-        $allDocuments = Document::whereCategoryId(['55', '56', '57', '58', '59'])->pluck('category_id');
+        $allDocuments = Document::whereCategoryId(['55', '57', '58', '59'])->pluck('category_id');
         $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
         $categorie  = Category::where('id', $id)->first();
         $doctors = Employee::orderBy('last_name')->get();
