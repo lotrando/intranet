@@ -36,7 +36,7 @@
             <div class="dropdown-menu">
               <a class="dropdown-item {{ request()->segment(2) == 'prehledy' ? 'active' : '' }}" href="{{ url('https://www.sukl.cz/') }}" target="_blank">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon icon-tabler icon-tabler-presentation-analytics text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                  <svg class="icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M9 12v-4"></path>
@@ -51,6 +51,7 @@
                 <span class="nav-link-title">
                   {{ __('Hlášení SÚKL') }}
                 </span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'zmeny-standardu' ? 'active' : '' }}" href="{{ route('oznameni.zmeny-standardu') }}">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -66,6 +67,7 @@
                 <span class="nav-link-title">
                   {{ __('Změny ve standardech') }}
                 </span>
+                <span class="badge badge-sm bg-purple-lt text-uppercase ms-auto">{{ $stands->count() }}</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'zmeny-v-dokumentaci' ? 'active' : '' }}"
                 href="{{ route('oznameni.zmeny-v-dokumentaci') }}">
@@ -81,119 +83,20 @@
                 <span class="nav-link-title">
                   {{ __('Změny v dokumentaci') }}
                 </span>
+                <span class="badge badge-sm bg-pink-lt text-uppercase ms-auto">{{ $docs->count() }}</span>
               </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'important' ? 'active' : '' }}" href="{{ route('oznameni.important') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Důležité') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'servis' ? 'active' : '' }}" href="{{ route('oznameni.servis') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-cyan" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5">
-                    </path>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Odstávky a servis') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'sluzby' ? 'active' : '' }}" href="{{ route('oznameni.sluzby') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon icon-tabler icon-tabler-users text-yellow" width="40" height="40" viewBox="0 0 24 24" stroke-width="21"
-                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Změny služeb') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'informace' ? 'active' : '' }}" href="{{ route('oznameni.informace') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon icon-tabler icon-tabler-info-square-rounded text-cyan" width="40" height="40" viewBox="0 0 24 24"
-                    stroke-width="21" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M12 8h.01"></path>
-                    <path d="M11 12h1v4h1"></path>
-                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z"></path>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Informace') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'seminare' ? 'active' : '' }}" href="{{ route('oznameni.seminare') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-purple" width="36" height="36" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z">
-                    </path>
-                    <path d="M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5"></path>
-                    <path d="M6 19v2"></path>
-                    <path d="M18 19v2"></path>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Semináře') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'akord' ? 'active' : '' }}" href="{{ route('oznameni.akord') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon icon-tabler text-bitbucket" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <line x1="3" y1="21" x2="21" y2="21"></line>
-                    <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"></path>
-                    <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path>
-                    <line x1="10" y1="9" x2="14" y2="9"></line>
-                    <line x1="12" y1="7" x2="12" y2="11"></line>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Akord') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'kultura' ? 'active' : '' }}" href="{{ route('oznameni.kultura') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon icon-tabler icon-tabler-masks-theater text-google" width="36" height="36" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path
-                      d="M13.192 9h6.616a2 2 0 0 1 1.992 2.183l-.567 6.182a4 4 0 0 1 -3.983 3.635h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183z">
-                    </path>
-                    <path d="M15 13h.01"></path>
-                    <path d="M18 13h.01"></path>
-                    <path d="M15 16.5c1 .667 2 .667 3 0"></path>
-                    <path d="M8.632 15.982a4.037 4.037 0 0 1 -.382 .018h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183h6.616a2 2 0 0 1 2 2">
-                    </path>
-                    <path d="M6 8h.01"></path>
-                    <path d="M9 8h.01"></path>
-                    <path d="M6 12c.764 -.51 1.528 -.63 2.291 -.36"></path>
-                  </svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Kultura') }}
-                </span>
-              </a>
-              <a class="dropdown-item {{ request()->segment(2) == 'normalni' ? 'active' : '' }}" href="{{ route('oznameni.normalni') }}">
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-pink" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1"></path><circle cx="12" cy="7.5" r=".5" fill="currentColor"></circle></svg>
-                </span>
-                <span class="nav-link-title">
-                  {{ __('Normálni') }}
-                </span>
-              </a>
+              @foreach ($types as $type)
+                <a class="dropdown-item {{ request()->segment(2) == $type->type_route ? 'active' : '' }}"
+                  href="{{ route($type->type_route . '', $type->id) }}">
+                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    {!! $type->svg_icon !!}
+                  </span>
+                  <span class="nav-link-title">
+                    {{ $type->type_name }}
+                  </span>
+                  <span class="badge badge-sm bg-{{ $type->type_color }}-lt text-uppercase ms-auto">{{ $type->notification->count() }}</span>
+                </a>
+              @endforeach
             </div>
           </li>
           {{-- Stravování --}}
@@ -232,6 +135,7 @@
                 <span class="nav-link-title">
                   {{ __('Objednávka obědů') }}
                 </span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'kantyna' ? 'active' : '' }}" href="{{ route('stravovani.kantyna') }}">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">

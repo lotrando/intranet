@@ -12,11 +12,9 @@ use App\Models\Notification;
 use App\Models\Paint;
 use App\Models\Type;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use LaravelFileViewer;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PageController extends Controller

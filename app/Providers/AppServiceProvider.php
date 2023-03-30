@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 
 use App\Models\Navitem;
+use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -82,5 +83,9 @@ class AppServiceProvider extends ServiceProvider
         // Categories items
         $categories = Category::with('documents')->where('id', '>', '12')->where('id', '<', '25')->get();
         View::share('categories', $categories);
+
+        // Types items
+        $types = Type::get();
+        View::share('types', $types);
     }
 }

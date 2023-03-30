@@ -688,37 +688,25 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'category_file' => 'akreditace',
             'category_type' => 'akreditace',
-            'category_name' => 'Auditní protokoly',
-            'folder_name'   => 'auditni-protokoly',
+            'category_name' => 'Aud. protokoly akr.',
+            'folder_name'   => 'aud-protokoly-akr',
             'category_icon' => 'auditni-protokoly.png',
             'svg_icon'      => '<svg class="icon text-blue" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5"></path><path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5"></path></svg>',
             'fa_icon'       => null,
-            'button'        => 'auditní protokoly',
+            'button'        => 'aud. protokoly akreditační',
             'color'         => 'blue'
         ]);
 
         DB::table('categories')->insert([
             'category_file' => 'akreditace',
             'category_type' => 'akreditace',
-            'category_name' => 'Prezentace',
-            'folder_name'   => 'prezentace',
-            'category_icon' => 'prezentace.png',
-            'svg_icon'      => '<svg class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5"></path><path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5"></path></svg>',
+            'category_name' => 'Aud. protokoly ose.',
+            'folder_name'   => 'aud-protokoly-ose',
+            'category_icon' => 'auditni-protokoly.png',
+            'svg_icon'      => '<svg class="icon text-green" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5"></path><path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5"></path></svg>',
             'fa_icon'       => null,
-            'button'        => 'prezentace',
-            'color'         => 'yellow'
-        ]);
-
-        DB::table('categories')->insert([
-            'category_file' => 'akreditace',
-            'category_type' => 'akreditace',
-            'category_name' => 'Audio nahrávky',
-            'folder_name'   => 'audio-nahravky',
-            'category_icon' => 'audio-nahravky.png',
-            'svg_icon'      => '<svg class="icon text-orange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M5 8v-3a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5"></path><path d="M6 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path><path d="M4.5 17l-1.5 5l3 -1.5l3 1.5l-1.5 -5"></path></svg>',
-            'fa_icon'       => null,
-            'button'        => 'audio nahrávky',
-            'color'         => 'orange'
+            'button'        => 'aud. protokoly ošetřovatelské',
+            'color'         => 'green'
         ]);
 
         DB::table('categories')->insert([

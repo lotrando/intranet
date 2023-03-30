@@ -20,6 +20,6 @@ class Type extends Model
 
     public function notification()
     {
-        return $this->belongsTo(Notification::class);
+        return $this->hasMany(Notification::class);
     }
 }

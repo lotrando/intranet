@@ -16,14 +16,13 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $document_id
- * @property int $category_id
- * @property int $position
+ * @property string $position
  * @property string $description
  * @property string $revision
+ * @property int $user_id
  * @property string $file
  * @property string $status
  * @property int|null $onscreen
- * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category|null $category
@@ -32,7 +31,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Addon newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Addon newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Addon query()
- * @method static \Illuminate\Database\Eloquent\Builder|Addon whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereDocumentId($value)
@@ -312,7 +310,8 @@ namespace App\Models{
  * @property string $accordion_name
  * @property int|null $accordion_group
  * @property int $position
- * @property string $name
+ * @property int $document_position
+ * @property string $document_name
  * @property string $description
  * @property string|null $year
  * @property string|null $processed
@@ -320,14 +319,14 @@ namespace App\Models{
  * @property string|null $examine
  * @property string|null $efficiency
  * @property string $revision
+ * @property string|null $revision_date
  * @property string|null $next_revision_date
  * @property string|null $tags
- * @property string|null $revision_date
  * @property string $file
  * @property string|null $unique_code
  * @property string $status
  * @property int $user_id
- * @property int|null $onscreen
+ * @property int $onscreen
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Addon> $addons
@@ -343,11 +342,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Document whereDocumentName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Document whereDocumentPosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereEfficiency($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereExamine($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereFile($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Document whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereNextRevisionDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereOnscreen($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document wherePosition($value)
@@ -370,7 +370,6 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $personal_number
- * @property string $image
  * @property string|null $title_preffix
  * @property string $last_name
  * @property string|null $middle_name
@@ -383,14 +382,15 @@ namespace App\Models{
  * @property string $start_date
  * @property string|null $end_date
  * @property string|null $comment
- * @property string|null $phone
- * @property string|null $mobile
+ * @property string $status
  * @property string $id_card
  * @property string|null $coffee
+ * @property string|null $phone
+ * @property string|null $mobile
  * @property string $employment
+ * @property string $image
  * @property int|null $position
- * @property int|null $standard_signature
- * @property string $status
+ * @property int|null $standard_sign
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Department|null $department
@@ -419,7 +419,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePersonalNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePosition($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Employee whereStandardSignature($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Employee whereStandardSign($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereTitlePreffix($value)
@@ -480,12 +480,12 @@ namespace App\Models{
  * @property string $alt_name
  * @property string $tooltip
  * @property string $color
- * @property string $icon_class
  * @property string $page_title
  * @property string $route
  * @property string $favicon
  * @property string $fa_icon
  * @property string $svg_icon
+ * @property string $icon_class
  * @property-read \App\Models\Category|null $category
  * @method static \Illuminate\Database\Eloquent\Builder|Navitem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Navitem newQuery()
@@ -514,11 +514,14 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $user_id
+ * @property int $type_id
  * @property string $title
  * @property string $content
- * @property string $type
+ * @property string $importance
+ * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Type|null $type
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Notification newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Notification newQuery()
@@ -526,8 +529,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereImportance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Notification whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereUserId($value)
  */
@@ -664,6 +669,29 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Training whereUpdatedAt($value)
  */
 	class Training extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Type
+ *
+ * @property int $id
+ * @property string $type_name
+ * @property string $type_route
+ * @property string $type_color
+ * @property string $svg_icon
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Notification> $notification
+ * @property-read int|null $notification_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Type newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Type newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Type query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Type whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Type whereSvgIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Type whereTypeColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Type whereTypeName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Type whereTypeRoute($value)
+ */
+	class Type extends \Eloquent {}
 }
 
 namespace App\Models{
