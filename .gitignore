@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/soubory
+/public/videa
 /storage/*.key
 /vendor
 .env
