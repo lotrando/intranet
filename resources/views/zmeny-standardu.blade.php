@@ -24,23 +24,11 @@
           </div>
           {{-- End Page pre-title --}}
 
-          {{-- Page buttons --}}
-          <div class="ms-auto d-print-none col-auto">
-            <div class="btn-list">
-              <div class="d-flex justify-content-end">
-                {{-- Buttons --}}
-              </div>
-            </div>
-          </div>
-          {{-- End Page buttons --}}
-
         </div>
       </div>
     </div>
 
     {{-- Page body --}}
-  </div>
-
   <!-- Page -->
   <div class="row container-fluid mt-2">
     <div class="col-12">
@@ -197,8 +185,7 @@
       @endforeach
     </div>
   </div>
-  <!-- Page End -->
-  </div>
+
   <!-- Page Wrapper End -->
   </div>
 @endsection

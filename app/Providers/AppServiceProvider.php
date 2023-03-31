@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Category;
 
+use App\Models\Document;
 use App\Models\Navitem;
 use App\Models\Type;
 use Carbon\Carbon;
@@ -87,5 +88,24 @@ class AppServiceProvider extends ServiceProvider
         // Types items
         $types = Type::get();
         View::share('types', $types);
+
+        // Změněné dokumenty
+        $changedDocs = Document::with('category', 'user')
+        ->where('category_id', '>', '11')
+        ->where('updated_at', '>=', Carbon::now()->subHours(24))
+        ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+        View::share('changedDocs', $changedDocs);
+
+        // Změněné standardy
+        $changedStands =
+        Document::with('category', 'user')
+        ->where('category_id', '<', '11')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
+            ->orderByDesc('updated_at')
+            ->get();
+        View::share('changedStands', $changedStands);
     }
 }

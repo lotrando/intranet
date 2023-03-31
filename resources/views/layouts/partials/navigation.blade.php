@@ -34,22 +34,33 @@
               </span>
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item {{ request()->segment(2) == 'prehledy' ? 'active' : '' }}" href="{{ url('https://www.sukl.cz/') }}" target="_blank">
+              <a class="dropdown-item {{ request()->segment(2) == 'prehledy' ? 'active' : '' }}"
+                href="{{ url('https://www.sukl.cz/souhrny-informaci-o-lecivech') }}" target="_blank">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                  <svg class="icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                  <svg class="icon text-red" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M9 12v-4"></path>
-                    <path d="M15 12v-2"></path>
-                    <path d="M12 12v-1"></path>
-                    <path d="M3 4h18"></path>
-                    <path d="M4 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-10"></path>
-                    <path d="M12 16v4"></path>
-                    <path d="M9 20h6"></path>
+                    <path d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
+                    </path>
+                  </svg>
+                </span>
+                <span>
+                  {{ __('SÚKL měsíční info') }}
+                </span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
+              </a>
+              <a class="dropdown-item {{ request()->segment(2) == 'prehledy' ? 'active' : '' }}"
+                href="{{ url('https://www.sukl.cz/modules/unregistered/?rewrite=modules/unregistered') }}" target="_blank">
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                  <svg class="icon text-red" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
+                    </path>
                   </svg>
                 </span>
                 <span class="nav-link-title">
-                  {{ __('Hlášení SÚKL') }}
+                  {{ __('SÚKL formulář') }}
                 </span>
                 <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
               </a>
@@ -67,7 +78,7 @@
                 <span class="nav-link-title">
                   {{ __('Změny ve standardech') }}
                 </span>
-                <span class="badge badge-sm bg-purple-lt text-uppercase ms-auto">{{ $stands->count() }}</span>
+                <span class="badge badge-sm bg-purple-lt text-uppercase ms-auto">{{ $changedStands->count() }}</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'zmeny-v-dokumentaci' ? 'active' : '' }}"
                 href="{{ route('oznameni.zmeny-v-dokumentaci') }}">
@@ -83,7 +94,7 @@
                 <span class="nav-link-title">
                   {{ __('Změny v dokumentaci') }}
                 </span>
-                <span class="badge badge-sm bg-pink-lt text-uppercase ms-auto">{{ $docs->count() }}</span>
+                <span class="badge badge-sm bg-pink-lt text-uppercase ms-auto">{{ $changedDocs->count() }}</span>
               </a>
               @foreach ($types as $type)
                 <a class="dropdown-item {{ request()->segment(2) == $type->type_route ? 'active' : '' }}"
@@ -692,8 +703,8 @@
                   </a>
                   <a class="dropdown-item {{ request()->segment(1) == 'employees' ? 'bg-primary-lt' : '' }}" href="{{ route('employees.index') }}">
                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                      <svg class="icon text-lime" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <svg class="icon text-lime" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
                         <path d="M6 21v-2a4 4 0 0 1 4 -4h1.5"></path>
@@ -706,8 +717,8 @@
                     </span>
                   </a>
                   <a class="dropdown-item dropdown-toggle show" data-bs-toggle="dropdown" data-bs-auto-close="outside" href="#" role="button"
-                  aria-expanded="true">
-                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    aria-expanded="true">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
                       <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                         fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -773,17 +784,17 @@
                 </div>
               </div>
 
-                  </div>
-                </div>
-              </div>
             </div>
-          </li>
-        </ul>
-        <div class="my-2">
-          @yield('searchbar')
-        </div>
-        @yield('buttons')
       </div>
     </div>
   </div>
+  </li>
+  </ul>
+  <div class="my-2">
+    @yield('searchbar')
+  </div>
+  @yield('buttons')
+</div>
+</div>
+</div>
 </div>
