@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Počítač: localhost:3306
--- Vytvořeno: Pát 31. bře 2023, 04:20
--- Verze serveru: 8.0.32-0ubuntu0.20.04.2
--- Verze PHP: 7.4.3-4ubuntu2.18
+-- Počítač: 127.0.0.1
+-- Vytvořeno: Pát 31. bře 2023, 09:44
+-- Verze serveru: 10.4.24-MariaDB
+-- Verze PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,16 +28,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `addons` (
-  `id` bigint UNSIGNED NOT NULL,
-  `document_id` bigint NOT NULL,
-  `category_id` int NOT NULL,
-  `position` int NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('Schváleno','Rozpracováno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `onscreen` int DEFAULT NULL,
-  `user_id` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `document_id` bigint(20) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('Schváleno','Rozpracováno') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `onscreen` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -210,40 +209,40 @@ INSERT INTO `addons` (`id`, `document_id`, `category_id`, `position`, `descripti
 --
 
 CREATE TABLE `adversevents` (
-  `id` bigint UNSIGNED NOT NULL,
-  `department_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `misto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `department_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `misto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `datum_cas` date NOT NULL,
   `cas` time NOT NULL,
-  `spec_druh` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jinydoplnek` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pracovnik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `svedek` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pacient` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spec_druh` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jinydoplnek` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pracovnik` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `svedek` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pacient` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `datumnaroz` date DEFAULT NULL,
-  `chorobopis` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `udalost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reseni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `opatreni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `informovan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pricina` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `jina_pricina` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `stav_pacienta` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lokalizace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `druh_zraneni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `preventivni_opatreni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `zhodnoceni_stavu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `chorobopis` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `udalost` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reseni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `opatreni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `informovan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pricina` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jina_pricina` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stav_pacienta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lokalizace` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `druh_zraneni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `preventivni_opatreni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zhodnoceni_stavu` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `datum` date DEFAULT NULL,
-  `jmeno_lekare` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vyvoj` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `upresneni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('Rozpracováno','Odesláno','Dokončeno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `resitel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vyjadreni` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `resitel1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vyjadreni1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `resitel2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vyjadreni2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jmeno_lekare` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vyvoj` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `upresneni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('Rozpracováno','Odesláno','Dokončeno') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `resitel` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vyjadreni` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `resitel1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vyjadreni1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `resitel2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vyjadreni2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -275,11 +274,11 @@ INSERT INTO `adversevents` (`id`, `department_id`, `misto`, `datum_cas`, `cas`, 
 --
 
 CREATE TABLE `attendances` (
-  `id` bigint UNSIGNED NOT NULL,
-  `training_id` int NOT NULL,
-  `personal_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `training_id` int(11) NOT NULL,
+  `personal_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_time` time DEFAULT NULL,
   `end_time` time DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -293,27 +292,27 @@ CREATE TABLE `attendances` (
 --
 
 CREATE TABLE `bozps` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint NOT NULL,
-  `accordion_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `accordion_group` int DEFAULT NULL,
-  `position` int NOT NULL,
-  `document_position` int NOT NULL,
-  `document_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `processed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `authorize` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `examine` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) NOT NULL,
+  `accordion_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accordion_group` int(11) DEFAULT NULL,
+  `position` int(11) NOT NULL,
+  `document_position` int(11) NOT NULL,
+  `document_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `processed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authorize` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `examine` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `efficiency` date DEFAULT NULL,
-  `revision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `revision_date` date DEFAULT NULL,
   `next_revision_date` date DEFAULT NULL,
-  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unique_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('Rozpracováno','Schváleno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
-  `onscreen` int NOT NULL,
+  `tags` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unique_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('Rozpracováno','Schváleno') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `onscreen` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -325,8 +324,8 @@ CREATE TABLE `bozps` (
 --
 
 CREATE TABLE `bulletins` (
-  `id` bigint UNSIGNED NOT NULL,
-  `edition` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `edition` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_edition` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -346,17 +345,17 @@ INSERT INTO `bulletins` (`id`, `edition`, `date_edition`, `created_at`, `updated
 --
 
 CREATE TABLE `calendar` (
-  `id` bigint NOT NULL,
+  `id` bigint(20) NOT NULL,
   `date` date DEFAULT NULL,
-  `jip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `operacni_saly` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `interna` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `neurologie` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rdg` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prijmova_ambulance` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zurnalni_sluzby` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nutricni_terapeuti` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `jip` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `operacni_saly` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interna` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `neurologie` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rdg` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prijmova_ambulance` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zurnalni_sluzby` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nutricni_terapeuti` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -737,16 +736,16 @@ INSERT INTO `calendar` (`id`, `date`, `jip`, `operacni_saly`, `interna`, `neurol
 --
 
 CREATE TABLE `categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_file` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `folder_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `svg_icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fa_icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `button` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_file` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `folder_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_icon` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `svg_icon` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fa_icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `button` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -828,11 +827,11 @@ INSERT INTO `categories` (`id`, `category_file`, `category_type`, `category_name
 --
 
 CREATE TABLE `departments` (
-  `id` bigint UNSIGNED NOT NULL,
-  `department_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `center_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `department_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `department_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `center_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `department_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -879,27 +878,27 @@ INSERT INTO `departments` (`id`, `department_code`, `center_code`, `color_id`, `
 --
 
 CREATE TABLE `documents` (
-  `id` bigint UNSIGNED NOT NULL,
-  `category_id` bigint NOT NULL,
-  `accordion_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `accordion_group` int DEFAULT NULL,
-  `position` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `processed` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `authorize` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `examine` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` bigint(20) NOT NULL,
+  `accordion_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accordion_group` int(11) DEFAULT NULL,
+  `position` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `processed` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authorize` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `examine` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `efficiency` date DEFAULT NULL,
-  `revision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `next_revision_date` date DEFAULT NULL,
-  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tags` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revision_date` date DEFAULT NULL,
-  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `unique_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('Schváleno','Rozpracováno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
-  `onscreen` int DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unique_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('Schváleno','Rozpracováno') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `onscreen` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -981,7 +980,7 @@ INSERT INTO `documents` (`id`, `category_id`, `accordion_name`, `accordion_group
 (71, 10, 'Standardní operační postup – OKB úsek krevní banka', NULL, 28, 'Standardní operační postup – OKB úsek krevní banka', 'STANDARD - Zrušen', NULL, NULL, NULL, NULL, '2021-12-01', '0', '2022-12-01', 'OKB', '2021-12-01', 'standardy_okb-standard_-_zrusen-revize-0.pdf', 'STD10#28', 'Schváleno', 11, NULL, '2023-01-26 10:41:36', '2023-02-01 10:25:43'),
 (72, 10, 'Standardní operační postup – OKB úsek krevní banka', NULL, 29, 'Standardní operační postup – OKB úsek krevní banka', 'Revize dokumentů (sop) na krevní bance', NULL, NULL, NULL, NULL, '2011-11-01', '4', '2023-12-01', 'OKB', '2021-12-01', 'standardy_okb-revize_dokumentu_(sop)_na_krevni_bance-revize-4.pdf', 'STD10#29', 'Schváleno', 11, NULL, '2023-01-26 10:43:14', '2023-01-26 10:43:14'),
 (73, 10, 'Standardní operační postup – OKB úsek krevní banka', NULL, 30, 'Standardní operační postup – OKB úsek krevní banka', 'Rozmrazování skmp a ohřev erytrocytárních transfuzních přípravků', NULL, NULL, NULL, NULL, '2018-01-01', '2', '2023-12-01', NULL, '2021-12-01', 'standardy_okb-rozmrazovani_skmp_a_ohrev_erytrocytarnich_transfuznich_pripravku-revize-2.pdf', 'STD10#30', 'Schváleno', 11, 1, '2023-01-26 10:44:36', '2023-01-26 10:44:36'),
-(74, 6, 'Standard ošetřovatelské péče - anesteziologický', NULL, 1, 'Standard ošetřovatelské péče - anesteziologický', 'Příprava a asistence u celkové anestezie u TEP kyčle', NULL, NULL, 'Kolektiv fyzioterapeutů', 'Kolektiv fyzioterapeutů', '2004-04-01', '7', '2022-10-01', 'ANEST', '2021-10-01', 'standardy_anesteziologicke-priprava_a_asistence_u_celkove_anestezie_u_tep_kycle-revize-7.pdf', 'STD6#1', 'Schváleno', 11, NULL, '2023-01-26 11:04:19', '2023-03-21 07:47:36'),
+(74, 6, 'Standard ošetřovatelské péče - anesteziologický', NULL, 1, 'Standard ošetřovatelské péče - anesteziologický', 'Příprava a asistence u celkové anestezie u TEP kyčle', NULL, NULL, 'Kolektiv fyzioterapeutů', 'Kolektiv fyzioterapeutů', '2004-04-01', '7', '2022-10-01', 'ANEST', '2021-10-01', 'standardy_anesteziologicke-priprava_a_asistence_u_celkove_anestezie_u_tep_kycle-revize-7.pdf', 'STD6#1', 'Schváleno', 11, NULL, '2023-01-26 11:04:19', '2023-03-31 05:25:06'),
 (75, 6, 'Standard ošetřovatelské péče - anesteziologický', NULL, 2, 'Standard ošetřovatelské péče - anesteziologický', 'Příprava a asistence u celkové anestezie u operace páteře', NULL, NULL, NULL, NULL, '2004-04-01', '7', '2022-10-01', NULL, '2021-10-01', 'standardy_anesteziologicke-priprava_a_asistence_u_celkove_anestezie_u_operace_patere-revize-7.pdf', 'STD6#2', 'Schváleno', 11, NULL, '2023-01-26 11:06:58', '2023-01-26 11:23:54'),
 (76, 6, 'Standard ošetřovatelské péče - anesteziologický', NULL, 3, 'Standard ošetřovatelské péče - anesteziologický', 'Příprava a asistence u celkové anestezie u periferní nervové blokád', NULL, NULL, NULL, NULL, '2005-09-20', '7', '2022-10-01', 'ANEST', '2021-10-01', 'standardy_anesteziologicke-priprava_a_asistence_u_celkove_anestezie_u_periferni_nervove_blokad-revize-7.pdf', 'STD6#3', 'Schváleno', 11, NULL, '2023-01-26 11:09:12', '2023-01-26 11:24:07'),
 (77, 6, 'Standard ošetřovatelské péče - anesteziologický', NULL, 4, 'Standard ošetřovatelské péče - anesteziologický', 'Příprava a asistence u epidurální a subarachnoidální anestezie', NULL, NULL, NULL, NULL, '2005-09-22', '7', '2022-10-01', 'ANEST', '2021-10-01', 'standardy_anesteziologicke-priprava_a_asistence_u_epiduralni_a_subarachnoidalni_anestezie-revize-7.pdf', 'STD6#4', 'Schváleno', 11, NULL, '2023-01-26 11:10:19', '2023-01-26 11:24:17'),
@@ -1866,7 +1865,19 @@ INSERT INTO `documents` (`id`, `category_id`, `accordion_name`, `accordion_group
 (984, 44, '11_Pooperační pokyny - po operaci skoliózy', NULL, 11, '11_Pooperační pokyny - po operaci skoliózy', '11_Pooperační pokyny - po operaci skoliózy', NULL, 'Neuvedeno', 'Neuvedeno', 'Neuvedeno', NULL, '1', NULL, NULL, NULL, 'edukace_edukacni-materialy-11_pooperacni_pokyny_-_po_operaci_skoliozy-11_pooperacni_pokyny_-_po_operaci_skoliozy-revize-1.pdf', 'edukacni-materialy#11', 'Schváleno', 23, NULL, '2023-03-30 11:35:36', '2023-03-30 11:35:36'),
 (985, 44, '12_Pooperační pokyny - TEP kolene', NULL, 12, '12_Pooperační pokyny - TEP kolene', '12_Pooperační pokyny - TEP kolene', NULL, 'Neuvedeno', 'Neuvedeno', 'Neuvedeno', NULL, '1', NULL, NULL, NULL, 'edukace_edukacni-materialy-12_pooperacni_pokyny_-_tep_kolene-12_pooperacni_pokyny_-_tep_kolene-revize-1.pdf', 'edukacni-materialy#12', 'Schváleno', 23, NULL, '2023-03-30 11:36:04', '2023-03-30 11:36:04'),
 (986, 44, '13_Pooperační pokyny TEP ramene', NULL, 13, '13_Pooperační pokyny TEP ramene', '13_Pooperační pokyny TEP ramene', NULL, 'Neuvedeno', 'Neuvedeno', 'Neuvedeno', NULL, '1', NULL, NULL, NULL, 'edukace_edukacni-materialy-13_pooperacni_pokyny_tep_ramene-13_pooperacni_pokyny_tep_ramene-revize-1.pdf', 'edukacni-materialy#13', 'Schváleno', 23, NULL, '2023-03-30 11:36:31', '2023-03-30 11:36:31'),
-(987, 44, '14_Zásady prevence bolesti zad', NULL, 14, '14_Zásady prevence bolesti zad', '14_Zásady prevence bolesti zad', NULL, 'Neuvedeno', 'Neuvedeno', 'Neuvedeno', NULL, '1', NULL, NULL, NULL, 'edukace_edukacni-materialy-14_zasady_prevence_bolesti_zad-14_zasady_prevence_bolesti_zad-revize-1.pdf', 'edukacni-materialy#14', 'Schváleno', 23, NULL, '2023-03-30 11:37:05', '2023-03-30 11:37:05');
+(987, 44, '14_Zásady prevence bolesti zad', NULL, 14, '14_Zásady prevence bolesti zad', '14_Zásady prevence bolesti zad', NULL, 'Neuvedeno', 'Neuvedeno', 'Neuvedeno', NULL, '1', NULL, NULL, NULL, 'edukace_edukacni-materialy-14_zasady_prevence_bolesti_zad-14_zasady_prevence_bolesti_zad-revize-1.pdf', 'edukacni-materialy#14', 'Schváleno', 23, NULL, '2023-03-30 11:37:05', '2023-03-30 11:37:05'),
+(988, 24, 'Zdravotní dotazník', NULL, 1, 'Zdravotní dotazník', 'Zdravotní dotazník', NULL, NULL, NULL, NULL, '2022-03-01', 'březen 2022', '2023-03-01', NULL, '2022-03-01', '_ukrajinske-dokumenty-zdravotni_dotaznik-zdravotni_dotaznik-revize-brezen_2022.pdf', 'DOC24#1', 'Schváleno', 11, NULL, '2023-03-31 05:28:26', '2023-03-31 05:28:26'),
+(989, 23, 'Návod pro lékaře, lékárníky a stomatology, včetně podání žádosti', NULL, 1, 'Návod pro lékaře, lékárníky a stomatology, včetně podání žádosti', 'Návod na používání SÚKL', NULL, NULL, NULL, NULL, '2022-03-01', '1', '2023-03-01', NULL, '2022-03-01', '_navody-navod_pro_lekare_lekarniky_a_stomatology_vcetne_podani_zadosti-navod_na_pouzivani_sukl-revize-1.pdf', 'DOC23#1', 'Schváleno', 11, NULL, '2023-03-31 05:31:37', '2023-03-31 05:31:37'),
+(990, 23, 'Obnova přístupových údajů', NULL, 2, 'Obnova přístupových údajů', 'Obnova přístupových údajů SÚKL - Zdravotník', NULL, NULL, NULL, NULL, '2022-03-01', '1', '2023-03-01', NULL, '2022-03-01', '_navody-obnova_pristupovych_udaju-obnova_pristupovych_udaju_sukl_-_zdravotnik-revize-1.pdf', 'DOC23#2', 'Schváleno', 11, NULL, '2023-03-31 05:32:37', '2023-03-31 05:32:37'),
+(991, 23, 'Periodické školení vedoucích zaměstnanců PO', NULL, 3, 'Periodické školení vedoucích zaměstnanců PO', 'Periodické školení vedoucích zaměstnanců - Požární Ochrana', NULL, NULL, NULL, NULL, '2019-10-01', 'říjen 2019', '2020-10-01', NULL, '2019-10-01', '_navody-periodicke_skoleni_vedoucich_zamestnancu_po-periodicke_skoleni_vedoucich_zamestnancu_-_pozarni_ochrana-revize-rijen_2019.pptx', 'DOC23#3', 'Schváleno', 11, NULL, '2023-03-31 05:35:22', '2023-03-31 05:35:22'),
+(992, 23, 'Periodické školení vedoucích zaměstnanců BOZP', NULL, 4, 'Periodické školení vedoucích zaměstnanců BOZP', 'Periodické školení vedoucích zaměstnanců - Bezpečnost a ochrana zdraví při práci', NULL, NULL, NULL, NULL, '2014-10-01', 'říjen 2019', '2020-10-01', NULL, '2019-10-01', '_navody-periodicke_skoleni_vedoucich_zamestnancu_bozp-periodicke_skoleni_vedoucich_zamestnancu_-_bezpecnost_a_ochrana_zdravi_pri_praci-revize-rijen_2019.pptx', 'DOC23#4', 'Schváleno', 11, NULL, '2023-03-31 05:36:33', '2023-03-31 05:36:43'),
+(993, 23, 'Způsob objednávání obědů', NULL, 5, 'Způsob objednávání obědů', 'Návod na objednávání obědů v KHN a.s.', NULL, NULL, NULL, NULL, '2019-05-01', '1', '2020-05-01', NULL, '2019-05-01', '_navody-zpusob_objednavani_obedu-navod_na_objednavani_obedu_v_khn_as-revize-1.pdf', 'DOC23#5', 'Schváleno', 11, NULL, '2023-03-31 05:40:54', '2023-03-31 05:40:54'),
+(994, 23, 'Zadání nového pacienta do NISu', NULL, 6, 'Zadání nového pacienta do NISu', 'Návod na vkládání pacienta do systému AKORD - číselníku pacientů', NULL, NULL, NULL, NULL, '2019-03-01', '1', '2020-03-01', NULL, '2019-03-01', '_navody-zadani_noveho_pacienta_do_nisu-navod_na_vkladani_pacienta_do_systemu_akord_-_ciselniku_pacientu-revize-1.pdf', 'DOC23#6', 'Schváleno', 11, NULL, '2023-03-31 05:42:24', '2023-03-31 05:42:24'),
+(995, 22, 'Spokojenost pacientů se službami - rehabilitační ambulance', NULL, 1, 'Spokojenost pacientů se službami - rehabilitační ambulance', 'Spokojenost pacientů', NULL, NULL, NULL, NULL, '2019-04-01', 'duben 2019', '2020-04-01', NULL, '2019-04-01', '_vyhodnoceni-dotazniku-spokojenost_pacientu_se_sluzbami_-_rehabilitacni_ambulance-spokojenost_pacientu-revize-duben_2019.pdf', 'DOC22#1', 'Schváleno', 11, NULL, '2023-03-31 05:44:05', '2023-03-31 05:44:05'),
+(996, 22, 'Vyhodnocení dotazníků - spokojenost hosp. pacientů říjen 2021', NULL, 2, 'Vyhodnocení dotazníků - spokojenost hosp. pacientů říjen 2021', 'Vyhodnocení dotazníků spokojenost hospitalizovaných pacientů za říjen 2021', NULL, NULL, NULL, NULL, '2021-12-01', 'říjen 2021', '2022-12-01', NULL, '2021-12-01', '_vyhodnoceni-dotazniku-vyhodnoceni_dotazniku_-_spokojenost_hosp_pacientu_rijen_2021-vyhodnoceni_dotazniku_spokojenost_hospitalizovanych_pacientu_za_rijen_2021-revize-rijen_2021.pdf', 'DOC22#2', 'Schváleno', 11, NULL, '2023-03-31 05:45:18', '2023-03-31 05:45:18'),
+(997, 20, 'KPR - Prezentace 2023', NULL, 1, 'KPR - Prezentace 2023', 'Kardiopulmonální resuscitace - postup', NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, '_kpr-kpr_-_prezentace_2023-kardiopulmonalni_resuscitace_-_postup-revize-1.pdf', 'DOC20#1', 'Schváleno', 11, NULL, '2023-03-31 06:50:16', '2023-03-31 06:50:16'),
+(998, 20, 'Lékaři a sestry', NULL, 2, 'Lékaři a sestry', 'vyhodnocení KPR 2022', NULL, NULL, NULL, NULL, NULL, '2022', NULL, NULL, NULL, '_kpr-lekari_a_sestry-vyhodnoceni_kpr_2022-revize-2022.pdf', 'DOC20#2', 'Schváleno', 11, NULL, '2023-03-31 06:51:49', '2023-03-31 06:51:49'),
+(999, 20, 'Sanitáři a ošetřovatelé', NULL, 3, 'Sanitáři a ošetřovatelé', 'vyhodnocení KPR 2022', NULL, NULL, NULL, NULL, NULL, '2022', NULL, NULL, NULL, '_kpr-sanitari_a_osetrovatele-vyhodnoceni_kpr_2022-revize-2022.pdf', 'DOC20#3', 'Schváleno', 11, NULL, '2023-03-31 06:52:33', '2023-03-31 06:52:33');
 
 -- --------------------------------------------------------
 
@@ -1875,32 +1886,32 @@ INSERT INTO `documents` (`id`, `category_id`, `accordion_name`, `accordion_group
 --
 
 CREATE TABLE `employees` (
-  `id` int NOT NULL,
-  `personal_number` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `title_preffix` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `last_name` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `middle_name` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `married_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `first_name` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `title_suffix` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `department_id` varchar(47) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `job_id` varchar(43) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `personal_number` varchar(5) NOT NULL,
+  `title_preffix` varchar(10) DEFAULT NULL,
+  `last_name` varchar(21) NOT NULL,
+  `middle_name` varchar(11) DEFAULT NULL,
+  `married_name` varchar(15) DEFAULT NULL,
+  `first_name` varchar(11) NOT NULL,
+  `title_suffix` varchar(10) DEFAULT NULL,
+  `department_id` varchar(47) NOT NULL,
+  `job_id` varchar(43) NOT NULL,
+  `email` varchar(21) DEFAULT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
-  `comment` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_card` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `coffee` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `phone` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `mobile` int DEFAULT NULL,
-  `employment` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(26) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `position` int DEFAULT NULL,
-  `standard_sign` int DEFAULT NULL,
-  `created_at` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `updated_at` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `comment` varchar(6) DEFAULT NULL,
+  `status` varchar(9) NOT NULL,
+  `id_card` varchar(16) DEFAULT NULL,
+  `coffee` varchar(3) DEFAULT NULL,
+  `phone` varchar(9) DEFAULT NULL,
+  `mobile` int(11) DEFAULT NULL,
+  `employment` varchar(3) NOT NULL,
+  `image` varchar(26) NOT NULL,
+  `position` int(11) DEFAULT NULL,
+  `standard_sign` int(11) DEFAULT NULL,
+  `created_at` varchar(19) NOT NULL,
+  `updated_at` varchar(19) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Vypisuji data pro tabulku `employees`
@@ -2752,9 +2763,9 @@ INSERT INTO `employees` (`id`, `personal_number`, `title_preffix`, `last_name`, 
 --
 
 CREATE TABLE `evidence` (
-  `id` bigint UNSIGNED NOT NULL,
-  `evidence_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `evidence_pieces` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `evidence_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `evidence_pieces` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2766,13 +2777,13 @@ CREATE TABLE `evidence` (
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2782,12 +2793,12 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `instructions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `standard_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `standard_category_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('Rozpracováno','Schváleno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `standard_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `standard_category_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('Rozpracováno','Schváleno') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2799,8 +2810,8 @@ CREATE TABLE `instructions` (
 --
 
 CREATE TABLE `jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `job_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `job_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2888,9 +2899,9 @@ INSERT INTO `jobs` (`id`, `job_title`) VALUES
 --
 
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2930,20 +2941,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `navitems` (
-  `id` bigint UNSIGNED NOT NULL,
-  `position` int NOT NULL,
-  `category_id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alt_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tooltip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon_class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `page_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fa_icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `svg_icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `position` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alt_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tooltip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon_class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `favicon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fa_icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `svg_icon` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2960,11 +2971,11 @@ INSERT INTO `navitems` (`id`, `position`, `category_id`, `name`, `subname`, `alt
 --
 
 CREATE TABLE `notifications` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` int NOT NULL,
-  `type_id` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `importance` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` enum('Nezobrazeno','Zobrazeno') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -2997,15 +3008,15 @@ INSERT INTO `notifications` (`id`, `user_id`, `type_id`, `title`, `content`, `im
 --
 
 CREATE TABLE `paints` (
-  `id` bigint UNSIGNED NOT NULL,
-  `department_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `department_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL,
-  `rooms` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `doors` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `specials` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('Vloženo','Schváleno') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rooms` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doors` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `specials` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('Vloženo','Schváleno') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3025,8 +3036,8 @@ INSERT INTO `paints` (`id`, `department_id`, `user_id`, `date_start`, `date_end`
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -3044,12 +3055,12 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -3062,11 +3073,11 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `printers` (
-  `id` bigint UNSIGNED NOT NULL,
-  `printer_vendor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `printer_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `printer_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `toner_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `printer_vendor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `printer_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `printer_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `toner_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3076,12 +3087,12 @@ CREATE TABLE `printers` (
 --
 
 CREATE TABLE `slides` (
-  `id` bigint UNSIGNED NOT NULL,
-  `training_id` int NOT NULL,
-  `slide_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `directory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `position` int NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `training_id` int(11) NOT NULL,
+  `slide_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `directory` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3093,11 +3104,11 @@ CREATE TABLE `slides` (
 --
 
 CREATE TABLE `toners` (
-  `id` bigint UNSIGNED NOT NULL,
-  `toner_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `toner_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `toner_size` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `toner_price` int NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `toner_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `toner_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `toner_size` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `toner_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3107,9 +3118,9 @@ CREATE TABLE `toners` (
 --
 
 CREATE TABLE `trainings` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3121,11 +3132,11 @@ CREATE TABLE `trainings` (
 --
 
 CREATE TABLE `types` (
-  `id` bigint UNSIGNED NOT NULL,
-  `type_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `svg_icon` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `type_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_color` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `svg_icon` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -3133,15 +3144,15 @@ CREATE TABLE `types` (
 --
 
 INSERT INTO `types` (`id`, `type_name`, `type_route`, `type_color`, `svg_icon`) VALUES
-(1, 'Odstávky a servis', 'oznameni.servis', 'cyan', '<svg class=\"icon text-cyan\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5\"></path></svg>'),
-(2, 'Změny služeb', 'oznameni.sluzby', 'yellow', '<svg class=\"icon text-yellow\" width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" stroke-width=\"21\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><circle cx=\"9\" cy=\"7\" r=\"4\"></circle><path d=\"M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2\"></path><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"></path><path d=\"M21 21v-2a4 4 0 0 0 -3 -3.85\"></path></svg>'),
-(3, 'Informace', 'oznameni.informace', 'azure', '<svg class=\"icon text-azure\" width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" stroke-width=\"21\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M12 8h.01\"></path><path d=\"M11 12h1v4h1\"></path><path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\"></path></svg>'),
-(4, 'Semináře', 'oznameni.seminare', 'purple', '<svg class=\"icon text-purple\" width=\"36\" height=\"36\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\"></path><path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\"></path><path d=\"M6 19v2\"></path><path d=\"M18 19v2\"></path></svg>'),
-(5, 'Akord', 'oznameni.akord', 'blue', '<svg class=\"icon text-blue\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><line x1=\"3\" y1=\"21\" x2=\"21\" y2=\"21\"></line><path d=\"M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16\"></path><path d=\"M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4\"></path><line x1=\"10\" y1=\"9\" x2=\"14\" y2=\"9\"></line><line x1=\"12\" y1=\"7\" x2=\"12\" y2=\"11\"></line></svg>'),
-(6, 'Kultura', 'oznameni.kultura', 'pink', '<svg class=\"icon text-pink\" width=\"36\" height=\"36\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M13.192 9h6.616a2 2 0 0 1 1.992 2.183l-.567 6.182a4 4 0 0 1 -3.983 3.635h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183z\"></path><path d=\"M15 13h.01\"></path><path d=\"M18 13h.01\"></path><path d=\"M15 16.5c1 .667 2 .667 3 0\"></path><path d=\"M8.632 15.982a4.037 4.037 0 0 1 -.382 .018h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183h6.616a2 2 0 0 1 2 2\"></path><path d=\"M6 8h.01\"></path><path d=\"M9 8h.01\"></path><path d=\"M6 12c.764 -.51 1.528 -.63 2.291 -.36\"></path></svg>'),
-(7, 'Normální', 'oznameni.normalni', 'muted', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-muted\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\"></path><path d=\"M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1\"></path><circle cx=\"12\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"></circle></svg>'),
-(8, 'Důležité', 'oznameni.important', 'red', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-red\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z\"></path><path d=\"M12 9v4\"></path><path d=\"M12 17h.01\"></path></svg>'),
-(9, 'Dlouhodobé', 'oznameni.dlouhodobe', 'orange', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-red\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z\"></path><path d=\"M12 9v4\"></path><path d=\"M12 17h.01\"></path></svg>');
+(1, 'Důležité', 'oznameni.important', 'red', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-red\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z\"></path><path d=\"M12 9v4\"></path><path d=\"M12 17h.01\"></path></svg>'),
+(2, 'Odstávky a servis', 'oznameni.servis', 'cyan', '<svg class=\"icon text-cyan\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5\"></path></svg>'),
+(3, 'Změny služeb', 'oznameni.sluzby', 'yellow', '<svg class=\"icon text-yellow\" width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" stroke-width=\"21\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><circle cx=\"9\" cy=\"7\" r=\"4\"></circle><path d=\"M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2\"></path><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"></path><path d=\"M21 21v-2a4 4 0 0 0 -3 -3.85\"></path></svg>'),
+(4, 'Informace', 'oznameni.informace', 'azure', '<svg class=\"icon text-azure\" width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" stroke-width=\"21\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M12 8h.01\"></path><path d=\"M11 12h1v4h1\"></path><path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\"></path></svg>'),
+(5, 'Semináře', 'oznameni.seminare', 'purple', '<svg class=\"icon text-purple\" width=\"36\" height=\"36\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\"></path><path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\"></path><path d=\"M6 19v2\"></path><path d=\"M18 19v2\"></path></svg>'),
+(6, 'Akord', 'oznameni.akord', 'blue', '<svg class=\"icon text-blue\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><line x1=\"3\" y1=\"21\" x2=\"21\" y2=\"21\"></line><path d=\"M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16\"></path><path d=\"M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4\"></path><line x1=\"10\" y1=\"9\" x2=\"14\" y2=\"9\"></line><line x1=\"12\" y1=\"7\" x2=\"12\" y2=\"11\"></line></svg>'),
+(7, 'Kultura', 'oznameni.kultura', 'pink', '<svg class=\"icon text-pink\" width=\"36\" height=\"36\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M13.192 9h6.616a2 2 0 0 1 1.992 2.183l-.567 6.182a4 4 0 0 1 -3.983 3.635h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183z\"></path><path d=\"M15 13h.01\"></path><path d=\"M18 13h.01\"></path><path d=\"M15 16.5c1 .667 2 .667 3 0\"></path><path d=\"M8.632 15.982a4.037 4.037 0 0 1 -.382 .018h-1.5a4 4 0 0 1 -3.983 -3.635l-.567 -6.182a2 2 0 0 1 1.992 -2.183h6.616a2 2 0 0 1 2 2\"></path><path d=\"M6 8h.01\"></path><path d=\"M9 8h.01\"></path><path d=\"M6 12c.764 -.51 1.528 -.63 2.291 -.36\"></path></svg>'),
+(8, 'Normální', 'oznameni.normalni', 'muted', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-muted\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\"></path><path d=\"M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1\"></path><circle cx=\"12\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"></circle></svg>'),
+(9, 'Dlouhodobé', 'oznameni.dlouhodobe', 'orange', '<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon text-red\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"></path><path d=\"M11 21h-5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3.5\"></path><path d=\"M16 3v4\"></path><path d=\"M8 3v4\"></path><path d=\"M4 11h11\"></path><path d=\"M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z\"></path></svg>');
 
 -- --------------------------------------------------------
 
@@ -3150,16 +3161,16 @@ INSERT INTO `types` (`id`, `type_name`, `type_route`, `type_color`, `svg_icon`) 
 --
 
 CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `personal_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `personal_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3175,108 +3186,108 @@ INSERT INTO `users` (`id`, `personal_number`, `name`, `email`, `email_verified_a
 (25, '60432', 'Ivo Byrtus', 'byrtus@khn.cz', NULL, '$2y$10$XrnDqbFdkbfYNGNW.H.JD.oI4tIQjkp0Df1I4u9EQfeOie1qQLHri', 'admin', NULL, NULL, 'FR1JO66XVpTHni7Pqw4xyudQoq378h5dXr5ekmFpf15yXomf4uuifp7SKg5c', '2023-03-24 11:23:00', '2023-03-27 07:31:21');
 
 --
--- Klíče pro exportované tabulky
+-- Indexy pro exportované tabulky
 --
 
 --
--- Klíče pro tabulku `addons`
+-- Indexy pro tabulku `addons`
 --
 ALTER TABLE `addons`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `adversevents`
+-- Indexy pro tabulku `adversevents`
 --
 ALTER TABLE `adversevents`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `attendances`
+-- Indexy pro tabulku `attendances`
 --
 ALTER TABLE `attendances`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `bozps`
+-- Indexy pro tabulku `bozps`
 --
 ALTER TABLE `bozps`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `bulletins`
+-- Indexy pro tabulku `bulletins`
 --
 ALTER TABLE `bulletins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `calendar`
+-- Indexy pro tabulku `calendar`
 --
 ALTER TABLE `calendar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `categories`
+-- Indexy pro tabulku `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `departments`
+-- Indexy pro tabulku `departments`
 --
 ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `documents`
+-- Indexy pro tabulku `documents`
 --
 ALTER TABLE `documents`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `employees`
+-- Indexy pro tabulku `employees`
 --
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `evidence`
+-- Indexy pro tabulku `evidence`
 --
 ALTER TABLE `evidence`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `failed_jobs`
+-- Indexy pro tabulku `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Klíče pro tabulku `migrations`
+-- Indexy pro tabulku `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `notifications`
+-- Indexy pro tabulku `notifications`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `paints`
+-- Indexy pro tabulku `paints`
 --
 ALTER TABLE `paints`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `types`
+-- Indexy pro tabulku `types`
 --
 ALTER TABLE `types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Klíče pro tabulku `users`
+-- Indexy pro tabulku `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
@@ -3289,73 +3300,73 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pro tabulku `addons`
 --
 ALTER TABLE `addons`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
 
 --
 -- AUTO_INCREMENT pro tabulku `bozps`
 --
 ALTER TABLE `bozps`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pro tabulku `bulletins`
 --
 ALTER TABLE `bulletins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=366;
 
 --
 -- AUTO_INCREMENT pro tabulku `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT pro tabulku `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=988;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
 
 --
 -- AUTO_INCREMENT pro tabulku `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=866;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=866;
 
 --
 -- AUTO_INCREMENT pro tabulku `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- AUTO_INCREMENT pro tabulku `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pro tabulku `paints`
 --
 ALTER TABLE `paints`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pro tabulku `types`
 --
 ALTER TABLE `types`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pro tabulku `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
