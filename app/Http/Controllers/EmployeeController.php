@@ -290,22 +290,22 @@ class EmployeeController extends Controller
             if ($employees) {
                 $output .=
                     '<div>
-                        <div class="col">
+                        <div class="col mt-2">
                             <div class="page-pretitle text-primary">
                                 Výsledky hledání : nalezeno ' . $employees->count() . ' z ' . Employee::whereStatus('aktivní')->count() . ' zaměstnanců
                             </div>
-                        </div>;
+                        </div>
                     </div>
-                <div class="row mt-2">';
+                <div class="row">';
 
                 foreach ($employees as $employee) {
                     $output .=
                         '<div class="col-12">
-                        <div class="card card-sm mt-3">
+                        <div class="card card-sm mt-2 shadow-sm">
                                 <div class="card-body bg-' . $employee->department->color_id . '-lt">
                                 <div class="row align-items-top">
                                     <div class="col-auto">
-                                    <img class="avatar text-white mb-1" src="foto/' .  $employee->image . '" alt="' .  $employee->personal_number . '" style="width: 42px; height:55px"><br>
+                                    <img class="avatar text-white mb-1" src="/foto/' .  $employee->image . '" alt="' .  $employee->personal_number . '" style="width: 42px; height:55px"><br>
                                     <span class="px-2 text-' .  $employee->department->color_id . '"><strong>' .  $employee->personal_number . '</strong></span>
                                     </div>
                                     <div class="col">

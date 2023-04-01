@@ -318,7 +318,7 @@ class DocumentController extends Controller
             }
             $output .= '
                     <div>
-                        <div class="col">
+                        <div class="col mt-2">
                             <div class="page-pretitle text-primary">
                                 Výsledky hledání : nalezeno ' . $documents->count() . ' z ' . $allDocumnets . ' dokumentů
                             </div>
@@ -330,7 +330,7 @@ class DocumentController extends Controller
 
             foreach ($documents as $document) {
                 $output .=
-                    '<div class="accordion-item py-1 bg-white">
+                    '<div class="accordion-item py-1 bg-white shadow-sm">
                         <div id="test-' . $document->position . '">
                             <div class="accordion-body">
                             <div class="list-group list-group-flush list-group-hoverable pt-1">

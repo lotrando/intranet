@@ -162,7 +162,7 @@ return [
         'rooms'             => 'Pole místnosti',
         'date_start'        => 'Od',
         'date_end'          => 'Do',
-        'title'             => 'Pole titulek',
+        'title'             => 'Pole titulek oznámení',
         'content'           => 'Pole text oznámení',
         'last_name'         => 'Příjmení',
         'first_name'        => 'Jméno',

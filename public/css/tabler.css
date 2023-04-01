@@ -3438,7 +3438,7 @@ fieldset:disabled .btn {
   position: absolute;
   z-index: 1000;
   display: none;
-  min-width: 14rem;
+  min-width: 17rem;
   padding: 0.25rem;
   margin: 0;
   font-size: 0.8975rem;

@@ -128,7 +128,7 @@ class NotificationController extends Controller
             'type_id'               => $request->type_id,
             'status'                => $request->status,
             'importance'            => $request->importance,
-            'user_id'               => Auth::user()->id
+            'user_id'               => $request->user_id,
         ];
 
         Notification::whereId($request->hidden_id)->update($form_data);

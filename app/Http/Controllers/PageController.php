@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Addon;
 use App\Models\Bulletin;
 use App\Models\Category;
-use App\Models\Department;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Notification;
@@ -25,19 +24,19 @@ class PageController extends Controller
         $types = Type::all();
 
         if (Auth::user()) {
-            $important = Notification::with('user', 'type')->where('type_id', '=', 8)->latest()->get();
+            $important = Notification::with('user', 'type')->where('type_id', '=', 1)->latest()->get();
             $notificationLong = Notification::with('user', 'type')->where('type_id', '=', 9)->latest()->get();
             $notifications = Notification::with('user', 'type')
-                ->where('type_id', '>=', 2)
+                ->where('type_id', '>=', 3)
                 ->where('type_id', '<', 8)->latest()->get();
-            $notificationsServis = Notification::with('user', 'type')->where('type_id', '=', 1)->latest()->get();
+            $notificationsServis = Notification::with('user', 'type')->where('type_id', '=', 2)->latest()->get();
         } else {
-            $important = Notification::with('user', 'type')->where('type_id', '=', 8)->latest()->get();
+            $important = Notification::with('user', 'type')->where('type_id', '=', 1)->latest()->get();
             $notificationLong = Notification::with('user', 'type')->where('type_id', '=', 9)->latest()->get();
             $notifications = Notification::with('user', 'type')->whereStatus('Zobrazeno')
-                ->where('type_id', '>=', 2)
+                ->where('type_id', '>=', 3)
                 ->where('type_id', '<', 8)->latest()->get();
-            $notificationsServis = Notification::with('user', 'type')->whereStatus('Zobrazeno')->where('type_id', '=', 1)->latest()->get();
+            $notificationsServis = Notification::with('user', 'type')->whereStatus('Zobrazeno')->where('type_id', '=', 2)->latest()->get();
         }
 
         return view('home', [
@@ -52,12 +51,6 @@ class PageController extends Controller
     }
 
     // OZNÁMENÍ
-
-    // Přehledy
-    public function prehledy()
-    {
-        return view('prehledy', ['pretitle' => 'Oznámení', 'title' => 'Přehledy']);
-    }
 
     // Změny standardů
     public function zmenyStandardu()
@@ -128,171 +121,27 @@ class PageController extends Controller
         ]);
     }
 
-    public function akord()
+    // Oznameni Filter
+    public function oznameniFilter($id)
     {
         $types = Type::all();
 
-        $typ = Type::whereId(5)->get();
+        $type = Type::whereId($id)->get();
 
         if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('5')->latest()->get();
+            $notifications = Notification::with('user')->whereTypeId($id)->latest()->get();
         } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('5')->latest()->get();
+            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId($id)->latest()->get();
         }
 
-        return view('informace', [
+        return view('oznameni-filter', [
             'pretitle' => 'Oznámení',
-            'title' => 'Akord',
+            'title' => $type[0]['type_name'],
+            'svg_icon' => $type[0]['svg_icon'],
+            'color' => $type[0]['type_color'],
+            'id' => $type[0]['id'],
             'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function important()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(8)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('8')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('8')->latest()->get();
-        }
-
-        return view('important', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Důležité',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function servis()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(1)->get(['type_color', 'svg_icon']);
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('1')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('1')->latest()->get();
-        }
-
-        return view('servis', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Odstávky servis',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function seminare()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(4)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('4')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('4')->latest()->get();
-        }
-
-        return view('seminare', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Seminare',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function sluzby()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(2)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('2')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('2')->latest()->get();
-        }
-
-        return view('sluzby', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Změny služeb',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function informace()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(3)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('3')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('3')->latest()->get();
-        }
-
-        return view('informace', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Informace',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function kultura()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(6)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('6')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('6')->latest()->get();
-        }
-
-        return view('kultura', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Kultura',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
-        ]);
-    }
-
-    public function normalni()
-    {
-        $types = Type::all();
-
-        $typ = Type::whereId(7)->get();
-
-        if (Auth::user()) {
-            $notifications = Notification::with('user')->whereTypeId('7')->latest()->get();
-        } else {
-            $notifications = Notification::with('user')->whereStatus('Zobrazeno')->whereTypeId('7')->latest()->get();
-        }
-
-        return view('normalni', [
-            'pretitle' => 'Oznámení',
-            'title' => 'Normální',
-            'notifications' => $notifications,
-            'types' => $types,
-            'typ' => $typ
+            'types' => $types
         ]);
     }
 

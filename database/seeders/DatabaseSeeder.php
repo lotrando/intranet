@@ -24,8 +24,6 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
         ]);
 
-        Employee::factory(10)->create();
-
-        User::factory(10)->create();
+        User::factory(865)->create();
     }
 }

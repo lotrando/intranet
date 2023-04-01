@@ -19,19 +19,17 @@ Route::get('home', [PageController::class, 'home'])->name('home');
 
 // Oznámení
 Route::prefix('oznameni')->name('oznameni.')->group(function () {
-    Route::get('prehledy', [PageController::class, 'prehledy'])->name('prehledy');                                          // Přehledy
     Route::get('zmeny-standardu', [PageController::class, 'zmenyStandardu'])->name('zmeny-standardu');                      // Změny standardů
     Route::get('zmeny-v-dokumentaci', [PageController::class, 'zmenyDokumentu'])->name('zmeny-v-dokumentaci');              // Změny dokumentů
-    Route::get('important', [PageController::class, 'important'])->name('important');                                       // Important
-    Route::get('servis', [PageController::class, 'servis'])->name('servis');                                                // Servis
-    Route::get('sluzby', [PageController::class, 'sluzby'])->name('sluzby');                                                // Služby
-    Route::get('seminare', [PageController::class, 'seminare'])->name('seminare');                                          // Semináře
-    Route::get('informace', [PageController::class, 'informace'])->name('informace');                                       // Informace
-    Route::get('akord', [PageController::class, 'akord'])->name('akord');                                                   // Akord
-    Route::get('kultura', [PageController::class, 'kultura'])->name('kultura');                                             // Kultura
-    Route::get('normalni', [PageController::class, 'normalni'])->name('normalni');                                          // Normální
-    Route::get('dlouhodobe', [PageController::class, 'dlouhodobe'])->name('dlouhodobe');
-    // Dlouhodobe
+    Route::get('important/{id}', [PageController::class, 'oznameniFilter'])->name('important');                             // Important
+    Route::get('servis/{id}', [PageController::class, 'oznameniFilter'])->name('servis');                                   // Servis
+    Route::get('sluzby/{id}', [PageController::class, 'oznameniFilter'])->name('sluzby');                                   // Služby
+    Route::get('seminare/{id}', [PageController::class, 'oznameniFilter'])->name('seminare');                               // Semináře
+    Route::get('informace/{id}', [PageController::class, 'oznameniFilter'])->name('informace');                             // Informace
+    Route::get('akord/{id}', [PageController::class, 'oznameniFilter'])->name('akord');                                     // Akord
+    Route::get('kultura/{id}', [PageController::class, 'oznameniFilter'])->name('kultura');                                 // Kultura
+    Route::get('normalni/{id}', [PageController::class, 'oznameniFilter'])->name('normalni');                               // Normální
+    Route::get('dlouhodobe/{id}', [PageController::class, 'oznameniFilter'])->name('dlouhodobe');                           // Dlouhodobe
 });
 
 // Stravování

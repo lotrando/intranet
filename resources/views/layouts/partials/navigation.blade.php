@@ -40,14 +40,15 @@
                   <svg class="icon text-red" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
+                    <path
+                      d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
                     </path>
                   </svg>
                 </span>
                 <span>
-                  {{ __('SÚKL měsíční info') }}
+                  {{ __('SÚKL měsíční přehledy') }}
                 </span>
-                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">www odkaz</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'prehledy' ? 'active' : '' }}"
                 href="{{ url('https://www.sukl.cz/modules/unregistered/?rewrite=modules/unregistered') }}" target="_blank">
@@ -55,14 +56,15 @@
                   <svg class="icon text-red" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
+                    <path
+                      d="M13 3a1 1 0 0 1 1 1v4.535l3.928 -2.267a1 1 0 0 1 1.366 .366l1 1.732a1 1 0 0 1 -.366 1.366l-3.927 2.268l3.927 2.269a1 1 0 0 1 .366 1.366l-1 1.732a1 1 0 0 1 -1.366 .366l-3.928 -2.269v4.536a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-4.536l-3.928 2.268a1 1 0 0 1 -1.366 -.366l-1 -1.732a1 1 0 0 1 .366 -1.366l3.927 -2.268l-3.927 -2.268a1 1 0 0 1 -.366 -1.366l1 -1.732a1 1 0 0 1 1.366 -.366l3.928 2.267v-4.535a1 1 0 0 1 1 -1h2z">
                     </path>
                   </svg>
                 </span>
                 <span class="nav-link-title">
                   {{ __('SÚKL formulář') }}
                 </span>
-                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">www odkaz</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'zmeny-standardu' ? 'active' : '' }}" href="{{ route('oznameni.zmeny-standardu') }}">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -146,7 +148,7 @@
                 <span class="nav-link-title">
                   {{ __('Objednávka obědů') }}
                 </span>
-                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">odkaz</span>
+                <span class="badge badge-sm bg-red-lt text-uppercase ms-auto">v novém okně</span>
               </a>
               <a class="dropdown-item {{ request()->segment(2) == 'kantyna' ? 'active' : '' }}" href="{{ route('stravovani.kantyna') }}">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">

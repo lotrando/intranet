@@ -145,8 +145,11 @@
                     <span
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route) }}">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
                       <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
                         {!! $notification->type->svg_icon !!}
                       </span>
@@ -156,7 +159,7 @@
                     <h2 class="mb-0">{{ $notification->title }}</h2>
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route) }}">{{ $notification->type->type_name }}</a>
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
                       - vložil: {{ $notification->user->name }}
                       - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
                       hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
@@ -172,7 +175,7 @@
             </div>
           @endforeach
         </div>
-          <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6">
           <div class="hr-text text-pink">Dlouhodobá sdělení</div>
           @foreach ($notificationLong as $notification)
             <div class="card mb-2 bg-white shadow-xl">
@@ -222,7 +225,7 @@
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route) }}">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
                       <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
                         {!! $notification->type->svg_icon !!}
                       </span>
@@ -232,7 +235,7 @@
                     <h2 class="mb-0">{{ $notification->title }}</h2>
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route) }}">{{ $notification->type->type_name }}</a>
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
                       - vložil: {{ $notification->user->name }}
                       - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
                       hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
@@ -300,7 +303,7 @@
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route) }}">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
                       <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
                         {!! $notification->type->svg_icon !!}
                       </span>
@@ -310,7 +313,7 @@
                     <h2 class="mb-0">{{ $notification->title }}</h2>
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route) }}">{{ $notification->type->type_name }}</a>
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
                       - vložil: {{ $notification->user->name }}
                       - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
                       hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
@@ -376,7 +379,7 @@
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route) }}">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
                       <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
                         {!! $notification->type->svg_icon !!}
                       </span>
@@ -386,7 +389,7 @@
                     <h2 class="mb-0">{{ $notification->title }}</h2>
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route) }}">{{ $notification->type->type_name }}</a>
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
                       - vložil: {{ $notification->user->name }}
                       - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
                       hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
@@ -444,16 +447,16 @@
               <div class="col-12 col-lg-3 mb-2">
                 <label class="form-label">{{ __('Důležitost') }}</label>
                 <select class="form-select" id="importance" name="importance">
-                  <option value="red">Vysoká</option>
-                  <option value="blue">Střední</option>
                   <option value="muted">Normální</option>
+                  <option value="blue">Střední</option>
+                  <option value="red">Vysoká</option>
                 </select>
               </div>
               <div class="col-12 col-lg-3 mb-2">
                 <label class="form-label">{{ __('Status') }}</label>
                 <select class="form-select" id="status" name="status">
-                  <option value="Nezobrazeno">Nezobrazeno</option>
                   <option value="Zobrazeno">Zobrazeno</option>
+                  <option value="Nezobrazeno">Nezobrazeno</option>
                 </select>
               </div>
               <div class="col-12 col-lg-3 mb-2">
@@ -624,7 +627,7 @@
           $('#importance').val(html.data.importance);
           $('#status').val(html.data.status);
           $('#hidden_id').val(html.data.id);
-          $('#user_id').val('{{ auth()->user()->id ?? null }}');
+          $('#user_id').val(html.data.user_id);
           $('#user_name').val(html.data.user.name);
         }
       })
@@ -636,13 +639,12 @@
       $('#pdf-preview-show, #pdf-preview').addClass('d-none')
       $('#formModal').modal('show')
       $('#content').summernote('code', '')
-      $('#modal-icon').html('').addClass('bg-lime-lt')
       $('#modal-header').addClass("modal-header bg-lime-lt")
       $('#action_button, .modal-title').text("{{ __('Create new') }}")
       $('#action').val("Add")
-      $('#status').val('Nezobrazeno')
-      $('#type').val('Nezobrazeno')
-      $('#importance').val('Nezobrazeno')
+      $('#status').val('Zobrazeno')
+      $('#type_id').val(8)
+      $('#importance').val('muted')
       $('#user_id').val('{{ auth()->user()->id ?? null }}')
       $('#user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
     })

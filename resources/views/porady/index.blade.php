@@ -25,19 +25,6 @@
               </a>
             </div>
           @endforeach
-          <div class="col-12">
-            @if ($allDocuments->count() > 0)
-              <div class="progress mt-2">
-                @foreach ($porady as $category)
-                  <div class="progress-bar progress-sm bg-{{ $category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="{{ $category->category_name . ' ' . round(($category->documents->count() * 100) / $allDocuments->count()) . '%' }}"
-                    role="progressbar" aria-label="{{ $category->category_name }}"
-                    style="width: {{ ($category->documents->count() * 100) / $allDocuments->count() }}%">
-                  </div>
-                @endforeach
-              </div>
-            @endif
-          </div>
 
           <div class="col-12 mt-2">
             <form autocomplete="off">
