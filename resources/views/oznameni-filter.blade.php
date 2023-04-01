@@ -66,22 +66,23 @@
           <div class="ms-auto d-print-none col-auto">
             <div class="btn-list">
               <div class="d-flex justify-content-end">
-
                 @auth
-                  <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
-                    data-bs-original-title="{{ __('Vytvoří nové oznámení') }}">
-                    <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
-                      </path>
-                      <rect x="9" y="3" width="6" height="4" rx="2">
-                      </rect>
-                      <path d="M10 14h4"></path>
-                      <path d="M12 12v4"></path>
-                    </svg>
-                    <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
-                  </button>
+                  @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor')
+                    <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
+                      data-bs-original-title="{{ __('Vytvoří nové oznámení') }}">
+                      <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                        </path>
+                        <rect x="9" y="3" width="6" height="4" rx="2">
+                        </rect>
+                        <path d="M10 14h4"></path>
+                        <path d="M12 12v4"></path>
+                      </svg>
+                      <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
+                    </button>
+                  @endif
                 @endauth
               </div>
             </div>
@@ -100,7 +101,7 @@
       <div class="row g-2 m-1">
         <div class="col-12 col-lg-12">
           @foreach ($notifications as $notification)
-            <div class="card mb-2 bg-white shadow-sm">
+            <div class="card mb-4 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
                 <div class="d-flex justify-item-start align-items-center">
                   @auth

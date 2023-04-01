@@ -67,20 +67,22 @@
             <div class="btn-list">
               <div class="d-flex justify-content-end">
                 @auth
-                  <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
-                    data-bs-original-title="{{ __('Vytvoří nový') }}">
-                    <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
-                      </path>
-                      <rect x="9" y="3" width="6" height="4" rx="2">
-                      </rect>
-                      <path d="M10 14h4"></path>
-                      <path d="M12 12v4"></path>
-                    </svg>
-                    <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
-                  </button>
+                  @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor')
+                    <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
+                      data-bs-original-title="{{ __('Vytvoří nový') }}">
+                      <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                        </path>
+                        <rect x="9" y="3" width="6" height="4" rx="2">
+                        </rect>
+                        <path d="M10 14h4"></path>
+                        <path d="M12 12v4"></path>
+                      </svg>
+                      <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
+                    </button>
+                  @endif
                 @endauth
               </div>
             </div>
@@ -99,11 +101,171 @@
         <div class="col-12 col-xl-6">
           <div class="hr-text text-red">Důležitá oznámení</div>
           @foreach ($important as $notification)
-            <div class="card mb-2 bg-white shadow-xl">
+            <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
                 <div class="d-flex justify-item-start align-items-center">
                   @auth
-                    @if (Auth::user()->id == $notification->user_id or Auth::user()->role == 'admin')
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
+                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
+                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                          fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                          </path>
+                          <line x1="4" y1="6" x2="20" y2="6"></line>
+                          <line x1="4" y1="12" x2="20" y2="12"></line>
+                          <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                      </span>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-item edit" id="{{ $notification->id }}">
+                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                          {{ __('Upravit oznámení') }}
+                        </li>
+                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
+                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 7h16"></path>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+                            </path>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+                            </path>
+                            <path d="M10 12l4 4m0 -4l-4 4"></path>
+                          </svg>
+                          {{ __('Odstranit oznámení') }}
+                        </li>
+                      </ul>
+                    @endif
+                  @endauth
+                  <div class="avatar mx-1 bg-transparent">
+                    <span
+                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
+                  <div class="avatar mx-2 bg-transparent">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <h2 class="mb-0">{{ $notification->title }}</h2>
+                    <span class="d-block description text-muted text-truncate">
+                      Typ: <a class="text-{{ $notification->type->type_color }}"
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
+                      - vložil: {{ $notification->user->name }}
+                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-4">
+                <div class="text-muted">
+                  {!! $notification->content !!}
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+        <div class="col-12 col-xl-6">
+          <div class="hr-text text-pink">Dlouhodobá sdělení</div>
+          @foreach ($notificationLong as $notification)
+            <div class="card mb-3 bg-white shadow">
+              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
+                <div class="d-flex justify-item-start align-items-center">
+                  @auth
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
+                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
+                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                          fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                          </path>
+                          <line x1="4" y1="6" x2="20" y2="6"></line>
+                          <line x1="4" y1="12" x2="20" y2="12"></line>
+                          <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                      </span>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-item edit" id="{{ $notification->id }}">
+                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                          {{ __('Upravit oznámení') }}
+                        </li>
+                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
+                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 7h16"></path>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+                            </path>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+                            </path>
+                            <path d="M10 12l4 4m0 -4l-4 4"></path>
+                          </svg>
+                          {{ __('Odstranit oznámení') }}
+                        </li>
+                      </ul>
+                    @endif
+                  @endauth
+                  <div class="avatar bg-transparent">
+                    <span
+                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
+                  <div class="avatar mx-2 bg-transparent">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <h2 class="mb-0">{{ $notification->title }}</h2>
+                    <span class="d-block description text-muted text-truncate">
+                      Typ: <a class="text-{{ $notification->type->type_color }}"
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
+                      - vložil: {{ $notification->user->name }}
+                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-4">
+                <div class="text-muted">
+                  {!! $notification->content !!}
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+      <div class="row m-1">
+        <div class="col-12 col-xl-6">
+          <div class="hr-text text-blue">Oznámení</div>
+          @foreach ($notifications as $notification)
+            <div class="card mb-3 bg-white shadow-sm">
+              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
+                <div class="d-flex justify-item-start align-items-center">
+                  @auth
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
                       <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
                         <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                           fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -176,167 +338,13 @@
           @endforeach
         </div>
         <div class="col-12 col-xl-6">
-          <div class="hr-text text-pink">Dlouhodobá sdělení</div>
-          @foreach ($notificationLong as $notification)
-            <div class="card mb-2 bg-white shadow-xl">
-              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
-                <div class="d-flex justify-item-start align-items-center">
-                  @auth
-                    @if (Auth::user()->id == $notification->user_id or Auth::user()->role == 'admin')
-                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
-                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                          fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
-                          </path>
-                          <line x1="4" y1="6" x2="20" y2="6"></line>
-                          <line x1="4" y1="12" x2="20" y2="12"></line>
-                          <line x1="4" y1="18" x2="20" y2="18"></line>
-                        </svg>
-                      </span>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-item edit" id="{{ $notification->id }}">
-                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
-                          </svg>
-                          {{ __('Upravit oznámení') }}
-                        </li>
-                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
-                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 7h16"></path>
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
-                            </path>
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
-                            </path>
-                            <path d="M10 12l4 4m0 -4l-4 4"></path>
-                          </svg>
-                          {{ __('Odstranit oznámení') }}
-                        </li>
-                      </ul>
-                    @endif
-                  @endauth
-                  <div class="avatar bg-transparent">
-                    <span
-                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
-                  </div>
-                  <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
-                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                        {!! $notification->type->svg_icon !!}
-                      </span>
-                    </a>
-                  </div>
-                  <div>
-                    <h2 class="mb-0">{{ $notification->title }}</h2>
-                    <span class="d-block description text-muted text-truncate">
-                      Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body p-4">
-                <div class="text-muted">
-                  {!! $notification->content !!}
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-      <div class="row m-1">
-        <div class="col-12 col-xl-6">
-          <div class="hr-text text-blue">Oznámení</div>
-          @foreach ($notifications as $notification)
-            <div class="card mb-2 bg-white shadow-xl">
-              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
-                <div class="d-flex justify-item-start align-items-center">
-                  @auth
-                    @if (Auth::user()->id == $notification->user_id or Auth::user()->role == 'admin')
-                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
-                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                          fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
-                          </path>
-                          <line x1="4" y1="6" x2="20" y2="6"></line>
-                          <line x1="4" y1="12" x2="20" y2="12"></line>
-                          <line x1="4" y1="18" x2="20" y2="18"></line>
-                        </svg>
-                      </span>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-item edit" id="{{ $notification->id }}">
-                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
-                          </svg>
-                          {{ __('Upravit oznámení') }}
-                        </li>
-                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
-                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 7h16"></path>
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
-                            </path>
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
-                            </path>
-                            <path d="M10 12l4 4m0 -4l-4 4"></path>
-                          </svg>
-                          {{ __('Odstranit oznámení') }}
-                        </li>
-                      </ul>
-                    @endif
-                  @endauth
-                  <div class="avatar bg-transparent">
-                    <span
-                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
-                  </div>
-                  <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
-                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                        {!! $notification->type->svg_icon !!}
-                      </span>
-                    </a>
-                  </div>
-                  <div>
-                    <h2 class="mb-0">{{ $notification->title }}</h2>
-                    <span class="d-block description text-muted text-truncate">
-                      Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body p-4">
-                <div class="text-muted">
-                  {!! $notification->content !!}
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-        <div class="col-12 col-xl-6">
           <div class="hr-text text-blue">Odstávky a servis</div>
           @foreach ($notificationsServis as $notification)
-            <div class="card mb-2 bg-white shadow-xl">
+            <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
                 <div class="d-flex justify-item-start align-items-center">
                   @auth
-                    @if (Auth::user()->id == $notification->user_id or Auth::user()->role == 'admin')
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
                       <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
                         <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                           fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -377,6 +385,9 @@
                   <div class="avatar bg-transparent">
                     <span
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
                   </div>
                   <div class="avatar mx-2 bg-transparent">
                     <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
