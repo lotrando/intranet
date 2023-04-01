@@ -180,7 +180,7 @@
         <div class="col-12 col-xl-6">
           <div class="hr-text text-pink">Dlouhodobá sdělení</div>
           @foreach ($notificationLong as $notification)
-            <div class="card mb-3 bg-white shadow">
+            <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
                 <div class="d-flex justify-item-start align-items-center">
                   @auth
