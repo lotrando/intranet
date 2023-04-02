@@ -1040,7 +1040,7 @@
     });
 
     $('#openCreateModal').click(function() {
-      $('#inputForm')[0].reset();
+      $('#inputForm')[0].reset()
       $("#attachment, #action_button").removeClass('d-none')
       $('#pdf-preview-show, #pdf-preview').addClass('d-none')
       $('#unique_code').prop('readonly', true)

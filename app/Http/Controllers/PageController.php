@@ -248,9 +248,9 @@ class PageController extends Controller
         }
 
         if (Auth::user()) {
-            $documents = Document::with('category', 'addons', 'user')->where('category_id', $id)->orderBy('position')->get();
+            $documents = Document::with('category', 'addons', 'user')->where('category_id', $id)->orderBy('category_id')->get();
         } else {
-            $documents = Document::with('category', 'addons', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('position')->get();
+            $documents = Document::with('category', 'addons', 'user')->where('status', 'Schváleno')->where('category_id', $id)->orderBy('category_id')->get();
         }
 
         return view('dokumenty.dokument', [
