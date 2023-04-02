@@ -559,7 +559,7 @@
   <script>
     $(document).ready(function() {
       $('.summernote').summernote({
-        placeholder: 'Text oznámení',
+        // placeholder: 'Text oznámení',
         tabsize: 2,
         height: 350
       })
@@ -623,35 +623,36 @@
         url: "/notifications/" + id + "/edit",
         dataType: "json",
         success: function(html) {
-          $('#inputForm')[0].reset();
-          $('#attachment, #action_button').removeClass('d-none');
-          $('#formModal').modal('show');
           $('#modal-header', '#modal-icon').removeClass()
-          $('#modal-icon').html('').addClass("bg-" + html.data.type + "-lt");
-          $('#modal-header').addClass("modal-header bg-" + html.data.type + "-lt");
+          $('#inputForm')[0].reset()
+          $('#attachment, #action_button').removeClass('d-none')
+          $('#formModal').modal('show')
+          $('#modal-icon').html(html.data.type.svg_icon).addClass("bg-" + html.data.type.type_color + "-lt")
+          $('#modal-header').addClass("modal-header bg-" + html.data.type.type_color + "-lt")
           $('.modal-title').text("{{ __('Edit') }} oznámení - " + html.data.title)
           $('#action_button').text("{{ __('Edit') }} oznámení")
-          $('#action').val("Edit");
-          $('#title').val(html.data.title);
+          $('#action').val("Edit")
+          $('#title').val(html.data.title)
           $('#content').summernote('code', html.data.content)
-          $('#type_id').val(html.data.type_id);
-          $('#importance').val(html.data.importance);
-          $('#status').val(html.data.status);
-          $('#hidden_id').val(html.data.id);
-          $('#user_id').val(html.data.user_id);
-          $('#user_name').val(html.data.user.name);
+          $('#type_id').val(html.data.type_id)
+          $('#importance').val(html.data.importance)
+          $('#status').val(html.data.status)
+          $('#hidden_id').val(html.data.id)
+          $('#user_id').val(html.data.user_id)
+          $('#user_name').val(html.data.user.name)
         }
       })
     });
 
     $('#openCreateModal').click(function() {
+      $('#modal-header', '#modal-icon').removeClass()
       $('#inputForm')[0].reset();
       $("#action_button").removeClass('d-none')
-      $('#pdf-preview-show, #pdf-preview').addClass('d-none')
       $('#formModal').modal('show')
       $('#content').summernote('code', '')
-      $('#modal-header').addClass("modal-header bg-lime-lt")
-      $('#action_button, .modal-title').text("{{ __('Create new') }}")
+      $('#modal-icon').html().addClass('bg-lime-lt');
+      $('#modal-header').addClass('bg-lime-lt modal-header')
+      $('#action_button, .modal-title').text("{{ __('Vytvořit nové oznámení') }}")
       $('#action').val("Add")
       $('#status').val('Zobrazeno')
       $('#type_id').val(8)

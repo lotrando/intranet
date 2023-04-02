@@ -107,7 +107,8 @@
                   <span class="nav-link-title">
                     {{ $type->type_name }}
                   </span>
-                  <span class="badge badge-sm bg-{{ $type->type_color }}-lt text-uppercase ms-auto">{{ $type->notification->count() }}</span>
+                  <span
+                    class="badge badge-sm bg-{{ $type->type_color }}-lt text-uppercase ms-auto">{{ $type->notification->where('status', 'Zobrazeno')->count() }}</span>
                 </a>
               @endforeach
             </div>

@@ -98,10 +98,10 @@
   <div class="page-body">
     <div class="container-fluid">
 
-      <div class="row g-2 m-1">
-        <div class="col-12 col-lg-12">
+      <div class="row m-1">
+        <div class="col-12">
           @foreach ($notifications as $notification)
-            <div class="card mb-4 bg-white shadow-sm">
+            <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
                 <div class="d-flex justify-item-start align-items-center">
                   @auth
