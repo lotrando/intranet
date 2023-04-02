@@ -14,60 +14,66 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
+        // Clear table
+
+        DB::table('departments')->truncate();
+
+        // Departments
+
         DB::table('departments')->insert([
             'department_code' => '401',
             'center_code' => '4501',
             'color_id' => 'blue',
-            'department_name' => 'Interní oddělení',
+            'department_name' => 'interní oddělení',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '402',
             'center_code' => '4502',
             'color_id' => 'azure',
-            'department_name' => 'Endokrinologická ambulance',
+            'department_name' => 'endokrinologická ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '403',
             'center_code' => '4503',
             'color_id' => 'azure',
-            'department_name' => 'Příjmová interní ambulance',
+            'department_name' => 'příjmová interní ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '404',
             'center_code' => '4507',
             'color_id' => 'azure',
-            'department_name' => 'Gastroenterologická ambulance',
+            'department_name' => 'gastroenterologická ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '405',
             'center_code' => '4507',
             'color_id' => 'azure',
-            'department_name' => 'Interní odborné ambulance',
+            'department_name' => 'interní odborné ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '407',
             'center_code' => '4512',
             'color_id' => 'purple',
-            'department_name' => 'Neurologické oddělení',
+            'department_name' => 'neurologické oddělení',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '408',
             'center_code' => '4513',
             'color_id' => 'purple',
-            'department_name' => 'Neurologická ambulance',
+            'department_name' => 'neurologická ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '410',
             'center_code' => '4501',
             'color_id' => 'lime',
-            'department_name' => 'Odělení chirurgie páteře',
+            'department_name' => 'odělení chirurgie páteře',
         ]);
 
         DB::table('departments')->insert([
@@ -81,28 +87,28 @@ class DepartmentSeeder extends Seeder
             'department_code' => '412',
             'center_code' => '4524',
             'color_id' => 'lime',
-            'department_name' => 'Ambulance chirurgie páteře',
+            'department_name' => 'ambulance chirurgie páteře',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '413',
             'center_code' => '4551',
             'color_id' => 'green',
-            'department_name' => 'Rehabilitační oddělení',
+            'department_name' => 'rehabilitační oddělení',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '414',
             'center_code' => '4552',
             'color_id' => 'green',
-            'department_name' => 'Rehabilitační ambulance',
+            'department_name' => 'rehabilitační ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '415',
             'center_code' => '4558',
             'color_id' => 'cyan',
-            'department_name' => 'Oddělení pracovního lékařství',
+            'department_name' => 'oddělení pracovního lékařství',
         ]);
 
         DB::table('departments')->insert([
@@ -123,112 +129,112 @@ class DepartmentSeeder extends Seeder
             'department_code' => '419',
             'center_code' => '4522',
             'color_id' => 'lime',
-            'department_name' => 'Operační sály',
+            'department_name' => 'operační sály',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '420',
             'center_code' => '4110',
             'color_id' => 'yellow',
-            'department_name' => 'Ředitelství',
+            'department_name' => 'ředitelství',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '421',
             'center_code' => '4120',
             'color_id' => 'orange',
-            'department_name' => 'Stravovací provoz - kantýna',
+            'department_name' => 'stravovací provoz - kantýna',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '422',
             'center_code' => '4130',
             'color_id' => 'muted',
-            'department_name' => 'Úklid',
+            'department_name' => 'úklid',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '424',
             'center_code' => '4528',
             'color_id' => 'lime',
-            'department_name' => 'Anesteziologická ambulance',
+            'department_name' => 'anesteziologická ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '425',
             'center_code' => '4504',
             'color_id' => 'azure',
-            'department_name' => 'Diabetologická ambulance',
+            'department_name' => 'diabetologická ambulance',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '426',
             'center_code' => '4141',
             'color_id' => 'teal',
-            'department_name' => 'Lékárna KHN',
+            'department_name' => 'lékárna KHN',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '427',
             'center_code' => '4510',
             'color_id' => 'indigo',
-            'department_name' => 'Mezioborová JIP',
+            'department_name' => 'mezioborová JIP',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '428',
             'center_code' => '4524',
             'color_id' => 'muted',
-            'department_name' => 'Provozní úsek',
+            'department_name' => 'provozní úsek',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '429',
             'center_code' => '4150',
             'color_id' => 'muted',
-            'department_name' => 'Údržba',
+            'department_name' => 'údržba',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '432',
             'center_code' => '4507',
             'color_id' => 'azure',
-            'department_name' => 'Ambulance infuzní terapie',
+            'department_name' => 'ambulance infuzní terapie',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '433',
             'center_code' => '4524',
             'color_id' => 'lime',
-            'department_name' => 'Mamologická poradna',
+            'department_name' => 'mamologická poradna',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '434',
             'center_code' => '4525',
             'color_id' => 'orange',
-            'department_name' => 'Ortopedické oddělení',
+            'department_name' => 'ortopedické oddělení',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '436',
             'center_code' => '4143',
             'color_id' => 'teal',
-            'department_name' => 'Lékárna KHN v Ráji',
+            'department_name' => 'lékárna KHN v Ráji',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '437',
             'center_code' => '4560',
             'color_id' => 'orange',
-            'department_name' => 'Oddělení následné péče',
+            'department_name' => 'oddělení následné péče',
         ]);
 
         DB::table('departments')->insert([
             'department_code' => '999',
             'center_code' => '9999',
             'color_id' => 'muted',
-            'department_name' => 'Externí pracovník',
+            'department_name' => 'externí pracovník',
         ]);
     }
 }

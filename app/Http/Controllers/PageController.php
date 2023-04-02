@@ -275,6 +275,7 @@ class PageController extends Controller
         $allDocuments = Document::where('category_id', '<', 12)->pluck('category_id');
         $categorie  = Category::where('id', $id)->first();
         $doctors = Employee::orderBy('last_name')->get();
+        $stanicni = Employee::whereJobId('47')->orderBy('last_name')->get();
         $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
 
         if ($last == null) {
@@ -298,7 +299,8 @@ class PageController extends Controller
             'lastpos'           => $last,
             'documents'         => $documents,
             'allDocuments'      => $allDocuments,
-            'doctors'           => $doctors
+            'doctors'           => $doctors,
+            'stanicni'          => $stanicni
         ]);
     }
 

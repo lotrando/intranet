@@ -10,7 +10,21 @@
 
     {{-- Page header --}}
     <div class="page-header d-print-none">
-      <div class="container-fluid mt-2">
+      <div class="container-fluid">
+        {{-- <div class="row align-items-center mb-3">
+          @foreach ($types as $type)
+            <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-xxl-4 ps-0 m-0">
+              <a class="btn bg-{{ $type->type_color }}-lt hover-shadow-sm w-100 m-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-original-title="{{ $type->type_name }}" href="{{ route($type->type_route, $type->id) }}">
+                <span class="d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline">{!! $type->svg_icon !!}</span>
+                <span class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline pe-1">{{ $type->type_name }}</span>
+                <span class="text-small">
+                  {{ $type->notification->count() }}
+                </span>
+              </a>
+            </div>
+          @endforeach
+        </div> --}}
         <div class="row">
           <div class="col-6">
             <form autocomplete="off">
@@ -97,7 +111,6 @@
   {{-- Page body --}}
   <div class="page-body">
     <div class="container-fluid">
-
       <div class="row m-1">
         <div class="col-12">
           @foreach ($notifications as $notification)
@@ -147,18 +160,24 @@
                     <span
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                      {!! $notification->type->svg_icon !!}
-                    </span>
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
                   </div>
                   <div>
                     <h2 class="mb-0">{{ $notification->title }}</h2>
                     <span class="d-block description text-muted text-truncate">
-                      Typ: <span class="text-{{ $notification->type->type_color }}">{{ $notification->type->type_name }}</span>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                      Typ: <a class="text-{{ $notification->type->type_color }}"
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
                     </span>
                   </div>
                 </div>
@@ -262,7 +281,20 @@
                     <path d="M15 16l3 -3l3 3"></path>
                     <path d="M18 13v9"></path>
                   </svg>
-                  Upravit
+                  Upravit<div class="avatar bg-transparent">
+                    <span
+                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
+                  <div class="avatar mx-2 bg-transparent">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
+                  </div>
                 </button>
               </div>
             </div>

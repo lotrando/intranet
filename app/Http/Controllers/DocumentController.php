@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\StandardStoreMail;
 use App\Mail\StandardUpdatedMail;
 use App\Models\Document;
 use App\Models\Employee;
@@ -101,7 +102,13 @@ class DocumentController extends Controller
             'user_id'               => Auth::user()->id
         ];
 
-        Document::create($form_data);
+        $standardData = Document::create($form_data);
+
+        if (($request->infomail) == 'ano') {
+            $stanicniSestry = Employee::whereJobId(47)->pluck('email');
+            $emailData = Document::with('category')->whereId($standardData->id)->get();
+            Mail::to($stanicniSestry)->send(new StandardStoreMail($emailData));
+        }
 
         Alert::toast('Dokument úspěšně vytvořen!', 'success')->position('center');
 
@@ -263,11 +270,11 @@ class DocumentController extends Controller
 
         Document::whereId($request->hidden_id)->update($form_data);
 
-        // if (($request->infomail) == true) {
-        //     $emailData = Document::with('category')->where('updated_at', '>=', Carbon::now()->subDays(7))->get();
-        //     $stanicniSestry = Employee::where('job_id', '47')->pluck('email');
-        //     Mail::to($stanicniSestry)->send(new StandardUpdatedMail($emailData));
-        // }
+        if (($request->infomail) == 'ano') {
+            $emailData = Document::with('category')->whereId($request->hidden_id)->get();
+            $stanicniSestry = Employee::whereJobId(47)->pluck('email');
+            Mail::to($stanicniSestry)->send(new StandardUpdatedMail($emailData));
+        }
 
         Alert::toast('Dokument aktualizován!', 'success')->position('center');
         return response()->json(['success' => 'Dokument aktualizován!']);

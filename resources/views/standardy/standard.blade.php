@@ -121,8 +121,8 @@
                           </div>
                           <div class="col-auto">
                             <a href="{{ route('soubory.' . $document->category->category_type . '.download', $document->id) }}" target="_blank">
-                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
                                 @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
                                   <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
                                 @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
@@ -305,9 +305,9 @@
                           </div>
                         </div>
                         <div class="col-auto">
-                          <a href="/soubory/{{ $document->category->category_type}}/priloha/{{ $add->id }}">
-                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-bs-original-title="Stáhnout soubor .{{ substr($add->file, strpos($add->file, '.') + 1) }}">
+                          <a href="/soubory/{{ $document->category->category_type }}/priloha/{{ $add->id }}">
+                            <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-original-title="Stáhnout soubor .{{ substr($add->file, strpos($add->file, '.') + 1) }}">
                               @if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf')
                                 <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
                               @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'xlsx')
@@ -532,8 +532,8 @@
               <div class="col-2 col-lg-1 mb-2">
                 <label class="form-label">{{ __('Infomail') }}</label>
                 <select class="form-select" id="infomail" name="infomail">
-                  <option value="false">Ne</option>
-                  <option value="true">Ano</option>
+                  <option value="ne">Ne</option>
+                  <option value="ano">Ano</option>
                 </select>
               </div>
               <div class="col-4 col-lg-2 mb-2">
@@ -1031,7 +1031,8 @@
               "#pdf-preview-addon-show", {
                 height: "41rem"
               })
-          } if (file_type !== '.pdf') {
+          }
+          if (file_type !== '.pdf') {
             $('#pdf-preview-addon-show').html('Náhled souboru typu *' + file_type + ' nenelze zobrazit. Klikněte na stáhnout soubor.')
           }
         }
@@ -1072,7 +1073,7 @@
     })
 
     $('#inputForm').on('submit', function(event) {
-      event.preventDefault();
+      event.preventDefault(event);
       if ($('#action').val() === 'Add') {
         $.ajax({
           url: "{{ route('documents.store') }}",

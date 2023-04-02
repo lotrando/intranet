@@ -33,9 +33,9 @@ class EmployeeController extends Controller
         if ($request->ajax()) {
 
             if (Auth::user()) {
-                $model = Employee::with('department', 'job')->select('*', 'employees.id');
+                $model = Employee::with('department', 'job')->where('personal_number', '!=', null)->select('*', 'employees.id');
             } else {
-                $model = Employee::with('department', 'job')->select('*', 'employees.id')->where('status', 'Aktivní');
+                $model = Employee::with('department', 'job')->select('*', 'employees.id')->where('personal_number', '!=', null)->where('status', 'Aktivní');
             }
             return DataTables::eloquent($model)
 
@@ -313,10 +313,10 @@ class EmployeeController extends Controller
                                     </div>
                                     <div class="col">
                                         <h2 class="font-weight-medium text-muted mb-0">' .  $employee->title_preffix . ' ' . $employee->last_name . ' ' . $employee->first_name . ' ' . $employee->title_suffix . '</h2>
+                                    <div class="text-' .  $employee->department->color_id . '">' .  $employee->job->job_title . '</div>
                                     <div class="text-' .  $employee->department->color_id . '">
                                         ' .  $employee->department->department_name . '
                                         </div>
-                                    <div class="text-' .  $employee->department->color_id . '">' .  $employee->job->job_title . '</div>
                                     <div class="hr-text text-muted my-2" >
                                         <span style="font-size: 0.7rem">' .  __("kontaktní informace")  . '</span>
                                      </div>
