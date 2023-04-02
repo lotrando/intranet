@@ -5374,6 +5374,18 @@
   <script src="{{ asset('js/ViewerJS') }}"></script>
   <script>
     $(document).ready(function() {
+      $('.accordion-collapse').removeClass('show');
+      $('#showbtn').click(function() {
+        $('.accordion-collapse').addClass('show');
+        $('.accordion-button').removeClass('collapsed');
+      });
+      $('#closebtn').click(function() {
+        $('.accordion-collapse').removeClass('show');
+        $('.accordion-button').addClass('collapsed');
+      });
+    });
+
+    $(document).ready(function() {
 
       function fill(Value) {
         $('#search').val(Value);
@@ -5384,9 +5396,9 @@
 
     $(document).ready(function() {
       $("#search").keyup(function() {
-        var name = $('#search').val()
+        var name = $('#search').val();
         if (name === "") {
-          $("#display").html("")
+          $("#display").html("");
         } else {
           $.ajax({
             type: "GET",
@@ -5395,30 +5407,12 @@
               search: name
             },
             success: function(html) {
-              $("#display").html(html).show()
+              $("#display").html(html).show();
             }
           });
         }
-      })
-
-      $("#search-employee").keyup(function() {
-        var name = $('#search-employee').val()
-        if (name === "") {
-          $("#display").html("")
-        } else {
-          $.ajax({
-            type: "GET",
-            url: "{{ route('employees.search') }}",
-            data: {
-              search: name
-            },
-            success: function(html) {
-              $("#display").html(html).show()
-            }
-          })
-        }
-      })
-    })
+      });
+    });
   </script>
 
   <script>
@@ -5575,7 +5569,7 @@
     });
 
     $('#openCreateModal').click(function() {
-      $('#inputForm')[0].reset();
+      $('#inputForm')[0].reset()
       $("#attachment, #action_button").removeClass('d-none')
       $('#pdf-preview-show, #pdf-preview').addClass('d-none')
       $('#unique_code').prop('readonly', true)

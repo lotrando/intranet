@@ -158,6 +158,8 @@ class PageController extends Controller
         $weekEndDate    = $now->endOfWeek()->format('Y-m-d');
         $from           = $now->startOfWeek()->format('d. m.');
         $to             = $now->endOfWeek()->subDays(2)->format('d. m.');
+        $polevky        = Employee::orderBy('last_name')->get();
+        $jidla          = Employee::orderBy('last_name')->get();
 
         $daylist        = DB::table('calendar')
             ->where('date', '>=', $weekStartDate)
@@ -169,8 +171,38 @@ class PageController extends Controller
             'title'     => 'Nabídka kantýny',
             'daylist'   => $daylist,
             'od'        => $from,
-            'do'        => $to
+            'do'        => $to,
+            'polevky'   => $polevky,
+            'jidla'     => $jidla
         ]);
+    }
+
+    // Plánování polévek
+    public function changePolevka(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'polevka'  => $request->polevka,
+                ]);
+        }
+        return response()->json(['success' => 'Polevka uložena!']);
+        Alert::toast('Polevka uložena!', 'success')->position('center');
+    }
+
+    // Plánování polévek
+    public function changeJidlo(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'jidlo'  => $request->jidlo,
+                ]);
+        }
+        return response()->json(['success' => 'Jídlo uloženo!']);
+        Alert::toast('Jídlo uloženo!', 'success')->position('center');
     }
 
     // Akreditacní stadnardy

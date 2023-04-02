@@ -35,7 +35,9 @@ Route::prefix('oznameni')->name('oznameni.')->group(function () {
 // Stravování
 Route::prefix('stravovani')->name('stravovani.')->group(function () {
     Route::get('obedy', [PageController::class, 'obedy'])->name('obedy');                                                   // Obědy
-    Route::get('kantyna', [PageController::class, 'kantyna'])->name('kantyna');                                             // Kantýna
+    Route::get('kantyna', [PageController::class, 'kantyna'])->name('kantyna');
+    Route::post('polevka/update/{id}', [PageController::class, 'changePolevka'])->name('kantyna.polevka.update');                                             // Kantýna
+    Route::post('jidlo/update/{id}', [PageController::class, 'changejidlo'])->name('kantyna.jidlo.update');                                             // Kantýna
 });
 
 // Dokumenty

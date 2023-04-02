@@ -48,7 +48,7 @@
 
           {{-- Searched events --}}
           <div>
-            <div class="display mt-2 mb-3" id="display"></div>
+            <div class="display mt-2 mb-2" id="display"></div>
           </div>
 
           {{-- Page pre-title --}}
@@ -98,8 +98,8 @@
   <div class="page-body">
     <div class="container-fluid">
       <div class="row mx-1">
-        <div class="col-12 col-xl-6">
-          <div class="hr-text text-red">Důležitá oznámení</div>
+        <div class="col-12 col-xl-6 order-0">
+          <div class="hr-text text-red py-2">Důležité oznámení</div>
           @foreach ($important as $notification)
             <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
@@ -176,9 +176,164 @@
               </div>
             </div>
           @endforeach
+          <div class="hr-text text-blue py-2">Oznámení</div>
+          @foreach ($notifications as $notification)
+            <div class="card mb-1 bg-white shadow-sm">
+              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
+                <div class="d-flex justify-item-start align-items-center">
+                  @auth
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
+                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
+                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                          fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                          </path>
+                          <line x1="4" y1="6" x2="20" y2="6"></line>
+                          <line x1="4" y1="12" x2="20" y2="12"></line>
+                          <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                      </span>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-item edit" id="{{ $notification->id }}">
+                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                          {{ __('Upravit oznámení') }}
+                        </li>
+                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
+                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 7h16"></path>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+                            </path>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+                            </path>
+                            <path d="M10 12l4 4m0 -4l-4 4"></path>
+                          </svg>
+                          {{ __('Odstranit oznámení') }}
+                        </li>
+                      </ul>
+                    @endif
+                  @endauth
+                  <div class="avatar bg-transparent">
+                    <span
+                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
+                  <div class="avatar mx-2 bg-transparent">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <h2 class="mb-0">{{ $notification->title }}</h2>
+                    <span class="d-block description text-muted text-truncate">
+                      Typ: <a class="text-{{ $notification->type->type_color }}"
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-4">
+                <div class="text-muted">
+                  {!! $notification->content !!}
+                </div>
+              </div>
+            </div>
+          @endforeach
         </div>
-        <div class="col-12 col-xl-6">
-          <div class="hr-text text-pink">Dlouhodobá sdělení</div>
+
+        <div class="col-12 col-xl-6 order-1">
+          <div class="hr-text text-azure py-2">Odstávky a servis</div>
+          @foreach ($notificationsServis as $notification)
+            <div class="card mb-3 bg-white shadow-sm">
+              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
+                <div class="d-flex justify-item-start align-items-center">
+                  @auth
+                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
+                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
+                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                          fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                          </path>
+                          <line x1="4" y1="6" x2="20" y2="6"></line>
+                          <line x1="4" y1="12" x2="20" y2="12"></line>
+                          <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                      </span>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-item edit" id="{{ $notification->id }}">
+                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                            <path d="M16 5l3 3" />
+                          </svg>
+                          {{ __('Upravit oznámení') }}
+                        </li>
+                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
+                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 7h16"></path>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
+                            </path>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
+                            </path>
+                            <path d="M10 12l4 4m0 -4l-4 4"></path>
+                          </svg>
+                          {{ __('Odstranit oznámení') }}
+                        </li>
+                      </ul>
+                    @endif
+                  @endauth
+                  <div class="avatar bg-transparent">
+                    <span
+                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
+                  </div>
+                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
+                  </div>
+                  <div class="avatar mx-2 bg-transparent">
+                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
+                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                        {!! $notification->type->svg_icon !!}
+                      </span>
+                    </a>
+                  </div>
+                  <div>
+                    <h2 class="mb-0">{{ $notification->title }}</h2>
+                    <span class="d-block description text-muted text-truncate">
+                      Typ: <a class="text-{{ $notification->type->type_color }}"
+                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-4">
+                <div class="text-muted">
+                  {!! $notification->content !!}
+                </div>
+              </div>
+            </div>
+          @endforeach
+          <div class="hr-text text-orange py-2">Dlouhodobá sdělení</div>
           @foreach ($notificationLong as $notification)
             <div class="card mb-3 bg-white shadow-sm">
               <div class="card-header bg-{{ $notification->importance }}-lt text-left">
@@ -257,497 +412,336 @@
           @endforeach
         </div>
       </div>
-      <div class="row m-1">
-        <div class="col-12 col-xl-6">
-          <div class="hr-text text-blue">Oznámení</div>
-          @foreach ($notifications as $notification)
-            <div class="card mb-3 bg-white shadow-sm">
-              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
-                <div class="d-flex justify-item-start align-items-center">
-                  @auth
-                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
-                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
-                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                          fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
-                          </path>
-                          <line x1="4" y1="6" x2="20" y2="6"></line>
-                          <line x1="4" y1="12" x2="20" y2="12"></line>
-                          <line x1="4" y1="18" x2="20" y2="18"></line>
-                        </svg>
-                      </span>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-item edit" id="{{ $notification->id }}">
-                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
-                          </svg>
-                          {{ __('Upravit oznámení') }}
-                        </li>
-                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
-                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 7h16"></path>
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
-                            </path>
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
-                            </path>
-                            <path d="M10 12l4 4m0 -4l-4 4"></path>
-                          </svg>
-                          {{ __('Odstranit oznámení') }}
-                        </li>
-                      </ul>
-                    @endif
-                  @endauth
-                  <div class="avatar bg-transparent">
-                    <span
-                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
-                  </div>
-                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
-                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
-                  </div>
-                  <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
-                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                        {!! $notification->type->svg_icon !!}
-                      </span>
-                    </a>
-                  </div>
-                  <div>
-                    <h2 class="mb-0">{{ $notification->title }}</h2>
-                    <span class="d-block description text-muted text-truncate">
-                      Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - autor: {{ $notification->user->name }}
-                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body p-4">
-                <div class="text-muted">
-                  {!! $notification->content !!}
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-        <div class="col-12 col-xl-6">
-          <div class="hr-text text-blue">Odstávky a servis</div>
-          @foreach ($notificationsServis as $notification)
-            <div class="card mb-3 bg-white shadow-sm">
-              <div class="card-header bg-{{ $notification->importance }}-lt text-left">
-                <div class="d-flex justify-item-start align-items-center">
-                  @auth
-                    @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor' and Auth::user()->id == $notification->user_id)
-                      <span class="btn btn-icon hover-shadow me-2 cursor-pointer" data-bs-toggle="dropdown">
-                        <svg class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                          fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none">
-                          </path>
-                          <line x1="4" y1="6" x2="20" y2="6"></line>
-                          <line x1="4" y1="12" x2="20" y2="12"></line>
-                          <line x1="4" y1="18" x2="20" y2="18"></line>
-                        </svg>
-                      </span>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-item edit" id="{{ $notification->id }}">
-                          <svg class="icon dropdown-item-icon-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                            <path d="M16 5l3 3" />
-                          </svg>
-                          {{ __('Upravit oznámení') }}
-                        </li>
-                        <li class="dropdown-item delete" id="{{ $notification->id }}" disabled>
-                          <svg class="icon dropdown-item-icon-delete" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 7h16"></path>
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12">
-                            </path>
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3">
-                            </path>
-                            <path d="M10 12l4 4m0 -4l-4 4"></path>
-                          </svg>
-                          {{ __('Odstranit oznámení') }}
-                        </li>
-                      </ul>
-                    @endif
-                  @endauth
-                  <div class="avatar bg-transparent">
-                    <span
-                      class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
-                  </div>
-                  <div class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt mx-1">
-                    <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
-                  </div>
-                  <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
-                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                        {!! $notification->type->svg_icon !!}
-                      </span>
-                    </a>
-                  </div>
-                  <div>
-                    <h2 class="mb-0">{{ $notification->title }}</h2>
-                    <span class="d-block description text-muted text-truncate">
-                      Typ: <a class="text-{{ $notification->type->type_color }}"
-                        href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - autor: {{ $notification->user->name }}
-                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body p-4">
-                <div class="text-muted">
-                  {!! $notification->content !!}
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
+      {{-- End Page body --}}
     </div>
-    {{-- End Page body --}}
-  </div>
-  <!-- Wrapper End -->
-@endsection
+    <!-- Wrapper End -->
+  @endsection
 
-@section('modals')
-  {{-- Main Form Modal --}}
-  <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-full-width mx-3" role="document">
-      <div class="modal-content shadow-lg">
-        <div id="modal-header">
-          <h5 class="modal-title"></h5>;
-          <div class="avatar avatar-transparent" id="modal-icon"></div>
-        </div>
-        <form id="inputForm" action="{{ route('notifications.store') }}" enctype="multipart/form-data">
-          @csrf
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12">
-                <span id="form_result_modal"></span>
+  @section('modals')
+    {{-- Main Form Modal --}}
+    <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-full-width mx-3" role="document">
+        <div class="modal-content shadow-lg">
+          <div id="modal-header">
+            <h5 class="modal-title"></h5>;
+            <div class="avatar avatar-transparent" id="modal-icon"></div>
+          </div>
+          <form id="inputForm" action="{{ route('notifications.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-12">
+                  <span id="form_result_modal"></span>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-lg-12 mb-2">
-                <label class="form-label">{{ __('Title') }}</label>
-                <input class="form-control" id="title" name="title" type="text" placeholder="{{ __('Název oznámení') }}">
+              <div class="row">
+                <div class="col-12 col-lg-12 mb-2">
+                  <label class="form-label">{{ __('Title') }}</label>
+                  <input class="form-control" id="title" name="title" type="text" placeholder="{{ __('Název oznámení') }}">
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-lg-3 mb-2">
-                <label class="form-label">{{ __('Typ oznámení') }}</label>
-                <select class="form-select" id="type_id" name="type_id">
-                  @foreach ($types as $type)
-                    <option value="{{ $type->id }}">{{ $type->type_name }}</option>
-                  @endforeach
-                </select>
+              <div class="row">
+                <div class="col-12 col-lg-3 mb-2">
+                  <label class="form-label">{{ __('Typ oznámení') }}</label>
+                  <select class="form-select" id="type_id" name="type_id">
+                    @foreach ($types as $type)
+                      <option value="{{ $type->id }}">{{ $type->type_name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-12 col-lg-3 mb-2">
+                  <label class="form-label">{{ __('Důležitost') }}</label>
+                  <select class="form-select" id="importance" name="importance">
+                    <option value="muted">Normální</option>
+                    <option value="blue">Střední</option>
+                    <option value="red">Vysoká</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-3 mb-2">
+                  <label class="form-label">{{ __('Status') }}</label>
+                  <select class="form-select" id="status" name="status">
+                    <option value="Zobrazeno">Zobrazeno</option>
+                    <option value="Nezobrazeno">Nezobrazeno</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-3 mb-2">
+                  <label class="form-label">{{ __('Založil / upravil') }}</label>
+                  <input class="form-control" id="user_name" name="user_name" type="text" readonly>
+                </div>
               </div>
-              <div class="col-12 col-lg-3 mb-2">
-                <label class="form-label">{{ __('Důležitost') }}</label>
-                <select class="form-select" id="importance" name="importance">
-                  <option value="muted">Normální</option>
-                  <option value="blue">Střední</option>
-                  <option value="red">Vysoká</option>
-                </select>
-              </div>
-              <div class="col-12 col-lg-3 mb-2">
-                <label class="form-label">{{ __('Status') }}</label>
-                <select class="form-select" id="status" name="status">
-                  <option value="Zobrazeno">Zobrazeno</option>
-                  <option value="Nezobrazeno">Nezobrazeno</option>
-                </select>
-              </div>
-              <div class="col-12 col-lg-3 mb-2">
-                <label class="form-label">{{ __('Založil / upravil') }}</label>
-                <input class="form-control" id="user_name" name="user_name" type="text" readonly>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-lg-12">
-                <div class="form-group">
-                  <label class="form-label">{{ __('Content') }}</label>
-                  <textarea class="summernote form-control" id="content" name="content"></textarea>
+              <div class="row">
+                <div class="col-12 col-lg-12">
+                  <div class="form-group">
+                    <label class="form-label">{{ __('Content') }}</label>
+                    <textarea class="summernote form-control" id="content" name="content"></textarea>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <input id="action" name="action" type="hidden" />
-          <input id="hidden_id" name="hidden_id" type="hidden" />
-          <input id="user_id" name="user_id" type="hidden" />
+            <input id="action" name="action" type="hidden" />
+            <input id="hidden_id" name="hidden_id" type="hidden" />
+            <input id="user_id" name="user_id" type="hidden" />
 
-          <div class="modal-footer">
-            <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
-              <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                <path d="M10 10l4 4m0 -4l-4 4"></path>
-              </svg>
-              {{ __('Close') }}
-            </button>
-            <div class="align-content-end flex">
-              <button class="btn btn-primary ms-auto hover-shadow" id="action_button" name="action_button" type="submit">
-                <svg class="icon icon-tabler icon-tabler-book-upload" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <div class="modal-footer">
+              <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
+                <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
-                  <path d="M11 16h-5a2 2 0 0 0 -2 2"></path>
-                  <path d="M15 16l3 -3l3 3"></path>
-                  <path d="M18 13v9"></path>
+                  <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                  <path d="M10 10l4 4m0 -4l-4 4"></path>
                 </svg>
-                Upravit
+                {{ __('Close') }}
               </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  {{-- Notification Delete Modal --}}
-  <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-      <div class="modal-content shadow-lg">
-        <div class="modal-status bg-danger"></div>
-        <div class="modal-body py-4 text-center">
-          <svg class="icon text-danger icon-lg mb-3" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-            fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 9v2m0 4v.01" />
-            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
-          </svg>
-          <h3>{{ __('Are you sure?') }}</h3>
-          <div class="text-muted mb-3">
-            {{ __('Do you really want to remove event?') }}<br>{{ __('This operation cannot be undone') }}
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="w-100">
-            <div class="row">
-              <div class="col">
-                <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
-                  {{ __('Cancel') }}
+              <div class="align-content-end flex">
+                <button class="btn btn-primary ms-auto hover-shadow" id="action_button" name="action_button" type="submit">
+                  <svg class="icon icon-tabler icon-tabler-book-upload" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
+                    <path d="M11 16h-5a2 2 0 0 0 -2 2"></path>
+                    <path d="M15 16l3 -3l3 3"></path>
+                    <path d="M18 13v9"></path>
+                  </svg>
+                  Upravit
                 </button>
               </div>
-              <div class="col">
-                <button class="btn btn-danger w-100 hover-shadow" id="ok_button"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    {{-- Notification Delete Modal --}}
+    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg">
+          <div class="modal-status bg-danger"></div>
+          <div class="modal-body py-4 text-center">
+            <svg class="icon text-danger icon-lg mb-3" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+              fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 9v2m0 4v.01" />
+              <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+            </svg>
+            <h3>{{ __('Are you sure?') }}</h3>
+            <div class="text-muted mb-3">
+              {{ __('Do you really want to remove event?') }}<br>{{ __('This operation cannot be undone') }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="w-100">
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
+                    {{ __('Cancel') }}
+                  </button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-danger w-100 hover-shadow" id="ok_button"></button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-@endsection
+  @endsection
 
-@section('scripts')
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.summernote').summernote({
-        // placeholder: 'Text oznámení',
-        tabsize: 2,
-        height: 350
-      })
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-
-      function fill(Value) {
-        $('#search').val(Value);
-        $('#display').hide();
-      }
-
-    });
-
-    $(document).ready(function() {
-      $("#search").keyup(function() {
-        var name = $('#search').val();
-        if (name === "") {
-          $("#display").html("");
-        } else {
-          $.ajax({
-            type: "GET",
-            url: "{{ route('dokument.search') }}",
-            data: {
-              search: name
-            },
-            success: function(html) {
-              $("#display").html(html).show();
-            }
-          });
-        }
-      });
-      $("#search-employee").keyup(function() {
-        var name = $('#search-employee').val();
-        if (name === "") {
-          $("#display").html("");
-        } else {
-          $.ajax({
-            type: "GET",
-            url: "{{ route('employees.search') }}",
-            data: {
-              search: name
-            },
-            success: function(html) {
-              $("#display").html(html).show();
-            }
-          });
-        }
-        content
-      });
-    });
-  </script>
-
-  <script>
-    // Form Modal Functions
-    $(document).on('click', '.edit', function() {
-      id = $(this).attr('id');
-      content
-      $.ajax({
-        url: "/notifications/" + id + "/edit",
-        dataType: "json",
-        success: function(html) {
-          $('#modal-header', '#modal-icon').removeClass()
-          $('#inputForm')[0].reset()
-          $('#attachment, #action_button').removeClass('d-none')
-          $('#formModal').modal('show')
-          $('#modal-icon').html(html.data.type.svg_icon).addClass("bg-" + html.data.type.type_color + "-lt")
-          $('#modal-header').addClass("modal-header bg-" + html.data.type.type_color + "-lt")
-          $('.modal-title').text("{{ __('Edit') }} oznámení - " + html.data.title)
-          $('#action_button').text("{{ __('Edit') }} oznámení")
-          $('#action').val("Edit")
-          $('#title').val(html.data.title)
-          $('#content').summernote('code', html.data.content)
-          $('#type_id').val(html.data.type_id)
-          $('#importance').val(html.data.importance)
-          $('#status').val(html.data.status)
-          $('#hidden_id').val(html.data.id)
-          $('#user_id').val(html.data.user_id)
-          $('#user_name').val(html.data.user.name)
-        }
-      })
-    });
-
-    $('#openCreateModal').click(function() {
-      $('#modal-header', '#modal-icon').removeClass()
-      $('#inputForm')[0].reset();
-      $("#action_button").removeClass('d-none')
-      $('#formModal').modal('show')
-      $('#content').summernote('code', '')
-      $('#modal-icon').html().addClass('bg-lime-lt');
-      $('#modal-header').addClass('bg-lime-lt modal-header')
-      $('#action_button, .modal-title').text("{{ __('Vytvořit nové oznámení') }}")
-      $('#action').val("Add")
-      $('#status').val('Zobrazeno')
-      $('#type_id').val(8)
-      $('#importance').val('muted')
-      $('#user_id').val('{{ auth()->user()->id ?? null }}')
-      $('#user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
-    })
-
-    $('#inputForm').on('submit', function(event) {
-      event.preventDefault();
-      if ($('#action').val() === 'Add') {
-        $.ajax({
-          url: "{{ route('notifications.store') }}",
-          method: "POST",
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData: false,
-          dataType: "json",
-          success: function(data) {
-            var html = '';
-            if (data.errors) {
-              html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
-              for (var count = 0; count < data.errors.length; count++) {
-                html += '<li>' + data.errors[count] + '</li>';
-              }
-              html +=
-                '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
-              $('#form_result_modal').html(html);
-            }
-            if (data.success) {
-              html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                data.success +
-                '</li></ul></div>';
-              $('#formModal').modal('hide')
-              $('#inputForm')[0].reset();
-              location.reload()
-              $('#form_result_window').html(html);
-            }
-          }
+  @section('scripts')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('.summernote').summernote({
+          // placeholder: 'Text oznámení',
+          tabsize: 2,
+          height: 350
         })
-      }
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
 
-      if ($('#action').val() === "Edit") {
-        event.preventDefault();
-        $.ajax({
-          url: "{{ route('notification.update') }}",
-          method: "POST",
-          data: new FormData(this),
-          contentType: false,
-          cache: false,
-          processData: false,
-          dataType: "json",
-          success: function(data) {
-            var html = '';
-            if (data.errors) {
-              html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
-              for (var count = 0; count < data.errors.length; count++) {
-                html += '<li>' + data.errors[count] + '</li>';
+        function fill(Value) {
+          $('#search').val(Value);
+          $('#display').hide();
+        }
+
+      });
+
+      $(document).ready(function() {
+        $("#search").keyup(function() {
+          var name = $('#search').val();
+          if (name === "") {
+            $("#display").html("");
+          } else {
+            $.ajax({
+              type: "GET",
+              url: "{{ route('dokument.search') }}",
+              data: {
+                search: name
+              },
+              success: function(html) {
+                $("#display").html(html).show();
               }
-              html += '</ul></div>';
-              $('#form_result_modal').html(html);
-            }
-            if (data.success) {
-              html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                data.success + '</li></ul></div>';
-              $('#form_result_window').html(html);
-              location.reload();
-              $('#formModal').modal('hide');
-            }
+            });
           }
         });
-      }
-    })
+        $("#search-employee").keyup(function() {
+          var name = $('#search-employee').val();
+          if (name === "") {
+            $("#display").html("");
+          } else {
+            $.ajax({
+              type: "GET",
+              url: "{{ route('employees.search') }}",
+              data: {
+                search: name
+              },
+              success: function(html) {
+                $("#display").html(html).show();
+              }
+            });
+          }
+          content
+        });
+      });
+    </script>
 
-    // Delete document and delete confirm modal
-    $(document).on('click', '.delete', function() {
-      id = $(this).attr('id')
-      $('#ok_button').text("{{ __('Delete') }}")
-      $('#confirmModal').modal('show')
-      $('#ok_button').click(function() {
+    <script>
+      // Form Modal Functions
+      $(document).on('click', '.edit', function() {
+        id = $(this).attr('id');
+        content
         $.ajax({
-          url: "/notifications/destroy/" + id,
-          beforeSend: function() {
-            $('#ok_button').text("{{ __('Deleting ...') }}")
-          },
-          success: function(data) {
-            setTimeout(function() {
-              $('#confirmModal').modal('hide');
-              $('#ok_button').text("{{ __('Delete') }}")
-              location.reload();
-            }, 1000);
+          url: "/notifications/" + id + "/edit",
+          dataType: "json",
+          success: function(html) {
+            $('#modal-header', '#modal-icon').removeClass()
+            $('#inputForm')[0].reset()
+            $('#attachment, #action_button').removeClass('d-none')
+            $('#formModal').modal('show')
+            $('#modal-icon').html(html.data.type.svg_icon).addClass("bg-" + html.data.type.type_color + "-lt")
+            $('#modal-header').addClass("modal-header bg-" + html.data.type.type_color + "-lt")
+            $('.modal-title').text("{{ __('Edit') }} oznámení - " + html.data.title)
+            $('#action_button').text("{{ __('Edit') }} oznámení")
+            $('#action').val("Edit")
+            $('#title').val(html.data.title)
+            $('#content').summernote('code', html.data.content)
+            $('#type_id').val(html.data.type_id)
+            $('#importance').val(html.data.importance)
+            $('#status').val(html.data.status)
+            $('#hidden_id').val(html.data.id)
+            $('#user_id').val(html.data.user_id)
+            $('#user_name').val(html.data.user.name)
           }
         })
+      });
+
+      $('#openCreateModal').click(function() {
+        $('#modal-header', '#modal-icon').removeClass()
+        $('#inputForm')[0].reset();
+        $("#action_button").removeClass('d-none')
+        $('#formModal').modal('show')
+        $('#content').summernote('code', '')
+        $('#modal-icon').html().addClass('bg-lime-lt');
+        $('#modal-header').addClass('bg-lime-lt modal-header')
+        $('#action_button, .modal-title').text("{{ __('Vytvořit nové oznámení') }}")
+        $('#action').val("Add")
+        $('#status').val('Zobrazeno')
+        $('#type_id').val(8)
+        $('#importance').val('muted')
+        $('#user_id').val('{{ auth()->user()->id ?? null }}')
+        $('#user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
       })
-    })
-  </script>
-@endsection
+
+      $('#inputForm').on('submit', function(event) {
+        event.preventDefault();
+        if ($('#action').val() === 'Add') {
+          $.ajax({
+            url: "{{ route('notifications.store') }}",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: "json",
+            success: function(data) {
+              var html = '';
+              if (data.errors) {
+                html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
+                for (var count = 0; count < data.errors.length; count++) {
+                  html += '<li>' + data.errors[count] + '</li>';
+                }
+                html +=
+                  '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
+                $('#form_result_modal').html(html);
+              }
+              if (data.success) {
+                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                  data.success +
+                  '</li></ul></div>';
+                $('#formModal').modal('hide')
+                $('#inputForm')[0].reset();
+                location.reload()
+                $('#form_result_window').html(html);
+              }
+            }
+          })
+        }
+
+        if ($('#action').val() === "Edit") {
+          event.preventDefault();
+          $.ajax({
+            url: "{{ route('notification.update') }}",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            dataType: "json",
+            success: function(data) {
+              var html = '';
+              if (data.errors) {
+                html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
+                for (var count = 0; count < data.errors.length; count++) {
+                  html += '<li>' + data.errors[count] + '</li>';
+                }
+                html += '</ul></div>';
+                $('#form_result_modal').html(html);
+              }
+              if (data.success) {
+                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                  data.success + '</li></ul></div>';
+                $('#form_result_window').html(html);
+                location.reload();
+                $('#formModal').modal('hide');
+              }
+            }
+          });
+        }
+      })
+
+      // Delete document and delete confirm modal
+      $(document).on('click', '.delete', function() {
+        id = $(this).attr('id')
+        $('#ok_button').text("{{ __('Delete') }}")
+        $('#confirmModal').modal('show')
+        $('#ok_button').click(function() {
+          $.ajax({
+            url: "/notifications/destroy/" + id,
+            beforeSend: function() {
+              $('#ok_button').text("{{ __('Deleting ...') }}")
+            },
+            success: function(data) {
+              setTimeout(function() {
+                $('#confirmModal').modal('hide');
+                $('#ok_button').text("{{ __('Delete') }}")
+                location.reload();
+              }, 1000);
+            }
+          })
+        })
+      })
+    </script>
+  @endsection

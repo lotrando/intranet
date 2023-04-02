@@ -164,11 +164,9 @@
                     <span class="avatar avatar-sm" style="background-image: url({{ asset('foto/' . $notification->user->personal_number . '.jpg') }}"></span>
                   </div>
                   <div class="avatar mx-2 bg-transparent">
-                    <a href="{{ route($notification->type->type_route, $notification->type->id) }}">
-                      <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
-                        {!! $notification->type->svg_icon !!}
-                      </span>
-                    </a>
+                    <span class="avatar bg-{{ $notification->type->type_color ?? 'muted' }}-lt">
+                      {!! $notification->type->svg_icon !!}
+                    </span>
                   </div>
                   <div>
                     <h2 class="mb-0">{{ $notification->title }}</h2>
