@@ -88,9 +88,9 @@
                           <div class="row align-items-center g-3 mx-1">
                             <div class="avatar bg-{{ $item->category->color }}-lt col-auto" data-bs-toggle="tooltip" data-bs-placement="top"
                               data-bs-original-title="{{ $item->category->category_name }}">
-                                <div class="text-uppercase">
-                                  {!! $item->category->svg_icon !!}
-                                </div>
+                              <div class="text-uppercase">
+                                {!! $item->category->svg_icon !!}
+                              </div>
                             </div>
                             <div class="col-auto">
                               <a href="{{ route('soubory.isp.download', $item->id) }}" target="_blank">
@@ -487,7 +487,7 @@
 
     {{-- Document Show Modal --}}
     <div class="modal fade" id="showModal" role="dialog" aria-hidden="true" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered modal-full-width" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content shadow-lg">
           <div id="show-modal-header">
             <h5 class="modal-title"></h5>
@@ -495,73 +495,7 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-7">
-
-                <div class="row">
-                  <div class="col-2 mb-3 mt-3">
-                    <label class="form-label">{{ __('Position') }}</label>
-                    <input class="form-control" id="show-position" type="text" readonly>
-                  </div>
-                  <div class="col-7 mb-3 mt-3">
-                    <label class="form-label">{{ __('Name') }} dokumentu</label>
-                    <input class="form-control" id="show-name" type="text" readonly>
-                  </div>
-                  <div class="col-3 mb-3 mt-3">
-                    <label class="form-label">{{ __('Revision') }}</label>
-                    <input class="form-control" id="show-revision" type="text" readonly>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12 mb-3">
-                    <label class="form-label">{{ __('Popis dokumentu') }} </label>
-                    <input class="form-control" id="show-description" type="text" readonly>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-4 mb-3">
-                    <label class="form-label">{{ __('Datum revize') }}</label>
-                    <input class="form-control" id="show-revision_date" type="date" readonly>
-                  </div>
-                  <div class="col-4 mb-3">
-                    <label class="form-label">{{ __('Datum další revize') }}</label>
-                    <input class="form-control" id="show-next_revision_date" type="date" readonly>
-                  </div>
-                  <div class="col-4 mb-3">
-                    <label class="form-label">{{ __('Platnost dokumentu od') }}</label>
-                    <input class="form-control" id="show-efficiency" type="date" readonly>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-3 mb-3">
-                    <label class="form-label">{{ __('Zpracoval/a') }}</label>
-                    <input class="form-control" id="show-processed" type="text" readonly>
-                  </div>
-                  <div class="col-9 mb-3">
-                    <label class="form-label">{{ __('Oblast působnosti dokumentu') }}</label>
-                    <input class="form-control" id="show-tags" type="text" readonly>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12 mb-3">
-                    <label class="form-label">{{ __('Soubor') }}</label>
-                    <input class="form-control" id="show-file" type="text" readonly>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <label class="form-label">{{ __('Status') }}</label>
-                    <input class="form-control" id="show-status" readonly>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <label class="form-label">{{ __('Založil / upravil') }}</label>
-                    <input class="form-control" id="show-user_name" name="user_name" type="text" readonly>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-5 p-1">
+              <div class="col-12 p-1">
                 <div id="pdf-preview-show"></div>
                 <input id="category_id" name="category_id" type="hidden">
                 <input id="action" name="action" type="hidden" />
@@ -570,7 +504,6 @@
               </div>
             </div>
           </div>
-
           <div class="modal-footer">
             <div class="align-content-end flex">
               <a class="btn btn-red ms-auto hover-shadow" id="download-btn" type="button" href="">
@@ -611,7 +544,6 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
-
                 <div class="row">
                   <div class="col-2 mb-3 mt-3">
                     <label class="form-label">{{ __('Position') }}</label>
@@ -625,566 +557,530 @@
                     <label class="form-label">{{ __('Revision') }}</label>
                     <input class="form-control" id="add-show-revision" type="text" readonly>
                   </div>
+
+                  <div id="pdf-preview-addon-show"></div>
                 </div>
 
-                <div id="pdf-preview-addon-show"></div>
-
-                <div class="row">
-                  <div class="col-12 mb-3">
-                    <label class="form-label">{{ __('Soubor') }}</label>
-                    <input class="form-control" id="add-show-file" type="text" readonly>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <label class="form-label">{{ __('Status') }}</label>
-                    <input class="form-control" id="add-show-status" readonly>
-                  </div>
-                  <div class="col-6 mb-3">
-                    <label class="form-label">{{ __('Založil / upravil') }}</label>
-                    <input class="form-control" id="add-show-user-name" readonly>
-                  </div>
+                <div class="col-5 p-1">
+                  <input id="category_id" name="category_id" type="hidden">
+                  <input id="action" name="action" type="hidden" />
+                  <input id="hidden_id" name="hidden_id" type="hidden" />
+                  <input id="user_id" name="user_id" type="hidden" />
                 </div>
-              </div>
-
-              <div class="col-5 p-1">
-                <input id="category_id" name="category_id" type="hidden">
-                <input id="action" name="action" type="hidden" />
-                <input id="hidden_id" name="hidden_id" type="hidden" />
-                <input id="user_id" name="user_id" type="hidden" />
               </div>
             </div>
-          </div>
 
-          <div class="modal-footer">
-            <div class="align-content-end flex">
-              <a class="btn btn-red ms-auto hover-shadow" id="add-download-btn" type="button" href="">
-                <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                  stroke-linecap="round" stroke-linejoin="round">
+            <div class="modal-footer">
+              <div class="align-content-end flex">
+                <a class="btn btn-red ms-auto hover-shadow" id="add-download-btn" type="button" href="">
+                  <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
+                    <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
+                    <path d="M15 19l3 3l3 -3"></path>
+                    <path d="M18 22v-9"></path>
+                  </svg>
+                  {{ __('Download file') }}</a>
+              </div>
+              <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
+                <svg class="icon icon-inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
-                  <path d="M13 16h-7a2 2 0 0 0 -2 2"></path>
-                  <path d="M15 19l3 3l3 -3"></path>
-                  <path d="M18 22v-9"></path>
+                  <rect x="4" y="4" width="16" height="16" rx="2">
+                  </rect>
+                  <path d="M10 10l4 4m0 -4l-4 4"></path>
                 </svg>
-                {{ __('Download file') }}</a>
+                {{ __('Close') }}
+              </button>
             </div>
-            <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
-              <svg class="icon icon-inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <rect x="4" y="4" width="16" height="16" rx="2">
-                </rect>
-                <path d="M10 10l4 4m0 -4l-4 4"></path>
+
+          </div>
+        </div>
+      </div>
+
+      {{-- Delete Modal --}}
+      <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content shadow-lg">
+            {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="{{ __('Close') }}"></button> --}}
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body py-4 text-center">
+              <svg class="icon text-danger icon-lg mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 9v2m0 4v.01" />
+                <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
               </svg>
-              {{ __('Close') }}
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    {{-- Delete Modal --}}
-    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
-      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content shadow-lg">
-          {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="{{ __('Close') }}"></button> --}}
-          <div class="modal-status bg-danger"></div>
-          <div class="modal-body py-4 text-center">
-            <svg class="icon text-danger icon-lg mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-              stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12 9v2m0 4v.01" />
-              <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
-            </svg>
-            <h3>{{ __('Are you sure?') }}</h3>
-            <div class="text-muted mb-3">
-              {{ __('Do you really want to remove standard event?') }}<br>{{ __('This operation cannot be undone') }}
+              <h3>{{ __('Are you sure?') }}</h3>
+              <div class="text-muted mb-3">
+                {{ __('Do you really want to remove standard event?') }}<br>{{ __('This operation cannot be undone') }}
+              </div>
+              <div class="text-info">
+                {{ __('If the standard contains appendices, it will be possible to subsequently attach these appendices to a new or different standard') }}
+              </div>
             </div>
-            <div class="text-info">
-              {{ __('If the standard contains appendices, it will be possible to subsequently attach these appendices to a new or different standard') }}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div class="w-100">
-              <div class="row">
-                <div class="col">
-                  <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
-                    {{ __('Cancel') }}
-                  </button>
-                </div>
-                <div class="col">
-                  <button class="btn btn-danger w-100 hover-shadow" id="ok_button"></button>
+            <div class="modal-footer">
+              <div class="w-100">
+                <div class="row">
+                  <div class="col">
+                    <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
+                      {{ __('Cancel') }}
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button class="btn btn-danger w-100 hover-shadow" id="ok_button"></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    {{-- Addon Delete Modal --}}
-    <div class="modal fade" id="addConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
-      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content shadow-lg">
-          {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="{{ __('Close') }}"></button> --}}
-          <div class="modal-status bg-danger"></div>
-          <div class="modal-body py-4 text-center">
-            <svg class="icon text-danger icon-lg mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-              stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M12 9v2m0 4v.01" />
-              <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
-            </svg>
-            <h3>{{ __('Are you sure?') }}</h3>
-            <div class="text-muted mb-3">
-              {{ __('Do you really want to remove addon event?') }}<br>{{ __('This operation cannot be undone') }}
+      {{-- Addon Delete Modal --}}
+      <div class="modal fade" id="addConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+          <div class="modal-content shadow-lg">
+            {{-- <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="{{ __('Close') }}"></button> --}}
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body py-4 text-center">
+              <svg class="icon text-danger icon-lg mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 9v2m0 4v.01" />
+                <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+              </svg>
+              <h3>{{ __('Are you sure?') }}</h3>
+              <div class="text-muted mb-3">
+                {{ __('Do you really want to remove addon event?') }}<br>{{ __('This operation cannot be undone') }}
+              </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <div class="w-100">
-              <div class="row">
-                <div class="col">
-                  <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
-                    {{ __('Cancel') }}
-                  </button>
-                </div>
-                <div class="col">
-                  <button class="btn btn-danger w-100 hover-shadow" id="add_ok_button"></button>
+            <div class="modal-footer">
+              <div class="w-100">
+                <div class="row">
+                  <div class="col">
+                    <button class="btn btn-muted w-100 hover-shadow" data-bs-dismiss="modal">
+                      {{ __('Cancel') }}
+                    </button>
+                  </div>
+                  <div class="col">
+                    <button class="btn btn-danger w-100 hover-shadow" id="add_ok_button"></button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  @endsection
+    @endsection
 
-  @section('scripts')
-    <script src="{{ asset('js/pdfobject.js') }}"></script>
-    <script>
-      $(document).ready(function() {
+    @section('scripts')
+      <script src="{{ asset('js/pdfobject.js') }}"></script>
+      <script>
+        $(document).ready(function() {
 
-        function fill(Value) {
-          $('#search').val(Value);
-          $('#display').hide();
-        }
+          function fill(Value) {
+            $('#search').val(Value);
+            $('#display').hide();
+          }
 
-      });
+        });
 
-      $(document).ready(function() {
-        $("#search").keyup(function() {
-          var name = $('#search').val();
-          if (name === "") {
-            $("#display").html("");
-          } else {
+        $(document).ready(function() {
+          $("#search").keyup(function() {
+            var name = $('#search').val();
+            if (name === "") {
+              $("#display").html("");
+            } else {
+              $.ajax({
+                type: "GET",
+                url: "{{ route('dokument.search') }}",
+                data: {
+                  search: name
+                },
+                success: function(html) {
+                  $("#display").html(html).show();
+                }
+              });
+            }
+          });
+        });
+      </script>
+
+      <script>
+        // Form Modal Functions
+        $(document).on('click', '.edit', function() {
+          id = $(this).attr('id');
+          $('#unique_code').prop('readonly', true);
+          $('#form_result_modal, #form_result_window').html('');
+          $.ajax({
+            url: "/documents/" + id + "/edit",
+            dataType: "json",
+            success: function(html) {
+              $('#inputForm')[0].reset();
+              $('.modal-title').val('');
+              $('#attachment, #action_button, #pdf-preview-show, #pdf-preview, #pdf-preview-addon-show')
+                .removeClass('d-none');
+              $('#formModal').modal('show');
+              $('#modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
+                'bg-{{ $categorie->color }}-lt');
+              $('#modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
+              $('#action_button, .modal-title').text("{{ __('Edit') }} dokument")
+              $('#action').val("Edit");
+              $('#category_id').val(html.data.category_id);
+              $('#folder_name').val(html.data.category.folder_name);
+              $('#category_file').val(html.data.category.category_file);
+              $('#name').val(html.data.name);
+              $('#processed').val('Pribula Marek, Bc.');
+              $('#efficiency').val(html.data.efficiency);
+              $('#revision').val(html.data.revision);
+              $('#revision_date').val(html.data.revision_date);
+              $('#next_revision_date').val(moment($('#revision_date').val()).add(1, 'Y').format(
+                'YYYY-MM-DD'));
+              $('#tags').val(html.data.tags);
+              $('#unique_code').val(html.data.unique_code);
+              $('#description').val(html.data.description);
+              $('#position').val(html.data.position);
+              $('#attachment').val(html.data.attachment);
+              $('#status').val(html.data.status);
+              $('#onscreen').val(html.data.onscreen);
+              $('#user_id').val('{{ auth()->user()->id ?? null }}');
+              $('#user_name').val(html.data.user.name);
+              $('#hidden_id').val(html.data.id);
+              $('#hidden_file').val(html.data.file);
+              $('#revision_date').change(function() {
+                var revisionDate = moment($(this).val()).format('YYYY-MM-DD')
+                var nextRevisionDate = moment(revisionDate).add(1, 'Y').format(
+                  'YYYY-MM-DD')
+                var efficiencyDate = moment(revisionDate).year(2014).format(
+                  'YYYY-MM-DD')
+                $('#efficiency').val(efficiencyDate)
+                $('#next_revision_date').val(nextRevisionDate)
+              })
+              PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#pdf-preview", {
+                height: "20rem"
+              })
+            }
+          })
+        });
+
+        $(document).on('click', '.add-edit', function() {
+          id = $(this).attr('id');
+          $('#add_form_result_modal, #form_result_window').html('');
+          $.ajax({
+            url: "/documents/addons/" + id + "/edit",
+            dataType: "json",
+            success: function(html) {
+              $('#addInputForm')[0].reset();
+              $('.modal-title').val('');
+              $('#add_action_button, #add-pdf-preview').removeClass('d-none');
+              $('#addFormModal').modal('show');
+              $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt');
+              $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
+              $('#add_action_button, .modal-title').text("{{ __('Addon Edit') }}")
+              $('#add_action').val("Edit");
+              $('#add_category_id').val(html.data.category_id);
+              $('#add_folder_name').val(html.data.category.folder_name);
+              $('#add_category_file').val(html.data.category.category_file);
+              $('#add_revision').val(html.data.revision);
+              $('#add_description').val(html.data.description);
+              $('#add_position').val(html.data.position);
+              $('#add_status').val(html.data.status);
+              $('#add_onscreen').val(html.data.onscreen);
+              $('#add_user_id').val('{{ auth()->user()->id ?? null }}');
+              $('#add_document_id').val(html.data.document_id);
+              $('#add_user_name').val(html.data.user.name);
+              $('#add_hidden_id').val(html.data.id);
+              $('#add_hidden_file').val(html.data.file);
+              PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#add-pdf-preview", {
+                height: "25rem"
+              })
+            }
+          })
+        });
+
+        $(document).on('click', '.show', function() {
+          id = $(this).attr('id');
+          $('#form_result_modal, #form_result_window').html('');
+          $.ajax({
+            url: "/documents/" + id,
+            dataType: "json",
+            success: function(html) {
+              $('#inputForm')[0].reset()
+              $('.modal-title, #pdf-preview-show, #pdf-preview').val('')
+              $('#pdf-preview-show, #pdf-preview, #pdf-preview-addon-show').removeClass('d-none')
+              $('#showModal').modal('show')
+              $('#show-modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
+                'bg-{{ $categorie->color }}-lt')
+              $('#show-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
+              $('.modal-title').text(html.data.name + ' - ' + html.data.description)
+              $('#category_id').val(html.data.category_id)
+              $('#show-folder_name').val(html.data.category.folder_name)
+              $('#show-name').val(html.data.name)
+              $('#show-hidden_id').val(html.data.id)
+              $('#download-btn').attr("href", "/soubory/bozp/" + html.data.id + "")
+              PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
+                "#pdf-preview-show", {
+                  height: "45rem"
+                })
+            }
+          })
+        });
+
+        $(document).on('click', '.show-addon', function() {
+          id = $(this).attr('id');
+          $.ajax({
+            url: "/documents/addons/" + id,
+            dataType: "json",
+            success: function(html) {
+              $('#addInputForm')[0].reset()
+              $('.modal-title').val('')
+              $('#addShowModal').modal('show')
+              $('#add-show-modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
+                'bg-{{ $categorie->color }}-lt')
+              $('#add-show-modal-header').addClass(
+                "modal-header bg-{{ $categorie->color }}-lt")
+              $('.modal-title').html(html.data.description + " - příloha")
+              $('#add-show-description').val(html.data.description)
+              $('#add-show-hidden_id').val(html.data.id)
+              $('#add-download-btn').attr("href", "/soubory/bozp/priloha/" + html.data.id +
+                "")
+              PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
+                "#pdf-preview-addon-show", {
+                  height: "28rem"
+                })
+            }
+          })
+        });
+
+        $('#openCreateModal').click(function() {
+          $('#inputForm')[0].reset();
+          $("#attachment, #action_button").removeClass('d-none')
+          $('#pdf-preview-show, #pdf-preview').addClass('d-none')
+          $('#unique_code').prop('readonly', true)
+          $('#category_id').val('{{ $categorie->id }}')
+          $('#formModal').modal('show')
+          $('#modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt')
+          $('#modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
+          $('#action_button, .modal-title').text("{{ __('Create new') }}")
+          $('#action').val("Add")
+          $('#position').val('{{ $lastpos + 1 }}')
+          $('#folder_name').val("{{ $categorie->folder_name }}")
+          $('#status').val('Schváleno')
+          $('#user_id').val('{{ auth()->user()->id ?? null }}')
+          $('#user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
+          $('#unique_code').val('ISP{{ $categorie->id }}#{{ $lastpos + 1 }}')
+          $('#revision').val('{{ $lastpos - $lastpos + 1 }}')
+          $('#category_file').val('{{ $categorie->category_file }}');
+          $('#processed').val('Pribula Marek, Bc.')
+          $('#revision_date').change(function() {
+            var revisionDate = moment($(this).val()).format('YYYY-MM-DD')
+            var nextRevisionDate = moment(revisionDate).add(1, 'Y').format('YYYY-MM-DD')
+            $('#efficiency').val($('#revision_date').val())
+            $('#next_revision_date').val(nextRevisionDate)
+          })
+        })
+
+        $('#inputForm').on('submit', function(event) {
+          event.preventDefault();
+          if ($('#action').val() === 'Add') {
             $.ajax({
-              type: "GET",
-              url: "{{ route('dokument.search') }}",
-              data: {
-                search: name
-              },
-              success: function(html) {
-                $("#display").html(html).show();
+              url: "{{ route('documents.store') }}",
+              method: "POST",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: "json",
+              success: function(data) {
+                var html = '';
+                if (data.errors) {
+                  html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
+                  for (var count = 0; count < data.errors.length; count++) {
+                    html += '<li>' + data.errors[count] + '</li>';
+                  }
+                  html +=
+                    '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
+                  $('#form_result_modal').html(html);
+                }
+                if (data.success) {
+                  html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                    data.success +
+                    '</li></ul></div>';
+                  $('#formModal').modal('hide')
+                  $('#inputForm')[0].reset();
+                  location.reload()
+                  $('#form_result_window').html(html);
+                }
+              }
+            })
+          }
+
+          if ($('#action').val() === "Edit") {
+            event.preventDefault();
+            $.ajax({
+              url: "{{ route('documents.update') }}",
+              method: "POST",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: "json",
+              success: function(data) {
+                var html = '';
+                if (data.errors) {
+                  html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
+                  for (var count = 0; count < data.errors.length; count++) {
+                    html += '<li>' + data.errors[count] + '</li>';
+                  }
+                  html += '</ul></div>';
+                  $('#form_result_modal').html(html);
+                }
+                if (data.success) {
+                  html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                    data.success + '</li></ul></div>';
+                  $('#form_result_window').html(html);
+                  location.reload();
+                  $('#formModal').modal('hide');
+                }
               }
             });
           }
-        });
-      });
-    </script>
-
-    <script>
-      // Form Modal Functions
-      $(document).on('click', '.edit', function() {
-        id = $(this).attr('id');
-        $('#unique_code').prop('readonly', true);
-        $('#form_result_modal, #form_result_window').html('');
-        $.ajax({
-          url: "/documents/" + id + "/edit",
-          dataType: "json",
-          success: function(html) {
-            $('#inputForm')[0].reset();
-            $('.modal-title').val('');
-            $('#attachment, #action_button, #pdf-preview-show, #pdf-preview, #pdf-preview-addon-show')
-              .removeClass('d-none');
-            $('#formModal').modal('show');
-            $('#modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
-              'bg-{{ $categorie->color }}-lt');
-            $('#modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
-            $('#action_button, .modal-title').text("{{ __('Edit') }} dokument")
-            $('#action').val("Edit");
-            $('#category_id').val(html.data.category_id);
-            $('#folder_name').val(html.data.category.folder_name);
-            $('#category_file').val(html.data.category.category_file);
-            $('#name').val(html.data.name);
-            $('#processed').val('Pribula Marek, Bc.');
-            $('#efficiency').val(html.data.efficiency);
-            $('#revision').val(html.data.revision);
-            $('#revision_date').val(html.data.revision_date);
-            $('#next_revision_date').val(moment($('#revision_date').val()).add(1, 'Y').format(
-              'YYYY-MM-DD'));
-            $('#tags').val(html.data.tags);
-            $('#unique_code').val(html.data.unique_code);
-            $('#description').val(html.data.description);
-            $('#position').val(html.data.position);
-            $('#attachment').val(html.data.attachment);
-            $('#status').val(html.data.status);
-            $('#onscreen').val(html.data.onscreen);
-            $('#user_id').val('{{ auth()->user()->id ?? null }}');
-            $('#user_name').val(html.data.user.name);
-            $('#hidden_id').val(html.data.id);
-            $('#hidden_file').val(html.data.file);
-            $('#revision_date').change(function() {
-              var revisionDate = moment($(this).val()).format('YYYY-MM-DD')
-              var nextRevisionDate = moment(revisionDate).add(1, 'Y').format(
-                'YYYY-MM-DD')
-              var efficiencyDate = moment(revisionDate).year(2014).format(
-                'YYYY-MM-DD')
-              $('#efficiency').val(efficiencyDate)
-              $('#next_revision_date').val(nextRevisionDate)
-            })
-            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#pdf-preview", {
-              height: "20rem"
-            })
-          }
         })
-      });
 
-      $(document).on('click', '.add-edit', function() {
-        id = $(this).attr('id');
-        $('#add_form_result_modal, #form_result_window').html('');
-        $.ajax({
-          url: "/documents/addons/" + id + "/edit",
-          dataType: "json",
-          success: function(html) {
-            $('#addInputForm')[0].reset();
-            $('.modal-title').val('');
-            $('#add_action_button, #add-pdf-preview').removeClass('d-none');
-            $('#addFormModal').modal('show');
-            $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt');
-            $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
-            $('#add_action_button, .modal-title').text("{{ __('Addon Edit') }}")
-            $('#add_action').val("Edit");
-            $('#add_category_id').val(html.data.category_id);
-            $('#add_folder_name').val(html.data.category.folder_name);
-            $('#add_category_file').val(html.data.category.category_file);
-            $('#add_revision').val(html.data.revision);
-            $('#add_description').val(html.data.description);
-            $('#add_position').val(html.data.position);
-            $('#add_status').val(html.data.status);
-            $('#add_onscreen').val(html.data.onscreen);
-            $('#add_user_id').val('{{ auth()->user()->id ?? null }}');
-            $('#add_document_id').val(html.data.document_id);
-            $('#add_user_name').val(html.data.user.name);
-            $('#add_hidden_id').val(html.data.id);
-            $('#add_hidden_file').val(html.data.file);
-            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0", "#add-pdf-preview", {
-              height: "25rem"
-            })
-          }
+        $('.addon').click(function() {
+          documentId = $(this).attr('id')
+          $('#addInputForm')[0].reset();
+          $("#add_action_button").removeClass('d-none')
+          $('#add-pdf-preview-show, #add-pdf-preview').addClass('d-none')
+          $('#add_category_id').val('{{ $categorie->id }}')
+          $('#addFormModal').modal('show')
+          $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt')
+          $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
+          $('#add_action_button, .modal-title').text("{{ __('Create new addon') }}")
+          $('#add_action').val("Add")
+          $('#add_position').val('')
+          $('#add_folder_name').val("{{ $categorie->folder_name }}")
+          $('#add_status').val('Schváleno')
+          $('#add_user_id').val('{{ auth()->user()->id ?? null }}')
+          $('#add_user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
+          $('#add_revision').val('')
+          $('#add_document_id').val(documentId ?? null)
+          $('#add_category_file').val('{{ $categorie->category_file }}');
+          $('#add_processed').val(
+            'Pribula Marek, Bc.')
         })
-      });
 
-      $(document).on('click', '.show', function() {
-        id = $(this).attr('id');
-        $('#unique_code').prop('readonly', true);
-        $('#form_result_modal, #form_result_window').html('');
-        $.ajax({
-          url: "/documents/" + id,
-          dataType: "json",
-          success: function(html) {
-            $('#inputForm')[0].reset()
-            $('.modal-title, #pdf-preview-show, #pdf-preview').val('')
-            $('#pdf-preview-show, #pdf-preview, #pdf-preview-addon-show').removeClass('d-none')
-            $('#showModal').modal('show')
-            $('#show-modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
-              'bg-{{ $categorie->color }}-lt')
-            $('#show-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
-            $('.modal-title').text(html.data.name + ' - ' + html.data.description)
-            $('#category_id').val(html.data.category_id)
-            $('#show-folder_name').val(html.data.category.folder_name)
-            $('#show-name').val(html.data.name)
-            $('#show-processed').val('Bc. Pribula Marek')
-            $('#show-efficiency').val(html.data.efficiency)
-            $('#show-revision').val(html.data.revision)
-            $('#show-revision_date').val(html.data.revision_date)
-            $('#show-next_revision_date').val(html.data.next_revision_date)
-            $('#show-tags').val(html.data.tags)
-            $('#show-description').val(html.data.description)
-            $('#show-position').val(html.data.position)
-            $('#show-file').val(html.data.file)
-            $('#show-status').val(html.data.status)
-            $('#show-user_id').val('{{ auth()->user()->id ?? null }}')
-            $('#show-user_name').val(html.data.user.name)
-            $('#attachment, #action_button').addClass('d-none')
-            $('#show-hidden_id').val(html.data.id)
-            $('#download-btn').attr("href", "/soubory/bozp/" + html.data.id + "")
-            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-              "#pdf-preview-show", {
-                height: "27rem"
-              })
-          }
-        })
-      });
-
-      $(document).on('click', '.show-addon', function() {
-        id = $(this).attr('id');
-        $.ajax({
-          url: "/documents/addons/" + id,
-          dataType: "json",
-          success: function(html) {
-            $('#addInputForm')[0].reset()
-            $('.modal-title').val('')
-            $('#addShowModal').modal('show')
-            $('#add-show-modal-icon').html('{!! $categorie->svg_icon !!}').addClass(
-              'bg-{{ $categorie->color }}-lt')
-            $('#add-show-modal-header').addClass(
-              "modal-header bg-{{ $categorie->color }}-lt")
-            $('.modal-title').html(html.data.description + " - příloha")
-            $('#add-show-description').val(html.data.description)
-            $('#add-show-position').val(html.data.position)
-            $('#add-show-file').val(html.data.file)
-            $('#add-show-revision').val(html.data.revision)
-            $('#add-show-status').val(html.data.status)
-            $('#user_id').val('{{ auth()->user()->id ?? null }}')
-            $('#add-show-user-name').val(html.data.user.name)
-            $('#add-show-hidden_id').val(html.data.id)
-            $('#add-download-btn').attr("href", "/soubory/bozp/priloha/" + html.data.id +
-              "")
-            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-              "#pdf-preview-addon-show", {
-                height: "28rem"
-              })
-          }
-        })
-      });
-
-      $('#openCreateModal').click(function() {
-        $('#inputForm')[0].reset();
-        $("#attachment, #action_button").removeClass('d-none')
-        $('#pdf-preview-show, #pdf-preview').addClass('d-none')
-        $('#unique_code').prop('readonly', true)
-        $('#category_id').val('{{ $categorie->id }}')
-        $('#formModal').modal('show')
-        $('#modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt')
-        $('#modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
-        $('#action_button, .modal-title').text("{{ __('Create new') }}")
-        $('#action').val("Add")
-        $('#position').val('{{ $lastpos + 1 }}')
-        $('#folder_name').val("{{ $categorie->folder_name }}")
-        $('#status').val('Schváleno')
-        $('#user_id').val('{{ auth()->user()->id ?? null }}')
-        $('#user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
-        $('#unique_code').val('ISP{{ $categorie->id }}#{{ $lastpos + 1 }}')
-        $('#revision').val('{{ $lastpos - $lastpos + 1 }}')
-        $('#category_file').val('{{ $categorie->category_file }}');
-        $('#processed').val('Pribula Marek, Bc.')
-        $('#revision_date').change(function() {
-          var revisionDate = moment($(this).val()).format('YYYY-MM-DD')
-          var nextRevisionDate = moment(revisionDate).add(1, 'Y').format('YYYY-MM-DD')
-          $('#efficiency').val($('#revision_date').val())
-          $('#next_revision_date').val(nextRevisionDate)
-        })
-      })
-
-      $('#inputForm').on('submit', function(event) {
-        event.preventDefault();
-        if ($('#action').val() === 'Add') {
-          $.ajax({
-            url: "{{ route('documents.store') }}",
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
-              var html = '';
-              if (data.errors) {
-                html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
-                for (var count = 0; count < data.errors.length; count++) {
-                  html += '<li>' + data.errors[count] + '</li>';
-                }
-                html +=
-                  '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
-                $('#form_result_modal').html(html);
-              }
-              if (data.success) {
-                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                  data.success +
-                  '</li></ul></div>';
-                $('#formModal').modal('hide')
-                $('#inputForm')[0].reset();
-                location.reload()
-                $('#form_result_window').html(html);
-              }
-            }
-          })
-        }
-
-        if ($('#action').val() === "Edit") {
+        $('#addInputForm').on('submit', function(event) {
           event.preventDefault();
-          $.ajax({
-            url: "{{ route('documents.update') }}",
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
-              var html = '';
-              if (data.errors) {
-                html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
-                for (var count = 0; count < data.errors.length; count++) {
-                  html += '<li>' + data.errors[count] + '</li>';
+          if ($('#add_action').val() === 'Add') {
+            $.ajax({
+              url: "{{ route('addons.store') }}",
+              method: "POST",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: "json",
+              success: function(data) {
+                var html = '';
+                if (data.errors) {
+                  html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
+                  for (var count = 0; count < data.errors.length; count++) {
+                    html += '<li>' + data.errors[count] + '</li>';
+                  }
+                  html +=
+                    '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
+                  $('#add_form_result_modal').html(html);
                 }
-                html += '</ul></div>';
-                $('#form_result_modal').html(html);
-              }
-              if (data.success) {
-                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                  data.success + '</li></ul></div>';
-                $('#form_result_window').html(html);
-                location.reload();
-                $('#formModal').modal('hide');
-              }
-            }
-          });
-        }
-      })
-
-      $('.addon').click(function() {
-        documentId = $(this).attr('id')
-        $('#addInputForm')[0].reset();
-        $("#add_action_button").removeClass('d-none')
-        $('#add-pdf-preview-show, #add-pdf-preview').addClass('d-none')
-        $('#add_category_id').val('{{ $categorie->id }}')
-        $('#addFormModal').modal('show')
-        $('#add-modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt')
-        $('#add-modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt")
-        $('#add_action_button, .modal-title').text("{{ __('Create new addon') }}")
-        $('#add_action').val("Add")
-        $('#add_position').val('')
-        $('#add_folder_name').val("{{ $categorie->folder_name }}")
-        $('#add_status').val('Schváleno')
-        $('#add_user_id').val('{{ auth()->user()->id ?? null }}')
-        $('#add_user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
-        $('#add_revision').val('')
-        $('#add_document_id').val(documentId ?? null)
-        $('#add_category_file').val('{{ $categorie->category_file }}');
-        $('#add_processed').val(
-          'Pribula Marek, Bc.')
-      })
-
-      $('#addInputForm').on('submit', function(event) {
-        event.preventDefault();
-        if ($('#add_action').val() === 'Add') {
-          $.ajax({
-            url: "{{ route('addons.store') }}",
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
-              var html = '';
-              if (data.errors) {
-                html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
-                for (var count = 0; count < data.errors.length; count++) {
-                  html += '<li>' + data.errors[count] + '</li>';
+                if (data.success) {
+                  html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                    data.success +
+                    '</li></ul></div>';
+                  $('#addFormModal').modal('hide')
+                  $('#addInputForm')[0].reset();
+                  location.reload()
+                  $('#add_form_result_window').html(html);
                 }
-                html +=
-                  '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
-                $('#add_form_result_modal').html(html);
               }
-              if (data.success) {
-                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                  data.success +
-                  '</li></ul></div>';
-                $('#addFormModal').modal('hide')
-                $('#addInputForm')[0].reset();
-                location.reload()
-                $('#add_form_result_window').html(html);
-              }
-            }
-          })
-        }
+            })
+          }
 
-        if ($('#add_action').val() === "Edit") {
-          event.preventDefault();
-          $.ajax({
-            url: "{{ route('addons.update') }}",
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
-              var html = '';
-              if (data.errors) {
-                html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
-                for (var count = 0; count < data.errors.length; count++) {
-                  html += '<li>' + data.errors[count] + '</li>';
+          if ($('#add_action').val() === "Edit") {
+            event.preventDefault();
+            $.ajax({
+              url: "{{ route('addons.update') }}",
+              method: "POST",
+              data: new FormData(this),
+              contentType: false,
+              cache: false,
+              processData: false,
+              dataType: "json",
+              success: function(data) {
+                var html = '';
+                if (data.errors) {
+                  html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
+                  for (var count = 0; count < data.errors.length; count++) {
+                    html += '<li>' + data.errors[count] + '</li>';
+                  }
+                  html += '</ul></div>';
+                  $('#add_form_result_modal').html(html);
                 }
-                html += '</ul></div>';
-                $('#add_form_result_modal').html(html);
+                if (data.success) {
+                  html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                    data.success + '</li></ul></div>';
+                  $('#add_form_result_window').html(html);
+                  location.reload();
+                  $('#addFormModal').modal('hide');
+                }
               }
-              if (data.success) {
-                html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
-                  data.success + '</li></ul></div>';
-                $('#add_form_result_window').html(html);
-                location.reload();
-                $('#addFormModal').modal('hide');
-              }
-            }
-          });
-        }
-      })
+            });
+          }
+        })
 
-      // Delete document and delete confirm modal
-      $(document).on('click', '.delete', function() {
-        id = $(this).attr('id')
-        $('#ok_button').text("{{ __('Delete') }}")
-        $('#confirmModal').modal('show')
-        $('#ok_button').click(function() {
-          $.ajax({
-            url: "/documents/destroy/" + id,
-            beforeSend: function() {
-              $('#ok_button').text("{{ __('Deleting ...') }}")
-            },
-            success: function(data) {
-              setTimeout(function() {
-                $('#confirmModal').modal('hide');
-                $('#ok_button').text("{{ __('Delete') }}")
-                location.reload();
-              }, 1000);
-            }
+        // Delete document and delete confirm modal
+        $(document).on('click', '.delete', function() {
+          id = $(this).attr('id')
+          $('#ok_button').text("{{ __('Delete') }}")
+          $('#confirmModal').modal('show')
+          $('#ok_button').click(function() {
+            $.ajax({
+              url: "/documents/destroy/" + id,
+              beforeSend: function() {
+                $('#ok_button').text("{{ __('Deleting ...') }}")
+              },
+              success: function(data) {
+                setTimeout(function() {
+                  $('#confirmModal').modal('hide');
+                  $('#ok_button').text("{{ __('Delete') }}")
+                  location.reload();
+                }, 1000);
+              }
+            })
           })
         })
-      })
 
-      // Delete addon and delete confirm modal
-      $(document).on('click', '.add-delete', function() {
-        id = $(this).attr('id')
-        $('#add_ok_button').text("{{ __('Delete') }}")
-        $('#addConfirmModal').modal('show')
-        $('#add_ok_button').click(function() {
-          $.ajax({
-            url: "/documents/addons/destroy/" + id,
-            beforeSend: function() {
-              $('#add_ok_button').text("{{ __('Deleting ...') }}")
-            },
-            success: function(data) {
-              setTimeout(function() {
-                $('#addConfirmModal').modal('hide');
-                $('#add_ok_button').text("{{ __('Delete') }}")
-                location.reload();
-              }, 1000);
-            }
+        // Delete addon and delete confirm modal
+        $(document).on('click', '.add-delete', function() {
+          id = $(this).attr('id')
+          $('#add_ok_button').text("{{ __('Delete') }}")
+          $('#addConfirmModal').modal('show')
+          $('#add_ok_button').click(function() {
+            $.ajax({
+              url: "/documents/addons/destroy/" + id,
+              beforeSend: function() {
+                $('#add_ok_button').text("{{ __('Deleting ...') }}")
+              },
+              success: function(data) {
+                setTimeout(function() {
+                  $('#addConfirmModal').modal('hide');
+                  $('#add_ok_button').text("{{ __('Delete') }}")
+                  location.reload();
+                }, 1000);
+              }
+            })
           })
         })
-      })
-    </script>
-  @endsection
+      </script>
+    @endsection
