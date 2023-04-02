@@ -278,15 +278,18 @@ class EmployeeController extends Controller
     {
         if ($request->ajax()) {
             $output = "";
-            $employees = Employee::with('department', 'job')
+            $employees = Employee::join('departments', 'department_id', '=', 'departments.id')
+                ->join('jobs', 'job_id', '=', 'jobs.id')
                 ->where('personal_number', 'LIKE', '%' . $request->search . "%")
                 ->orWhere('last_name', 'LIKE', '%' . $request->search . "%")
                 ->orwhere('first_name', 'LIKE', '%' . $request->search . "%")
                 ->orwhere('phone', 'LIKE', '%' . $request->search . "%")
                 ->orwhere('email', 'LIKE', '%' . $request->search . "%")
+                ->orwhere('department_name', 'LIKE', '%' . $request->search . "%")
+                ->orwhere('job_title', 'LIKE', '%' . $request->search . "%")
                 ->orwhere('mobile', 'LIKE', '%' . $request->search . "%")
                 ->orwhere('title_preffix', 'LIKE', '%' . $request->search . "%")
-                ->get()->where('status', 'Aktivní');
+                ->get()->where('status', 'Aktivní')->sortBy('last_name');
             if ($employees) {
                 $output .=
                     '<div>
@@ -300,8 +303,8 @@ class EmployeeController extends Controller
 
                 foreach ($employees as $employee) {
                     $output .=
-                        '<div class="col-12">
-                        <div class="card card-sm mt-2 shadow-sm">
+                        '<div class="col-12 col-md-6 col-lg-3">
+                        <div class="card card-sm mt-2 mb-2 shadow-sm">
                                 <div class="card-body bg-' . $employee->department->color_id . '-lt">
                                 <div class="row align-items-top">
                                     <div class="col-auto">
@@ -309,18 +312,18 @@ class EmployeeController extends Controller
                                     <span class="px-2 text-' .  $employee->department->color_id . '"><strong>' .  $employee->personal_number . '</strong></span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium text-muted">' .  $employee->title_preffix . ' ' . $employee->last_name . ' ' . $employee->first_name . ' ' . $employee->title_suffix . '</div>
+                                        <h2 class="font-weight-medium text-muted mb-0">' .  $employee->title_preffix . ' ' . $employee->last_name . ' ' . $employee->first_name . ' ' . $employee->title_suffix . '</h2>
+                                    <div class="text-' .  $employee->department->color_id . '">
+                                        ' .  $employee->department->department_name . '
+                                        </div>
+                                    <div class="text-' .  $employee->department->color_id . '">' .  $employee->job->job_title . '</div>
                                     <div class="hr-text text-muted my-2" >
-                                        <span style="font-size: 0.7rem">' .  __("informace")  . '</span>
+                                        <span style="font-size: 0.7rem">' .  __("kontaktní informace")  . '</span>
                                      </div>
                                     <div class="text-muted">
-                                        ' .  $employee->department->department_name . '
-                                    </div>
-                                    <div class="subheader text-muted">
-                                        <span class="text-' .  $employee->department->color_id . '">' .  $employee->job->job_title . '</span>
-                                        - Klapka KHN: <span class="text-blue">' . ($employee->phone ?? 'Neuvedena') . '</span>
-                                        - Mobilní telefon: <span class="text-blue">' .  ($employee->mobile  ?? 'Neuveden') . '</span>
-                                        - Email: <span class="text-blue"><a href="mailto:' . ($employee->email ?? '') . '">' . ($employee->email ?? '') . '</a></span>
+                                        <div>Klapka: <span class="text-blue">' . ($employee->phone ?? '') . '</div>
+                                        <div>Mobil: <span class="text-blue">' .  ($employee->mobile  ?? '') . '</div>
+                                        <div>Email: <span class="text-blue"><a href="mailto:' . ($employee->email ?? '') . '">' . ($employee->email ?? '') . '</a></div>
                                     </div>
                                     </div>
                                 </div>

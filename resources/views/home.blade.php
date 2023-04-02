@@ -162,9 +162,9 @@
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
                         href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
                     </span>
                   </div>
                 </div>
@@ -241,9 +241,9 @@
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
                         href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
                     </span>
                   </div>
                 </div>
@@ -322,9 +322,9 @@
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
                         href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
                     </span>
                   </div>
                 </div>
@@ -401,9 +401,9 @@
                     <span class="d-block description text-muted text-truncate">
                       Typ: <a class="text-{{ $notification->type->type_color }}"
                         href="{{ route($notification->type->type_route, $notification->type->id) }}">{{ $notification->type->type_name }}</a>
-                      - vložil: {{ $notification->user->name }}
-                      - {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
-                      hodin - {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                      - autor: {{ $notification->user->name }}
+                      v {{ Carbon\Carbon::parse($notification->created_at)->format('H:i') }}
+                      hodin ( {{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }} )
                     </span>
                   </div>
                 </div>
