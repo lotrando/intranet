@@ -97,9 +97,9 @@
                             @endif
                             <select class="form-select edit-polevka" name="polevka[{{ $day->id }}]" data-id="{{ $day->id }}">
                               <option value="">Vyber polevku</option>
-                              @foreach ($polevky as $polevka)
-                                <option value="{{ $polevka->last_name }}" @if (old('polevka[' . $day->id . ']') == $polevka->last_name) selected @endif>
-                                  {{ $polevka->last_name }}
+                              @foreach ($food->where('type', '=', 'soup') as $polevka)
+                                <option value="{{ $polevka->name }}" @if (old('polevka[' . $day->id . ']') == $polevka->_name) selected @endif>
+                                  {{ $polevka->name }}
                                 </option>
                               @endforeach
                             </select>
@@ -110,9 +110,9 @@
                             @endif
                             <select class="form-select edit-jidlo" name="jidlo[{{ $day->id }}]" data-id="{{ $day->id }}">
                               <option value="">Vyber jídlo</option>
-                              @foreach ($jidla as $jidlo)
-                                <option value="{{ $jidlo->last_name }}" @if (old('polevka[' . $day->id . ']') == $jidlo->last_name) selected @endif>
-                                  {{ $jidlo->last_name }}
+                              @foreach ($food->where('type', 'food') as $jidlo)
+                                <option value="{{ $jidlo->name }}" @if (old('polevka[' . $day->id . ']') == $jidlo->name) selected @endif>
+                                  {{ $jidlo->name }}
                                 </option>
                               @endforeach
                             </select>

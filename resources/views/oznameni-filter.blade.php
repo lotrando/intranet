@@ -5,107 +5,100 @@
 @endsection
 
 @section('content')
-  {{-- Page wrapper --}}
-  <div class="page-wrapper">
-
-    {{-- Page header --}}
-    <div class="page-header d-print-none">
-      <div class="container-fluid">
-        {{-- <div class="row align-items-center mb-3">
-          @foreach ($types as $type)
-            <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-xxl-4 ps-0 m-0">
-              <a class="btn bg-{{ $type->type_color }}-lt hover-shadow-sm w-100 m-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-bs-original-title="{{ $type->type_name }}" href="{{ route($type->type_route, $type->id) }}">
-                <span class="d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline">{!! $type->svg_icon !!}</span>
-                <span class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline pe-1">{{ $type->type_name }}</span>
-                <span class="text-small">
-                  {{ $type->notification->count() }}
-                </span>
-              </a>
-            </div>
-          @endforeach
-        </div> --}}
-        <div class="row">
-          <div class="col-6">
-            <form autocomplete="off">
-              <div class="input-icon">
-                <span class="input-icon-addon">
-                  <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                    <path d="M21 21l-6 -6"></path>
-                  </svg>
-                </span>
-                <input class="form-control" id="search" type="text" style="width:100%" placeholder="{{ __('v dokumentech ...') }}">
-              </div>
-            </form>
-          </div>
-          <div class="col-6">
-            <form autocomplete="off">
-              <div class="input-icon">
-                <span class="input-icon-addon">
-                  <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
-                    <path d="M21 21l-6 -6"></path>
-                  </svg>
-                </span>
-                <input class="form-control" id="search-employee" type="text" style="width:100%" placeholder="{{ __('v zaměstnancích ...') }}">
-              </div>
-            </form>
-          </div>
+  <div class="container-fluid p-3">
+    {{-- <div class="row align-items-center mb-3">
+      @foreach ($types as $type)
+        <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-xxl-4 ps-0 m-0">
+          <a class="btn bg-{{ $type->type_color }}-lt hover-shadow-sm w-100 m-1" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-original-title="{{ $type->type_name }}" href="{{ route($type->type_route, $type->id) }}">
+            <span class="d-inline d-sm-inline d-md-inline d-lg-inline d-xl-inline">{!! $type->svg_icon !!}</span>
+            <span class="d-none d-sm-inline d-md-inline d-lg-inline d-xl-inline pe-1">{{ $type->type_name }}</span>
+            <span class="text-small">
+              {{ $type->notification->count() }}
+            </span>
+          </a>
         </div>
-
-        <div class="row align-items-center">
-
-          {{-- Searched events --}}
-          <div>
-            <div class="display mt-1 mb-3" id="display"></div>
+      @endforeach
+    </div> --}}
+    <div class="row">
+      <div class="col-6">
+        <form autocomplete="off">
+          <div class="input-icon">
+            <span class="input-icon-addon">
+              <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                <path d="M21 21l-6 -6"></path>
+              </svg>
+            </span>
+            <input class="form-control" id="search" type="text" style="width:100%" placeholder="{{ __('v dokumentech ...') }}">
           </div>
-
-          {{-- Page pre-title --}}
-          <div class="col">
-            <div class="page-pretitle text-primary">
-              {{ __($pretitle) ?? '' }}
-            </div>
-            <h2 class="page-title text-primary">
-              {{ __($title) ?? '' }}
-            </h2>
+        </form>
+      </div>
+      <div class="col-6">
+        <form autocomplete="off">
+          <div class="input-icon">
+            <span class="input-icon-addon">
+              <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                <path d="M21 21l-6 -6"></path>
+              </svg>
+            </span>
+            <input class="form-control" id="search-employee" type="text" style="width:100%" placeholder="{{ __('v zaměstnancích ...') }}">
           </div>
-          {{-- End Page pre-title --}}
-
-          <!-- Page title actions buttons -->
-          <div class="ms-auto d-print-none col-auto">
-            <div class="btn-list">
-              <div class="d-flex justify-content-end">
-                @auth
-                  @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor')
-                    <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
-                      data-bs-original-title="{{ __('Vytvoří nové oznámení') }}">
-                      <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
-                        </path>
-                        <rect x="9" y="3" width="6" height="4" rx="2">
-                        </rect>
-                        <path d="M10 14h4"></path>
-                        <path d="M12 12v4"></path>
-                      </svg>
-                      <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
-                    </button>
-                  @endif
-                @endauth
-              </div>
-            </div>
-          </div>
-          <!-- Page Title Buttons End -->
-        </div>
-
+        </form>
       </div>
     </div>
+
+    <div class="row align-items-center">
+      {{-- Searched events --}}
+      <div>
+        <div class="display mt-2 mb-2" id="display"></div>
+      </div>
+
+      {{-- Page pre-title --}}
+      <div class="col mt-3">
+        <div class="page-pretitle text-primary">
+          {{ __($pretitle) ?? '' }}
+        </div>
+        <h2 class="page-title text-primary">
+          {{ __($title) ?? '' }}
+        </h2>
+      </div>
+      {{-- End Page pre-title --}}
+      {{-- Page title actions buttons --}}
+      <div class="ms-auto d-print-none col-auto">
+        <div class="btn-list">
+          <div class="d-flex justify-content-end">
+            @auth
+              @if (Auth::user()->role == 'admin' or Auth::user()->role == 'editor')
+                <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
+                  data-bs-original-title="{{ __('Vytvoří nové oznámení') }}">
+                  <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                    </path>
+                    <rect x="9" y="3" width="6" height="4" rx="2">
+                    </rect>
+                    <path d="M10 14h4"></path>
+                    <path d="M12 12v4"></path>
+                  </svg>
+                  <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nové oznámení') }}</span>
+                </button>
+              @endif
+            @endauth
+          </div>
+        </div>
+      </div>
+      <!-- Page Title Buttons End -->
+    </div>
+
+  </div>
+  </div>
   </div>
 
   {{-- Page body --}}
@@ -156,7 +149,7 @@
                       </ul>
                     @endif
                   @endauth
-                  <div class="avatar bg-transparent">
+                  <div class="avatar mx-1 bg-transparent">
                     <span
                       class="avatar bg-{{ $notification->importance ?? 'muted' }}-lt pt-1"><strong>{{ Carbon\Carbon::parse($notification->created_at)->format('d|m') }}<br>{{ Carbon\Carbon::parse($notification->created_at)->format('Y') }}</strong></span>
                   </div>

@@ -16,13 +16,14 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $document_id
- * @property string $position
+ * @property int $category_id
+ * @property int $position
  * @property string $description
  * @property string $revision
- * @property int $user_id
  * @property string $file
  * @property string $status
  * @property int|null $onscreen
+ * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Category|null $category
@@ -31,6 +32,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Addon newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Addon newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Addon query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Addon whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Addon whereDocumentId($value)
@@ -310,8 +312,7 @@ namespace App\Models{
  * @property string $accordion_name
  * @property int|null $accordion_group
  * @property int $position
- * @property int $document_position
- * @property string $document_name
+ * @property string $name
  * @property string $description
  * @property string|null $year
  * @property string|null $processed
@@ -319,14 +320,14 @@ namespace App\Models{
  * @property string|null $examine
  * @property string|null $efficiency
  * @property string $revision
- * @property string|null $revision_date
  * @property string|null $next_revision_date
  * @property string|null $tags
+ * @property string|null $revision_date
  * @property string $file
  * @property string|null $unique_code
  * @property string $status
  * @property int $user_id
- * @property int $onscreen
+ * @property int|null $onscreen
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Addon> $addons
@@ -342,12 +343,11 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Document whereDocumentName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Document whereDocumentPosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereEfficiency($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereExamine($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereFile($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Document whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereNextRevisionDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document whereOnscreen($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Document wherePosition($value)
@@ -369,7 +369,7 @@ namespace App\Models{
  * App\Models\Employee
  *
  * @property int $id
- * @property string $personal_number
+ * @property string|null $personal_number
  * @property string|null $title_preffix
  * @property string $last_name
  * @property string|null $middle_name
@@ -377,21 +377,21 @@ namespace App\Models{
  * @property string $first_name
  * @property string|null $title_suffix
  * @property string $department_id
- * @property string $job_id
+ * @property string|null $job_id
  * @property string|null $email
  * @property string $start_date
  * @property string|null $end_date
  * @property string|null $comment
  * @property string $status
- * @property string $id_card
+ * @property string|null $id_card
  * @property string|null $coffee
  * @property string|null $phone
- * @property string|null $mobile
- * @property string $employment
- * @property string $image
+ * @property int|null $mobile
+ * @property string|null $employment
+ * @property string|null $image
  * @property int|null $position
  * @property int|null $standard_sign
- * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Department|null $department
  * @property-read \App\Models\Job|null $job
@@ -454,6 +454,23 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\Food
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Food newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Food newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Food query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Food whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Food whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Food whereType($value)
+ */
+	class Food extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Job
  *
  * @property int $id
@@ -480,12 +497,12 @@ namespace App\Models{
  * @property string $alt_name
  * @property string $tooltip
  * @property string $color
+ * @property string $icon_class
  * @property string $page_title
  * @property string $route
  * @property string $favicon
  * @property string $fa_icon
  * @property string $svg_icon
- * @property string $icon_class
  * @property-read \App\Models\Category|null $category
  * @method static \Illuminate\Database\Eloquent\Builder|Navitem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Navitem newQuery()
@@ -704,6 +721,7 @@ namespace App\Models{
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
+ * @property string $role
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property string|null $remember_token
@@ -726,6 +744,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePersonalNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)

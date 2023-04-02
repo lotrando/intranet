@@ -7,6 +7,7 @@ use App\Models\Bulletin;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\Employee;
+use App\Models\Food;
 use App\Models\Notification;
 use App\Models\Paint;
 use App\Models\Type;
@@ -158,8 +159,7 @@ class PageController extends Controller
         $weekEndDate    = $now->endOfWeek()->format('Y-m-d');
         $from           = $now->startOfWeek()->format('d. m.');
         $to             = $now->endOfWeek()->subDays(2)->format('d. m.');
-        $polevky        = Employee::orderBy('last_name')->get();
-        $jidla          = Employee::orderBy('last_name')->get();
+        $food           = Food::orderBy('name')->get();
 
         $daylist        = DB::table('calendar')
             ->where('date', '>=', $weekStartDate)
@@ -172,8 +172,7 @@ class PageController extends Controller
             'daylist'   => $daylist,
             'od'        => $from,
             'do'        => $to,
-            'polevky'   => $polevky,
-            'jidla'     => $jidla
+            'food'      => $food
         ]);
     }
 
