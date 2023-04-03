@@ -369,7 +369,7 @@ namespace App\Models{
  * App\Models\Employee
  *
  * @property int $id
- * @property string|null $personal_number
+ * @property string $personal_number
  * @property string|null $title_preffix
  * @property string $last_name
  * @property string|null $middle_name
@@ -377,7 +377,7 @@ namespace App\Models{
  * @property string $first_name
  * @property string|null $title_suffix
  * @property string $department_id
- * @property string|null $job_id
+ * @property string $job_id
  * @property string|null $email
  * @property string $start_date
  * @property string|null $end_date
@@ -387,8 +387,8 @@ namespace App\Models{
  * @property string|null $coffee
  * @property string|null $phone
  * @property int|null $mobile
- * @property string|null $employment
- * @property string|null $image
+ * @property string $employment
+ * @property string $image
  * @property int|null $position
  * @property int|null $standard_sign
  * @property \Illuminate\Support\Carbon $created_at
@@ -459,12 +459,16 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $type
+ * @property string|null $created_at
+ * @property string|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Food newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Food newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Food query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Food whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Food whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Food whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Food whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Food whereUpdatedAt($value)
  */
 	class Food extends \Eloquent {}
 }
