@@ -92,7 +92,7 @@
   <div class="page-body">
     <div class="container-fluid">
       <div class="row mx-1">
-        <div class="col-12 col-xl-5 order-0">
+        <div class="col-12 col-xl-6 order-0">
           <div class="hr-text text-red py-2">Důležitá oznámení</div>
           @foreach ($important as $notification)
             <div class="card mb-3 bg-white shadow-sm">
@@ -249,7 +249,7 @@
           @endforeach
         </div>
 
-        <div class="col-12 col-xl-5 order-1">
+        <div class="col-12 col-xl-6 order-1">
           <div class="hr-text text-azure py-2">Odstávky a servis</div>
           @foreach ($notificationsServis as $notification)
             <div class="card mb-3 bg-white shadow-sm">
@@ -406,7 +406,7 @@
           @endforeach
         </div>
 
-        <div class="col-12 col-xl-2 order-2">
+        {{-- <div class="col-12 col-xl-2 order-2">
           <div class="hr-text text-pink py-2">odkazy</div>
           <div class="mb-3">
             <div class="d-flex justify-content-center text-muted">
@@ -417,7 +417,16 @@
               </div>
             </div>
           </div>
-        </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-center text-muted">
+              <div>
+                <a href="https://www.dotaceeu.cz/cs/fondy-eu/kohezni-politika-eu/operacni-programy/op-zamestnanost" target="_blank">
+                  <img class="shadow-sm" src="{{ asset('img/logo_opz.jpg') }}" alt="OPZ Logo">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div> --}}
       </div>
     </div>
     {{-- End Page body --}}
@@ -654,7 +663,7 @@
       $('#content').summernote('code', '')
       $('#modal-icon').html(
         '<svg class="icon text-lime" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z"></path><path d="M4 8h16"></path><path d="M8 4v4"></path><path d="M10 14h4"></path><path d="M12 12v4"></path></svg>'
-        ).addClass('bg-lime-lt');
+      ).addClass('bg-lime-lt');
       $('#modal-header').addClass('bg-lime-lt modal-header')
       $('#action_button, .modal-title').text("{{ __('Vytvořit nové oznámení') }}")
       $('#action').val("Add")

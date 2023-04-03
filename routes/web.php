@@ -36,8 +36,9 @@ Route::prefix('oznameni')->name('oznameni.')->group(function () {
 Route::prefix('stravovani')->name('stravovani.')->group(function () {
     Route::get('obedy', [PageController::class, 'obedy'])->name('obedy');                                                   // Obědy
     Route::get('kantyna', [PageController::class, 'kantyna'])->name('kantyna');
-    Route::post('polevka/update/{id}', [PageController::class, 'changePolevka'])->name('kantyna.polevka.update');                                             // Kantýna
-    Route::post('jidlo/update/{id}', [PageController::class, 'changejidlo'])->name('kantyna.jidlo.update');                                             // Kantýna
+    Route::post('polevka/update/{id}', [PageController::class, 'changePolevka'])->name('kantyna.polevka.update');           // Kantýna
+    Route::post('jidloa/update/{id}', [PageController::class, 'changeJidloA'])->name('kantyna.jidloa.update');              // Kantýna
+    Route::post('jidlob/update/{id}', [PageController::class, 'changeJidloB'])->name('kantyna.jidlob.update');              // Kantýna
 });
 
 // Dokumenty

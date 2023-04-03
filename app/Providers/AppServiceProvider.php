@@ -91,17 +91,17 @@ class AppServiceProvider extends ServiceProvider
 
         // Změněné dokumenty
         $changedDocs = Document::with('category', 'user')
-        ->where('category_id', '>', '11')
-        ->where('updated_at', '>=', Carbon::now()->subHours(24))
-        ->orderBy('category_id')
+            ->where('category_id', '>', '11')
+            ->where('updated_at', '>=', Carbon::now()->subHours(24))
+            ->orderBy('category_id')
             ->orderByDesc('updated_at')
             ->get();
         View::share('changedDocs', $changedDocs);
 
         // Změněné standardy
         $changedStands =
-        Document::with('category', 'user')
-        ->where('category_id', '<', '11')
+            Document::with('category', 'user')
+            ->where('category_id', '<', '11')
             ->where('updated_at', '>=', Carbon::now()->subHours(24))
             ->orderBy('category_id')
             ->orderByDesc('updated_at')

@@ -154,12 +154,12 @@ class PageController extends Controller
 
     public function kantyna()
     {
+        $food           = Food::orderBy('name')->get();
         $now            = Carbon::now();
         $weekStartDate  = $now->startOfWeek()->format('Y-m-d');
-        $weekEndDate    = $now->endOfWeek()->format('Y-m-d');
+        $weekEndDate    = $now->endOfWeek()->addWeek()->format('Y-m-d');
         $from           = $now->startOfWeek()->format('d. m.');
-        $to             = $now->endOfWeek()->subDays(2)->format('d. m.');
-        $food           = Food::orderBy('name')->get();
+        $to             = $now->endOfWeek()->format('d. m.');
 
         $daylist        = DB::table('calendar')
             ->where('date', '>=', $weekStartDate)
@@ -190,14 +190,28 @@ class PageController extends Controller
         Alert::toast('Polevka uložena!', 'success')->position('center');
     }
 
-    // Plánování polévek
-    public function changeJidlo(Request $request)
+    // Plánování j9dlo A
+    public function changeJidloA(Request $request)
     {
         if (request()->ajax()) {
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'jidlo'  => $request->jidlo,
+                    'jidlo_a'  => $request->jidlo_a,
+                ]);
+        }
+        return response()->json(['success' => 'Jídlo uloženo!']);
+        Alert::toast('Jídlo uloženo!', 'success')->position('center');
+    }
+
+    // Plánování j9dlo A
+    public function changeJidloB(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'jidlo_b'  => $request->jidlo_b,
                 ]);
         }
         return response()->json(['success' => 'Jídlo uloženo!']);
