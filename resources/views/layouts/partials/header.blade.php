@@ -15,105 +15,14 @@
       </a>
     </h1>
 
+    <div class="nav-text">
+      Dnes je {{ \Carbon\Carbon::parse(now())->locale('cs')->dayName }}
+      <span class="text-blue">{{ \Carbon\Carbon::parse(now())->format('j. n. Y') }}</span>
+      a {{ $svatek[0] }}
+    </div>
     <div class="navbar-nav order-md-last flex-row">
       <div class="nav-item d-none d-md-flex nav-item d-none d-md-flex">
         <div class="btn-list">
-          {{-- Helpdesk --}}
-          {{-- <div class="nav-item dropdown d-none d-md-flex">
-            <button class="btn dropdown-toggle m-0 align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">
-              <svg class="icon text-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <circle cx="12" cy="12" r="4"></circle>
-                <circle cx="12" cy="12" r="9"></circle>
-                <line x1="15" y1="15" x2="18.35" y2="18.35"></line>
-                <line x1="9" y1="15" x2="5.65" y2="18.35"></line>
-                <line x1="5.65" y1="5.65" x2="9" y2="9"></line>
-                <line x1="18.35" y1="5.65" x2="15" y2="9"></line>
-              </svg>
-              <span class="d-sm-none d-md-none d-lg-inline">{{ __('Helpdesk') }}</span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow dropdown-menu-card">
-              <div class="card">
-                <div class="list-group list-group-flush list-group-hoverable">
-                  <div class="list-group-item col-12">
-                    <div class="row align-items-center">
-                      <div class="col text-truncate">
-                        <a class="d-block text-decoration-none text-primary" href="#">
-                          IT
-                        </a>
-                        <div class="d-block text-muted text-truncate mt-n1">
-                          Akord, počítače, tiskárny, mobily, sítě, web, intranet ...
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a class="list-group-item-actions" href="#">
-                          <svg class="icon icon-tabler icon-tabler-devices-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M10 15h-6a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h6"></path>
-                            <rect x="13" y="4" width="8" height="16" rx="1"></rect>
-                            <line x1="7" y1="19" x2="10" y2="19"></line>
-                            <line x1="17" y1="8" x2="17" y2="8.01"></line>
-                            <circle cx="17" cy="16" r="1"></circle>
-                            <line x1="9" y1="15" x2="9" y2="19"></line>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <a class="text-primary d-block text-decoration-none" href="#">
-                          Údržbářské práce
-                        </a>
-                        <div class="d-block text-muted text-truncate mt-n1">
-                          Stěhování, opravy, elektro, instalatérské práce, plyn...
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a class="list-group-item-actions" href="#">
-                          <svg class="icon icon-tabler icon-tabler-tool text-black-50" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5">
-                            </path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <a class="text-primary d-block text-decoration-none" href="#">
-                          Úklidové služby
-                        </a>
-                        <div class="d-block text-muted text-truncate mt-n1">
-                          Úklid, mytí oken, dezinfekce, úklid po malování ...
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a class="list-group-item-actions" href="#">
-                          <svg class="icon icon-tabler icon-tabler-recycle text-success" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-                            viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 17l-2 2l2 2"></path>
-                            <path d="M10 19h9a2 2 0 0 0 1.75 -2.75l-.55 -1"></path>
-                            <path d="M8.536 11l-.732 -2.732l-2.732 .732"></path>
-                            <path d="M7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141 .024"></path>
-                            <path d="M15.464 11l2.732 .732l.732 -2.732"></path>
-                            <path d="M18.196 11.732l-4.5 -7.794a2 2 0 0 0 -3.256 -.14l-.591 .976"></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
           @guest
             <a class="btn hover-shadow-sm" href="{{ route('register') }}" rel="noreferrer">
               <svg class="icon icon-tabler icon-tabler-login text-azure" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -174,8 +83,8 @@
             </a>
               <div class="dropdown-divider"></div> --}}
             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout-modal" href="#">
-              <svg class="icon dropdown-item-icon text-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="icon dropdown-item-icon text-red" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
                 <path d="M7 12h14l-3 -3m0 6l3 -3"></path>

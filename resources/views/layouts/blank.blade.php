@@ -59,15 +59,10 @@
   <script src="{{ asset('js/m3u-player.js') }}" defer></script>
   <script>
     $(document).ready(function() {
-
       function fill(Value) {
         $('#search').val(Value);
         $('#display').hide();
       }
-
-    });
-
-    $(document).ready(function() {
       $("#search").keyup(function() {
         var name = $('#search').val();
         if (name === "") {
@@ -84,8 +79,26 @@
             }
           });
         }
-      });
-    });
+      })
+      $("#search-employee").keyup(function() {
+        var name = $('#search-employee').val();
+        if (name === "") {
+          $("#display").html("");
+        } else {
+          $.ajax({
+            type: "GET",
+            url: "{{ route('employees.search') }}",
+            data: {
+              search: name
+            },
+            success: function(html) {
+              $("#display").html(html).show();
+            }
+          });
+        }
+        content
+      })
+    })
   </script>
   @include('sweetalert::alert')
   @include('layouts.partials.scripts')

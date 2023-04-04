@@ -9,6 +9,7 @@ use App\Models\Navitem;
 use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +37,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Paginator Bootstrap CSS
         Paginator::useBootstrap();
+
+        // Svátek má
+        $svatek = DB::table('calendar')
+            ->where('date', Carbon::now()->format('Y-m-d'))
+            ->pluck('holiday');
+        View::share('svatek', $svatek);
 
         // Navigation items
         $navitems = Navitem::all();
