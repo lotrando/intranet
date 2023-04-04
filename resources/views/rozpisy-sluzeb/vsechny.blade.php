@@ -21,24 +21,12 @@
               </a>
             </div>
           @endforeach
-
-          {{-- Searched events --}}
-          <div>
-          </div>
-
-          {{-- Page title --}}
-          <div class="col mt-1">
-            {{-- Page Pretitle --}}
-            <div class="page-pretitle text-primary">
-              {{ __($pretitle) ?? '' }}
-            </div>
-          </div>
         </div>
 
         <!-- Page -->
         <div class="row">
           <div class="col-12 mt-1">
-            <div class="card" style="height: 41rem">
+            <div class="card" style="height: 45rem">
               <div class="card-header bg-{{ $categorie->color }}-lt text-left">
                 <div class="d-flex justify-item-center align-items-center">
                   <div class="avatar bg-{{ $categorie->color }}-lt col-auto">

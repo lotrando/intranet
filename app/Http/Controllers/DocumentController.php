@@ -327,7 +327,7 @@ class DocumentController extends Controller
                     <div>
                         <div class="col mt-2">
                             <div class="page-pretitle text-primary">
-                                Výsledky hledání : nalezeno ' . $documents->count() . ' z ' . $allDocumnets . ' dokumentů
+                                <div class="hr-text text-blue m-2 p-3">Výsledky hledání : nalezeno ' . $documents->count() . ' z ' . $allDocumnets . ' dokumentů</div>
                             </div>
                         </div>
                     </div>

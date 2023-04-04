@@ -295,7 +295,7 @@ class EmployeeController extends Controller
                     '<div>
                         <div class="col mt-2">
                             <div class="page-pretitle text-primary">
-                                Výsledky hledání : nalezeno ' . $employees->count() . ' z ' . Employee::whereStatus('aktivní')->count() . ' zaměstnanců
+                                <div class="hr-text text-blue m-2 p-3">Výsledky hledání : nalezeno ' . $employees->count() . ' z ' . Employee::whereStatus('aktivní')->count() . ' zaměstnanců</div>
                             </div>
                         </div>
                     </div>

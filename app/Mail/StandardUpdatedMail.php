@@ -31,8 +31,8 @@ class StandardUpdatedMail extends Mailable
      */
     public function build()
     {
-        return $this->from('standardy.intranet@khn.cz')
+        return $this->from('intranet@khn.cz')
             ->view('emails.standard.update')
-            ->subject('Aktualizace nemocničního standardu');
+            ->subject('Aktualizace nemocniční dokumentace');
     }
 }

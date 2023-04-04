@@ -39,7 +39,7 @@
     <div class="container-fluid">
       <div class="row justify-content-start g-2">
         <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-8">
-          <div class="card" style="height: 38rem">
+          <div class="card">
             <div class="card-header bg-azure-lt text-left">
               <div class="d-flex justify-item-center align-items-center">
                 <div class="avatar bg-azure-lt col-auto">
@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+            <div class="card-body">
               <div class="divide-y">
                 @foreach ($daylist as $day)
                   <div>
@@ -91,21 +91,21 @@
                         @if (Auth::user()->role == 'strava' or Auth::user()->role == 'admin')
                           <div class="col-12 col-lg-10 mb-2">
                             @if ($day->polevka == '')
-                              <label class="text-red description">Polévka: NEZADÁNA</label>
+                              <label class="text-red description">Polévka: Nevyplněno</label>
                             @else
                               <label class="text-blue description">Polévka: {{ $day->polevka }}</label>
                             @endif
-                            <select class="form-select edit-polevka" name="polevka[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <select class="form-select edit-polevka" name="polevka{{ $day->id }}" data-id="{{ $day->id }}">
                               <option value="-">Vyber polévku</option>
                               <option value="Svátek - Dnes se nevaří">Svátek - Dnes se nevaří</option>
                               @foreach ($food->where('type', '=', 'soup') as $polevka)
-                                <option value="{{ $polevka->name }}" @if (old('polevka[' . $day->id . ']') == $polevka->_name) selected @endif>
+                                <option value="{{ $polevka->name }}">
                                   {{ $polevka->name }}
                                 </option>
                               @endforeach
                             </select>
                             @if ($day->jidlo_a == '')
-                              <label class="text-red description">Jídlo: NEZADÁNO</label>
+                              <label class="text-red description">Jídlo: Nevyplněno</label>
                             @else
                               <label class="text-blue description">Jídlo: {{ $day->jidlo_a }}</label>
                             @endif
@@ -119,7 +119,7 @@
                               @endforeach
                             </select>
                             @if ($day->jidlo_b == '')
-                              <label class="text-red description">Jídlo: NEZADÁNO</label>
+                              <label class="text-red description">Jídlo: Nevyplněno</label>
                             @else
                               <label class="text-blue description">Jídlo: {{ $day->jidlo_b }}</label>
                             @endif

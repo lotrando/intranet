@@ -276,7 +276,7 @@ class PageController extends Controller
     // Dokument
     public function document($id)
     {
-        $allDocuments = Document::where('category_id', '>', 12)->pluck('category_id');
+        $allDocuments = Document::where('category_id', '>', 11)->pluck('category_id');
         $standards = Document::where('onscreen', $id)->orderBy('category_id')->get();
         $bozppos = Document::with('category')->where('onscreen', $id)->orderBy('category_id')->get();
         $categorie  = Category::where('id', $id)->first();
@@ -353,7 +353,7 @@ class PageController extends Controller
     public function isp()
     {
         $id = 43;
-        $allDocuments = Document::where('category_id', '<', 12)->pluck('category_id');
+        $allDocuments = Document::where('category_id', '>', 11)->pluck('category_id');
         $categorie  = Category::where('id', $id)->first();
         $last = Document::where('category_id', $id)->orderBy('id', 'desc')->take(1)->first();
 
@@ -566,8 +566,8 @@ class PageController extends Controller
             ->get();
 
         $daylistNext = DB::table('calendar')
-            ->where('date', '>', $now->endOfMonth()->addMonth()->format('Y-m-d'))
-            ->where('date', '<', $now->endOfMonth()->addMonth()->format('Y-m-d'))
+            ->where('date', '>=', $now->endOfMonth()->addMonth()->format('Y-m-d'))
+            ->where('date', '<', $now->endOfMonth()->format('Y-m-d'))
             ->get();
 
         $today = DB::table('calendar')->where('date', Carbon::now()->format('y-m-d'))->get();
