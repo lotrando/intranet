@@ -491,7 +491,7 @@ class PageController extends Controller
 
         return view('ridici-akty.index', [
             'title'             => $categorie->category_name,
-            'pretitle'          => 'Řédící akty',
+            'pretitle'          => 'Řídící akty',
             'categorie'         => $categorie,
             'lastpos'           => $last,
             'documents'         => $documents,

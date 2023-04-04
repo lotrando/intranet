@@ -152,18 +152,6 @@ class CategorySeeder extends Seeder
             'color'         => 'cyan'
         ]);
 
-        DB::table('categories')->insert([
-            'category_file' => 'standardy',
-            'category_type' => 'standard',
-            'category_name' => 'Legislativní',
-            'folder_name'   => 'legislativni',
-            'category_icon' => 'legislativni.png',
-            'svg_icon'      => '<svg class="icon icon-tabler icon-tabler-rubber-stamp text-orange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M21 17.85h-18c0 -4.05 1.421 -4.05 3.79 -4.05c5.21 0 1.21 -4.59 1.21 -6.8a4 4 0 1 1 8 0c0 2.21 -4 6.8 1.21 6.8c2.369 0 3.79 0 3.79 4.05z"></path><path d="M5 21h14"></path></svg>',
-            'fa_icon'       => null,
-            'button'        => 'legislativní',
-            'color'         => 'orange'
-        ]);
-
         // Documents Data
 
         DB::table('categories')->insert([
@@ -296,18 +284,6 @@ class CategorySeeder extends Seeder
             'fa_icon'       => null,
             'button'        => 'postupový',
             'color'         => 'teal'
-        ]);
-
-        DB::table('categories')->insert([
-            'category_file' => 'dokumenty',
-            'category_type' => 'dokument',
-            'category_name' => 'Ukrajinská',
-            'folder_name'   => 'ukrajinske-dokumenty',
-            'category_icon' => 'ukrajinske-dokumenty.png',
-            'svg_icon'      => '<svg class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M3.6 9l16.8 0"></path><path d="M3.6 15l16.8 0"></path><path d="M11.5 3a17 17 0 0 0 0 18"></path><path d="M12.5 3a17 17 0 0 1 0 18"></path></svg>',
-            'fa_icon'       => null,
-            'button'        => 'ukrajinský',
-            'color'         => 'yellow'
         ]);
 
         // BOZP Data
