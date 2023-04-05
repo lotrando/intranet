@@ -1024,8 +1024,8 @@
           $('#add-show-description').val(html.data.description)
           $('#add-show-hidden_id').val(html.data.id)
           $('#add-download-btn').attr("href", "/soubory/{{ $categorie->category_type }}/priloha/" + html.data.id)
-          val = html.data.file;
-          file_type = val.substr(val.lastIndexOf('.')).toLowerCase();
+          val = html.data.file
+          file_type = val.substr(val.lastIndexOf('.')).toLowerCase()
           if (file_type === '.pdf') {
             PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
               "#pdf-preview-addon-show", {

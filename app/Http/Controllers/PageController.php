@@ -543,9 +543,16 @@ class PageController extends Controller
             ->where('department_id', '>=', 8)
             ->where('department_id', '<=', 9)
             ->orderBy('last_name')->get();
+        $doctorsInterna = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->where('department_id', '>=', 1)
+            ->orderBy('last_name')->get();
         $doctorsOs = Employee::with('department')->whereTitlePreffix('MUDr.')
             ->where('department_id', '>=', 16)
             ->where('department_id', '<=', 16)
+            ->orderBy('last_name')->get();
+        $doctorsNeurologie = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->where('department_id', '>=', 6)
+            ->where('department_id', '<=', 7)
             ->orderBy('last_name')->get();
         $doctorsAll = Employee::with('department')->whereTitlePreffix('MUDr.')->orderBy('last_name')->get();
         $now = Carbon::now();
@@ -581,6 +588,8 @@ class PageController extends Controller
             'daylistNext'       => $daylistNext,
             'doctors'           => $doctors,
             'doctorsJip'        => $doctorsJip,
+            'doctorsInterna'    => $doctorsInterna,
+            'doctorsNeurologie' => $doctorsNeurologie,
             'doctorsOs'         => $doctorsOs,
             'doctorsAll'        => $doctorsAll,
             'from'              => $from,
@@ -712,6 +721,19 @@ class PageController extends Controller
                 ->where('id', $request->id)
                 ->update([
                     'interna'  => $request->interna,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    public function changeDoctorNeurologie(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'neurologie'  => $request->neurologie,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);

@@ -1310,10 +1310,17 @@
           $('#show-name').val(html.data.name)
           $('#show-hidden_id').val(html.data.id)
           $('#download-btn').attr("href", "/soubory/" + html.data.category.category_type + "/" + html.data.id + "")
-          PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-            "#pdf-preview-show", {
-              height: "41rem"
-            })
+          val = html.data.file;
+          file_type = val.substr(val.lastIndexOf('.')).toLowerCase();
+          if (file_type === '.pdf') {
+            PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
+              "#pdf-preview-addon-show", {
+                height: "41rem"
+              })
+          }
+          if (file_type !== '.pdf') {
+            $('#pdf-preview-addon-show').html('Náhled souboru typu *' + file_type + ' nenelze zobrazit. Klikněte na stáhnout soubor.')
+          }
         }
       })
     });

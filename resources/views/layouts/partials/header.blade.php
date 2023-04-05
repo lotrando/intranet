@@ -32,18 +32,18 @@
                 </path>
                 <path d="M20 12h-13l3 -3m0 6l-3 -3"></path>
               </svg>
-              {{ __('Register') }}
+              <span class="d-inline d-sm-inline d-md-none d-lg-inline d-xl-inline btn-icon">{{ __('Register') }}</span>
             </a>
             <a class="btn hover-shadow-sm" href="{{ route('login') }}" rel="noreferrer">
-              <svg class="icon icon-tabler icon-tabler-lock-open text-success" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <svg class="icon text-success px-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <rect x="5" y="11" width="14" height="10" rx="2">
                 </rect>
                 <circle cx="12" cy="16" r="1"></circle>
                 <path d="M8 11v-5a4 4 0 0 1 8 0"></path>
               </svg>
-              {{ __('Login') }}
+              <span class="d-inline btn-icon d-sm-inline d-md-none d-lg-inline d-xl-inline">{{ __('Login') }}</span>
             </a>
           @endguest
         </div>

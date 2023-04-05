@@ -186,9 +186,9 @@ Route::prefix('soubory')->name('soubory.')->group(function () {
     // Download bozp addon
     Route::get('bozp/priloha/{id}', [FileController::class, 'fileAddonDownload'])->name('bozp.addon.download');
     // Download indikátory kvality
-    Route::get('indikatory-kvality/{id}', [FileController::class, 'fileDownload'])->name('indikatory-kvality.download');
+    Route::get('indikatory-kvality/{id}', [FileController::class, 'fileDownload'])->name('indikatory.download');
     // Download indikátory kvality addon
-    Route::get('indikatory-kvality/priloha/{id}', [FileController::class, 'fileAddonDownload'])->name('indikatory-kvality.addon.download');
+    Route::get('indikatory-kvality/priloha/{id}', [FileController::class, 'fileAddonDownload'])->name('indikatory.addon.download');
     // Download informované souhlasy
     Route::get('isp/{id}', [FileController::class, 'fileDownload'])->name('isp.download');
     // Download Education
@@ -248,10 +248,11 @@ Route::resource('documents/addons', AddonController::class)->except(['update', '
 Route::get('vcards', [EmployeeController::class, 'vcards'])->name('employees.vcards');
 Route::get('search', [EmployeeController::class, 'vcardSearch'])->name('employees.search');
 
-Route::post('sluzby/interna/update/{id}', [PageController::class, 'changeDoctorInterna'])->name('sluzby.interna.update');
-Route::post('sluzby/zurnal/update/{id}', [PageController::class, 'changeDoctorZurnal'])->name('sluzby.zurnal.update');
 Route::post('sluzby/jip/update/{id}', [PageController::class, 'changeDoctorJip'])->name('sluzby.jip.update');
 Route::post('sluzby/operacni-saly/update/{id}', [PageController::class, 'changeDoctorOperacniSaly'])->name('sluzby.operacni-saly.update');
+Route::post('sluzby/interna/update/{id}', [PageController::class, 'changeDoctorInterna'])->name('sluzby.interna.update');
+Route::post('sluzby/neurologie/update/{id}', [PageController::class, 'changeDoctorNeurologie'])->name('sluzby.neurologie.update');
+Route::post('sluzby/zurnal/update/{id}', [PageController::class, 'changeDoctorZurnal'])->name('sluzby.zurnal.update');
 
 // Auth Routes
 Route::group(['middleware' => 'auth'], function () {

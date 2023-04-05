@@ -179,7 +179,7 @@
                     <option value="Vytvořit nálepku">Vytvořit nálepku</option>
                     <option value="Předat nálepku">Předat nálepku</option>
                     <option value="Aktual. nálepku">Aktual. nálepku</option>
-                    <option value="Vydáno">Vydáno</option>
+                    <option value="Ok">Vydáno</option>
                     <option value="Vrácena">Vrácena</option>
                   </select>
                 </div>
@@ -200,8 +200,8 @@
                 <div class="col-1">
                   <label class="form-label">{{ __('Coffee') }}</label>
                   <select class="form-select" id="coffee" name="coffee">
-                    <option value="N">Ne</option>
-                    <option value="A">Ano</option>
+                    <option value="Ne">Ne</option>
+                    <option value="Ano">Ano</option>
                   </select>
                 </div>
                 <div class="col-4">
@@ -447,135 +447,135 @@
     <script>
       // Data Table
       $(document).ready(function() {
-        $('.dataTable').DataTable({
-          processing: true,
-          processingAnim: false,
-          serverSide: true,
-          stateSave: true,
-          pageSave: true,
-          fixedHeader: {
-            header: false,
-            footer: false
-          },
-          order: [
-            [3, "desc"]
-          ],
-          "lengthMenu": [
-            [10, 20, 30, 60, 100, -1],
-            [10, 20, 30, 60, 100, "Všechny"]
-          ],
-          language: {
-            "url": "{{ asset('js/cs.json') }}",
-            "sProcessing": "<img style='height:100px;' src='img/processing.gif' />",
-            "search": "_INPUT_",
-            "searchPlaceholder": "Hledej zaměstnance..."
-          },
-          ajax: {
-            url: "{{ route('employees.index') }}",
-          },
-          columnDefs: [{
-            type: 'czech',
-            targets: [3]
-          }],
-          columns: [{
-              data: 'image',
-              "width": "1%",
-              render: function(data, type, row, full, meta) {
-                return "<div class='avatar avatar-sm'><center><img src={{ URL::to('/foto') }}/" +
-                  data + " class='zoom avatar' /></center></div>";
-              },
-              orderable: false,
+      $('.dataTable').DataTable({
+        processing: true,
+        processingAnim: false,
+        serverSide: true,
+        stateSave: true,
+        pageSave: true,
+        fixedHeader: {
+          header: false,
+          footer: false
+        },
+        order: [
+          [3, "desc"]
+        ],
+        "lengthMenu": [
+          [10, 20, 30, 60, 100, -1],
+          [10, 20, 30, 60, 100, "Všechny"]
+        ],
+        language: {
+          "url": "{{ asset('js/cs.json') }}",
+          "sProcessing": "<img style='height:100px;' src='img/processing.gif' />",
+          "search": "_INPUT_",
+          "searchPlaceholder": "Hledej zaměstnance..."
+        },
+        ajax: {
+          url: "{{ route('employees.index') }}",
+        },
+        columnDefs: [{
+          type: 'czech',
+          targets: [3]
+        }],
+        columns: [{
+            data: 'image',
+            "width": "1%",
+            render: function(data, type, row, full, meta) {
+              return "<div class='avatar avatar-sm'><center><img src={{ URL::to('/foto') }}/" +
+                data + " class='zoom avatar' /></center></div>";
             },
-            @auth {
-              data: 'personal_number',
-              "width": "1%",
-              render: function(data, type, row, full, meta) {
-                return "<span class='text-center text-" + row.department.color_id +
-                  "'><center><strong>" + data + "</strong></center></span>";
-              },
-            },
-          @endauth {
-            data: 'title_preffix',
-            "width": "auto"
-          },
-          {
-            data: 'last_name',
-            "width": "auto",
-          },
-          {
-            data: 'first_name',
-            "width": "auto"
-          },
-          {
-            data: 'department.department_name',
-            "width": "auto"
-          },
-          {
-            data: 'job.job_title',
-            "width": "auto"
-          },
-          {
-            data: 'email',
-            "width": "auto",
-            render: function(data, type, full, meta) {
-              if (data == null) {
-                return ""
-              } else {
-                return "<a class='text-center' href='mailto:" + data + "'>" + data +
-                  "</a>";
-              }
-            },
-          },
-          {
-            data: 'mobile',
-            "width": "auto"
-          },
-          {
-            data: 'phone',
-            className: "text-center",
-            "width": "auto"
-          },
-          {
-            data: 'status',
-            "width": "0.1%",
-            render: function(data, type, full, meta) {
-              if (data == 'Neaktivní') {
-                return "<span title='{{ __('Inactive') }}' class='cursor-help mx-3 badge bg-red p-1 me-1'></span>";
-              }
-              if (data == 'Aktivní') {
-                return "<span title='{{ __('Active') }}' class='cursor-help mx-3 badge bg-green p-1 me-1'></span>";
-              }
-              if (data == 'Mateřská') {
-                return "<span title='{{ __('Maternal') }}' class='cursor-help mx-3 badge bg-yellow p-1 me-1'></span>";
-              }
-            }
+            orderable: false,
           },
           @auth {
-            data: 'id_card',
-            className: "text-center",
-            "width": "auto"
+            data: 'personal_number',
+            "width": "1%",
+            render: function(data, type, row, full, meta) {
+              return "<span class='text-center text-" + row.department.color_id +
+                "'><center><strong>" + data + "</strong></center></span>";
+            },
           },
-          {
-            data: 'coffee',
-            className: "text-center",
-            "width": "auto"
-          },
-          {
-            data: 'start_date',
-            "width": "auto",
-            render: function(data, type, full, meta) {
-              var date = moment(data).locale('cs');
-              return date.format('DD. MM. YYYY');
+        @endauth {
+          data: 'title_preffix',
+          "width": "auto"
+        },
+        {
+          data: 'last_name',
+          "width": "auto",
+        },
+        {
+          data: 'first_name',
+          "width": "auto"
+        },
+        {
+          data: 'department.department_name',
+          "width": "auto"
+        },
+        {
+          data: 'job.job_title',
+          "width": "auto"
+        },
+        {
+          data: 'email',
+          "width": "auto",
+          render: function(data, type, full, meta) {
+            if (data == null) {
+              return ""
+            } else {
+              return "<a class='text-center' href='mailto:" + data + "'>" + data +
+                "</a>";
             }
           },
-          {
-            data: 'action',
-            "width": "0.5%",
-            orderable: false,
-            searchable: false
-          },
-        @endauth ],
-        });
+        },
+        {
+          data: 'mobile',
+          "width": "auto"
+        },
+        {
+          data: 'phone',
+          className: "text-center",
+          "width": "auto"
+        },
+        {
+          data: 'status',
+          "width": "0.1%",
+          render: function(data, type, full, meta) {
+            if (data == 'Neaktivní') {
+              return "<span title='{{ __('Inactive') }}' class='cursor-help mx-3 badge bg-red p-1 me-1'></span>";
+            }
+            if (data == 'Aktivní') {
+              return "<span title='{{ __('Active') }}' class='cursor-help mx-3 badge bg-green p-1 me-1'></span>";
+            }
+            if (data == 'Mateřská') {
+              return "<span title='{{ __('Maternal') }}' class='cursor-help mx-3 badge bg-yellow p-1 me-1'></span>";
+            }
+          }
+        },
+        @auth {
+          data: 'id_card',
+          className: "text-center",
+          "width": "auto"
+        },
+        {
+          data: 'coffee',
+          className: "text-center",
+          "width": "auto"
+        },
+        {
+          data: 'start_date',
+          "width": "auto",
+          render: function(data, type, full, meta) {
+            var date = moment(data).locale('cs');
+            return date.format('DD. MM. YYYY');
+          }
+        },
+        {
+          data: 'action',
+          "width": "0.5%",
+          orderable: false,
+          searchable: false
+        },
+      @endauth ],
+      });
       });
 
       // Form Modal Functions

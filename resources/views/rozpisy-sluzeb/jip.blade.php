@@ -149,9 +149,9 @@
                           <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Vyber lékaře</option>
                             @foreach ($doctorsJip as $doctor)
-                              <option data-phone="{{ $doctor->mobile }}" value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}"
-                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -230,9 +230,9 @@
                           <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Vyber lékaře</option>
                             @foreach ($doctorsJip as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                date-phone="{{ $doctor->phone }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -315,8 +315,9 @@
                           <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Vyber lékaře</option>
                             @foreach ($doctorsJip as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
