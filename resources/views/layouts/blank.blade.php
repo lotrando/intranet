@@ -17,6 +17,7 @@
   <link href="{{ asset('css/tabler-payments.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/tabler-vendors.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/demo.css') }}" rel="stylesheet" />
+  <link href="{{ asset('css/officeToHtml.css') }}" rel="stylesheet" />
   <style>
     body {
       font-family: 'Roboto Condensed';

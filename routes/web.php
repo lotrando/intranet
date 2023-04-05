@@ -19,42 +19,68 @@ Route::get('home', [PageController::class, 'home'])->name('home');
 
 // Oznámení
 Route::prefix('oznameni')->name('oznameni.')->group(function () {
-    Route::get('zmeny-standardu', [PageController::class, 'zmenyStandardu'])->name('zmeny-standardu');                      // Změny standardů
-    Route::get('zmeny-v-dokumentaci', [PageController::class, 'zmenyDokumentu'])->name('zmeny-v-dokumentaci');              // Změny dokumentů
-    Route::get('important/{id}', [PageController::class, 'oznameniFilter'])->name('important');                             // Important
-    Route::get('servis/{id}', [PageController::class, 'oznameniFilter'])->name('servis');                                   // Servis
-    Route::get('sluzby/{id}', [PageController::class, 'oznameniFilter'])->name('sluzby');                                   // Služby
-    Route::get('seminare/{id}', [PageController::class, 'oznameniFilter'])->name('seminare');                               // Semináře
-    Route::get('informace/{id}', [PageController::class, 'oznameniFilter'])->name('informace');                             // Informace
-    Route::get('akord/{id}', [PageController::class, 'oznameniFilter'])->name('akord');                                     // Akord
-    Route::get('kultura/{id}', [PageController::class, 'oznameniFilter'])->name('kultura');                                 // Kultura
-    Route::get('normalni/{id}', [PageController::class, 'oznameniFilter'])->name('normalni');                               // Normální
-    Route::get('dlouhodobe/{id}', [PageController::class, 'oznameniFilter'])->name('dlouhodobe');                           // Dlouhodobe
+    // Změny standardů
+    Route::get('zmeny-standardu', [PageController::class, 'zmenyStandardu'])->name('zmeny-standardu');
+    // Změny dokumentů
+    Route::get('zmeny-v-dokumentaci', [PageController::class, 'zmenyDokumentu'])->name('zmeny-v-dokumentaci');
+    // Důležitá oznámení
+    Route::get('important/{id}', [PageController::class, 'oznameniFilter'])->name('important');
+    // Odstávky a Servis
+    Route::get('servis/{id}', [PageController::class, 'oznameniFilter'])->name('servis');
+    // Služby
+    Route::get('sluzby/{id}', [PageController::class, 'oznameniFilter'])->name('sluzby');
+    // Semináře
+    Route::get('seminare/{id}', [PageController::class, 'oznameniFilter'])->name('seminare');
+    // Informace
+    Route::get('informace/{id}', [PageController::class, 'oznameniFilter'])->name('informace');
+    // Akord
+    Route::get('akord/{id}', [PageController::class, 'oznameniFilter'])->name('akord');
+    // Kultura
+    Route::get('kultura/{id}', [PageController::class, 'oznameniFilter'])->name('kultura');
+    // Normální
+    Route::get('normalni/{id}', [PageController::class, 'oznameniFilter'])->name('normalni');
+    // Dlouhodobá sdělení
+    Route::get('dlouhodobe/{id}', [PageController::class, 'oznameniFilter'])->name('dlouhodobe');
 });
 
 // Stravování
 Route::prefix('stravovani')->name('stravovani.')->group(function () {
-    Route::get('obedy', [PageController::class, 'obedy'])->name('obedy');                                                   // Obědy
+    // Obědy
+    Route::get('obedy', [PageController::class, 'obedy'])->name('obedy');
+    // Kantýna
     Route::get('kantyna', [PageController::class, 'kantyna'])->name('kantyna');
-    Route::post('polevka/update/{id}', [PageController::class, 'changePolevka'])->name('kantyna.polevka.update');           // Kantýna
-    Route::post('jidloa/update/{id}', [PageController::class, 'changeJidloA'])->name('kantyna.jidloa.update');              // Kantýna
-    Route::post('jidlob/update/{id}', [PageController::class, 'changeJidloB'])->name('kantyna.jidlob.update');              // Kantýna
+    // Polévka
+    Route::post('polevka/update/{id}', [PageController::class, 'changePolevka'])->name('kantyna.polevka.update');
+    // Jídlo A
+    Route::post('jidloa/update/{id}', [PageController::class, 'changeJidloA'])->name('kantyna.jidloa.update');
+    // Jídlo B
+    Route::post('jidlob/update/{id}', [PageController::class, 'changeJidloB'])->name('kantyna.jidlob.update');
 });
 
-// Dokumenty
+// Dokumentace
 Route::prefix('dokumenty')->name('dokumenty.')->group(function () {
+    // Dokumentace personální
     Route::get('personalni/{id}', [PageController::class, 'document'])->name('personalni');
+    // Dokumentace sesterská
     Route::get('sesterska/{id}', [PageController::class, 'document'])->name('sesterska');
+    // Dokumentace hygienická
     Route::get('hygiena/{id}', [PageController::class, 'document'])->name('hygiena');
+    // Dokumentace pacientská
     Route::get('pacient/{id}', [PageController::class, 'document'])->name('pacient');
+    // Dokumentace OKB
     Route::get('okb/{id}', [PageController::class, 'document'])->name('okb');
+    // Dokumentace RDG
     Route::get('rdg/{id}', [PageController::class, 'document'])->name('rdg');
+    // Dokumentace IT
     Route::get('it/{id}', [PageController::class, 'document'])->name('it');
+    // Dokumentace KPR
     Route::get('kpr/{id}', [PageController::class, 'document'])->name('kpr');
+    // Dokumentace komunikační karty
     Route::get('komunikacni-karty/{id}', [PageController::class, 'document'])->name('komunikacni-karty');
+    // Dokumentace vyhodnocení dotazníků
     Route::get('vyhodnoceni-dotazniku/{id}', [PageController::class, 'document'])->name('vyhodnoceni-dotazniku');
+    // Dokumentace návody
     Route::get('navody/{id}', [PageController::class, 'document'])->name('navody');
-    Route::get('ukrajinske-dokumenty/{id}', [PageController::class, 'document'])->name('ukrajinske-dokumenty');
 });
 
 // Standardy
@@ -146,7 +172,9 @@ Route::prefix('indikatory-kvality')->name('indikatory-kvality.')->group(function
 
 // Zápisy z porad
 Route::prefix('porady')->name('porady.')->group(function () {
+    // Zápisy z porad primářů
     Route::get('primarske-porady/{id}', [PageController::class, 'porady'])->name('primarske-porady');
+    // Zápisy z porad staničních sester
     Route::get('porady-stanicnich-sester/{id}', [PageController::class, 'porady'])->name('porady-stanicnich-sester');
 });
 

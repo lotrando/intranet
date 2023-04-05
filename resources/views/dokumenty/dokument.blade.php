@@ -981,7 +981,7 @@
               </div>
             </div>
             <div class="mb-2 mt-2">
-              <div id="pdf-preview"></div>
+              <div id="pdf-preview-add"></div>
             </div>
           </div>
           <input id="add_action" name="add_action" type="hidden" />
@@ -1187,7 +1187,7 @@
 
 @section('scripts')
   <script src="{{ asset('js/pdfobject.js') }}"></script>
-  <script src="{{ asset('js/ViewerJS') }}"></script>
+  {{-- <script src="{{ asset('js/ViewerJS') }}"></script> --}}
   <script>
     $(document).ready(function() {
       function fill(Value) {
@@ -1209,7 +1209,7 @@
         success: function(html) {
           $('#inputForm')[0].reset();
           $('.modal-title').val('');
-          $('#attachment, #action_button, #pdf-preview-show, #pdf-preview, #pdf-preview-addon-show').removeClass('d-none');
+          $('#action_button, #pdf-preview-show, #pdf-preview, #pdf-preview-addon-show').removeClass('d-none');
           $('#formModal').modal('show');
           $('#modal-icon').html('{!! $categorie->svg_icon !!}').addClass('bg-{{ $categorie->color }}-lt');
           $('#modal-header').addClass("modal-header bg-{{ $categorie->color }}-lt");
@@ -1283,8 +1283,8 @@
           $('#add_hidden_id').val(html.data.id);
           $('#add_hidden_file').val(html.data.file);
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-            "#pdf-preview-show", {
-              height: "41rem"
+            "#pdf-preview-add", {
+              height: "36rem"
             })
         }
       })
@@ -1314,13 +1314,19 @@
           file_type = val.substr(val.lastIndexOf('.')).toLowerCase();
           if (file_type === '.pdf') {
             PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
-              "#pdf-preview-addon-show", {
+              "#pdf-preview-show", {
                 height: "41rem"
               })
           }
           if (file_type !== '.pdf') {
-            $('#pdf-preview-addon-show').html('Náhled souboru typu *' + file_type + ' nenelze zobrazit. Klikněte na stáhnout soubor.')
+            $('#pdf-preview-show').html('Náhled souboru typu *' + file_type + ' nenelze zobrazit. Klikněte na stáhnout soubor.')
           }
+          // if (file_type !== '.pdf') {
+          //   var file_path = "../../soubory/" + html.data.file
+          //   $("#pdf-preview-show").officeToHtml({
+          //     url: file_path
+          //   })
+          // }
         }
       })
     });
