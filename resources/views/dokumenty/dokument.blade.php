@@ -581,7 +581,7 @@
                             </div>
                             <div class="col-auto">
                               <a href="{{ route('soubory.' . $addon->category->category_type . '.addon.download', $addon->id) }}" target="_blank">
-                                <span class="avatar bg-{{ $standard->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                                <span class="avatar bg-{{ $addon->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
                                   data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
                                   @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
                                     <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">

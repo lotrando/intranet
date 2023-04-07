@@ -247,6 +247,9 @@ class PageController extends Controller
         $documents10 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 10)->orderBy('position')->get();
         $documents11 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 11)->orderBy('position')->get();
         $documents12 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 12)->orderBy('position')->get();
+        $documents13 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 13)->orderBy('position')->get();
+        $documents14 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 14)->orderBy('position')->get();
+        $documents15 = Document::where('status', 'Schváleno')->with('category', 'addons')->where('category_id', $id)->where('accordion_group', 15)->orderBy('position')->get();
 
         return view('standardy.akreditacni', [
             'title'             => $categorie->category_name,
@@ -269,7 +272,10 @@ class PageController extends Controller
             'documents9'        => $documents9,
             'documents10'       => $documents10,
             'documents11'       => $documents11,
-            'documents12'       => $documents12
+            'documents12'       => $documents12,
+            'documents13'       => $documents13,
+            'documents14'       => $documents14,
+            'documents15'       => $documents15
         ]);
     }
 
