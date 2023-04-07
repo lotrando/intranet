@@ -145,13 +145,13 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->interna }}</label>
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <label class="text-blue">Službu má {{ $day->interna }}</label>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsInterna as $doctor)
-                              <option data-phone="{{ $doctor->mobile }}" value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}"
-                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -226,13 +226,13 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->interna }}</label>
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <label class="text-blue">Službu má {{ $day->interna }}</label>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsInterna as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                date-phone="{{ $doctor->phone }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -308,15 +308,16 @@
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
                           @if ($day->interna == '')
-                            <label class="text-red">Původní sloužící lékař: NEZADÁNO</label>
+                            <label class="text-red">Služba neobsazena</label>
                           @else
-                            <label class="text-blue">Původní sloužící lékař: {{ $day->interna }}</label>
+                            <label class="text-blue">Službu má {{ $day->interna }}</label>
                           @endif
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsInterna as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -364,6 +365,7 @@
         dataType: "json",
         success: function(data) {
           console.log('success')
+          location.reload()
         }
 
       });

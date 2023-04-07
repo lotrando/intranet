@@ -550,17 +550,23 @@ class PageController extends Controller
             ->where('department_id', '<=', 9)
             ->orderBy('last_name')->get();
         $doctorsInterna = Employee::with('department')->whereTitlePreffix('MUDr.')
-            ->where('department_id', '>=', 1)
-            ->orderBy('last_name')->get();
-        $doctorsOs = Employee::with('department')->whereTitlePreffix('MUDr.')
-            ->where('department_id', '>=', 16)
-            ->where('department_id', '<=', 16)
+            ->where('department_id', '=', [1, 4, 5])
             ->orderBy('last_name')->get();
         $doctorsNeurologie = Employee::with('department')->whereTitlePreffix('MUDr.')
             ->where('department_id', '>=', 6)
             ->where('department_id', '<=', 7)
             ->orderBy('last_name')->get();
-        $doctorsAll = Employee::with('department')->whereTitlePreffix('MUDr.')->orderBy('last_name')->get();
+        $doctorsRdg = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->where('department_id', '=', 15)
+            ->orderBy('last_name')->get();
+        $doctorsAll = Employee::with('department')->whereTitlePreffix('MUDr.')
+            ->whereStatus('Aktivní')
+            ->orderBy('last_name')->get();
+
+        $nutricni = collect([
+            'Marketa'
+        ]);
+
         $now = Carbon::now();
         $from = $now->startOfMonth()->format('d. m. Y');
         $to = $now->endOfMonth()->format('d. m. Y');
@@ -596,7 +602,8 @@ class PageController extends Controller
             'doctorsJip'        => $doctorsJip,
             'doctorsInterna'    => $doctorsInterna,
             'doctorsNeurologie' => $doctorsNeurologie,
-            'doctorsOs'         => $doctorsOs,
+            'doctorsRdg'        => $doctorsRdg,
+            'nutricni'          => $nutricni,
             'doctorsAll'        => $doctorsAll,
             'from'              => $from,
             'to'                => $to,
@@ -774,7 +781,7 @@ class PageController extends Controller
         return response()->json(['success' => 'Služba upravena!']);
     }
 
-    // Jip change sluzby
+    // OS change sluzby
     public function changeDoctorOperacniSaly(Request $request)
     {
         if (request()->ajax()) {
@@ -782,6 +789,34 @@ class PageController extends Controller
                 ->where('id', $request->id)
                 ->update([
                     'operacni_saly'               => $request->operacni_saly,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    // RDG change sluzby
+    public function changeDoctorRdg(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'rdg' => $request->rdg,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    // RDG change sluzby
+    public function changeDoctorPrijmovka(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'prijmova_ambulance' => $request->prijmovka,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);

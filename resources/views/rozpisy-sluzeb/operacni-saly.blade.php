@@ -145,13 +145,13 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->operacni_saly }}</label>
-                          <select class="form-select edit" name="operacni_saly[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
-                            @foreach ($doctorsOs as $doctor)
-                              <option data-phone="{{ $doctor->mobile }}" value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}"
-                                @if (old('operacni_saly[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                          <label class="text-blue">Službu má {{ $day->operacni_saly }}</label>
+                          <select class="form-select edit" name="operacni-saly[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
+                            @foreach ($doctorsAll as $doctor)
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('operacni-saly[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -226,13 +226,13 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->operacni_saly }}</label>
-                          <select class="form-select edit" name="operacni_saly[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
-                            @foreach ($doctorsOs as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                date-phone="{{ $doctor->phone }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                          <label class="text-blue">Službu má {{ $day->operacni_saly }}</label>
+                          <select class="form-select edit" name="operacni-saly[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
+                            @foreach ($doctorsAll as $doctor)
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('operacni-saly[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -240,7 +240,7 @@
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">
-                            {{ $day->interna }}
+                            {{ $day->operacni_saly }}
                           </div>
                         </div>
                       @endauth
@@ -308,15 +308,16 @@
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
                           @if ($day->operacni_saly == '')
-                            <label class="text-red">Původní sloužící lékař: NEZADÁNO</label>
+                            <label class="text-red">Služba neobsazena</label>
                           @else
-                            <label class="text-blue">Původní sloužící lékař: {{ $day->operacni_saly }}</label>
+                            <label class="text-blue">Službu má {{ $day->operacni_saly }}</label>
                           @endif
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
-                            @foreach ($doctorsOs as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                          <select class="form-select edit" name="operacni-saly[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
+                            @foreach ($doctorsAll as $doctor)
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
+                                @if (old('operacni-saly[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
                           </select>
@@ -324,10 +325,10 @@
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">
-                            @if ($day->interna == '')
+                            @if ($day->operacni_saly == '')
                               <span class="text-red">Nevyplněno</span>
                             @else
-                              {{ $day->interna }}
+                              {{ $day->operacni_saly }}
                             @endif
                           </div>
                         </div>
@@ -364,6 +365,7 @@
         dataType: "json",
         success: function(data) {
           console.log('success')
+          location.reload()
         }
 
       });

@@ -343,6 +343,7 @@
           dataType: "json",
           success: function(data) {
             console.log('success')
+            location.reload()
           }
 
         })
@@ -364,6 +365,7 @@
           dataType: "json",
           success: function(data) {
             console.log('success')
+            location.reload()
           }
 
         })
@@ -385,6 +387,7 @@
           dataType: "json",
           success: function(data) {
             console.log('success')
+            location.reload()
           }
 
         })

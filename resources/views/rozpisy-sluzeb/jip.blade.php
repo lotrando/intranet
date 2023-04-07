@@ -145,12 +145,12 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->jip }}</label>
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <label class="text-blue">Službu má {{ $day->jip }}</label>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsJip as $doctor)
                               <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
-                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
@@ -159,7 +159,7 @@
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">
-                            {{ $day->interna }}
+                            {{ $day->jip }}
                           </div>
                         </div>
                       @endauth
@@ -226,12 +226,12 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->jip }}</label>
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <label class="text-blue">Službu má {{ $day->jip }}</label>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsJip as $doctor)
                               <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
-                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
@@ -240,7 +240,7 @@
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">
-                            {{ $day->interna }}
+                            {{ $day->jip }}
                           </div>
                         </div>
                       @endauth
@@ -307,16 +307,16 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-8 mb-2">
-                          @if ($day->interna == '')
-                            <label class="text-red">Původní sloužící lékař: NEZADÁNO</label>
+                          @if ($day->jip == '')
+                            <label class="text-red">Služba neobsazena</label>
                           @else
-                            <label class="text-blue">Původní sloužící lékař: {{ $day->jip }}</label>
+                            <label class="text-blue">Službu má {{ $day->jip }}</label>
                           @endif
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsJip as $doctor)
                               <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name }}"
-                                @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . $doctor->first_name) selected @endif>
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ $doctor->first_name }}
                               </option>
                             @endforeach
@@ -325,10 +325,10 @@
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">
-                            @if ($day->interna == '')
+                            @if ($day->jip == '')
                               <span class="text-red">Nevyplněno</span>
                             @else
-                              {{ $day->interna }}
+                              {{ $day->jip }}
                             @endif
                           </div>
                         </div>
@@ -365,6 +365,7 @@
         dataType: "json",
         success: function(data) {
           console.log('success')
+          location.reload()
         }
 
       });

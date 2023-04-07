@@ -281,6 +281,9 @@ Route::post('sluzby/operacni-saly/update/{id}', [PageController::class, 'changeD
 Route::post('sluzby/interna/update/{id}', [PageController::class, 'changeDoctorInterna'])->name('sluzby.interna.update');
 Route::post('sluzby/neurologie/update/{id}', [PageController::class, 'changeDoctorNeurologie'])->name('sluzby.neurologie.update');
 Route::post('sluzby/zurnal/update/{id}', [PageController::class, 'changeDoctorZurnal'])->name('sluzby.zurnal.update');
+Route::post('sluzby/rdg/update/{id}', [PageController::class, 'changeDoctorRdg'])->name('sluzby.rdg.update');
+Route::post('sluzby/prijmovka/update/{id}', [PageController::class, 'changeDoctorPrijmovka'])->name('sluzby.prijmovka.update');
+Route::post('sluzby/nutricni/update/{id}', [PageController::class, 'changeNutricni'])->name('sluzby.nutricni.update');
 
 // Auth Routes
 Route::group(['middleware' => 'auth'], function () {
