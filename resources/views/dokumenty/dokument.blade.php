@@ -151,9 +151,9 @@
                             </div>
                             <div class="col text-truncate" id="{{ $document->id }}">
                               <span>
-                                <p class="show d-inline text-primary text-decoration-none cursor-pointer" id="{{ $document->id }}" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" data-bs-original-title="Více informací o dokumentu {{ $document->description }}"
-                                  style="margin-bottom: 0;">
+                                <p class="@if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else d-inline text-muted text-decoration-none @endif"
+                                  id="{{ $document->id }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') data-bs-original-title="Více informací o dokumentu {{ $document->description }}" style="margin-bottom: 0;" @endif>
                                   @if ($categorie->id != 3)
                                     {{ $i++ . '.' }}
                                   @endif
@@ -336,9 +336,9 @@
                           </div>
                           <div class="col text-truncate" id="{{ $add->id }}">
                             <span>
-                              <p class="show-addon d-inline text-primary text-decoration-none cursor-pointer" id="{{ $add->id }}"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Více informací o příloze {{ $add->description }}"
-                                style="margin-bottom: 0;">
+                              <p class="@if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else d-inline text-muted text-decoration-none @endif"
+                                id="{{ $add->id }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                                @if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf') data-bs-original-title="Více informací o dokumentu {{ $add->description }}" style="margin-bottom: 0;" @endif>
                                 {{ $add->description }}
                               </p>
                             </span>
@@ -450,15 +450,15 @@
                             </div>
                             <div class="col-auto">
                               <a href="{{ route('soubory.standard.download', $standard->id) }}" target="_blank">
-                                <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                  data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
-                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                <span class="avatar bg-{{ $standard->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  data-bs-original-title="Stáhnout soubor .{{ substr($standard->file, strpos($standard->file, '.') + 1) }}">
+                                  @if (substr($standard->file, strpos($standard->file, '.') + 1) == 'pdf')
                                     <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                  @elseif(substr($standard->file, strpos($standard->file, '.') + 1) == 'xlsx')
                                     <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                  @elseif(substr($standard->file, strpos($standard->file, '.') + 1) == 'docx')
                                     <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                  @elseif(substr($standard->file, strpos($standard->file, '.') + 1) == 'pptx')
                                     <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
                                   @endif
                                 </span>
@@ -466,9 +466,9 @@
                             </div>
                             <div class="col text-truncate" id="{{ $standard->id }}">
                               <span>
-                                <p class="show d-inline text-primary text-decoration-none cursor-pointer" id="{{ $standard->id }}" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" data-bs-original-title="Více informací o standardu {{ $standard->description }}"
-                                  style="margin-bottom: 0;">
+                                <p class="@if (substr($standard->file, strpos($standard->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else d-inline text-muted text-decoration-none @endif"
+                                  id="{{ $standard->id }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  @if (substr($standard->file, strpos($standard->file, '.') + 1) == 'pdf') data-bs-original-title="Více informací o dokumentu {{ $standard->description }}" style="margin-bottom: 0;" @endif>
                                   {{ $standard->name }} - {{ Str::ucfirst($standard->category->button) }} {{ $standard->category->category_type }}
                                 </p>
                               </span>
@@ -582,14 +582,14 @@
                             <div class="col-auto">
                               <a href="{{ route('soubory.' . $addon->category->category_type . '.addon.download', $addon->id) }}" target="_blank">
                                 <span class="avatar bg-{{ $addon->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                  data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
-                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                  data-bs-original-title="Stáhnout soubor .{{ substr($addon->file, strpos($addon->file, '.') + 1) }}">
+                                  @if (substr($addon->file, strpos($addon->file, '.') + 1) == 'pdf')
                                     <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                  @elseif(substr($addon->file, strpos($addon->file, '.') + 1) == 'xlsx')
                                     <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                  @elseif(substr($addon->file, strpos($addon->file, '.') + 1) == 'docx')
                                     <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
-                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                  @elseif(substr($addon->file, strpos($addon->file, '.') + 1) == 'pptx')
                                     <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
                                   @endif
                                 </span>
@@ -597,9 +597,9 @@
                             </div>
                             <div class="col text-truncate" id="{{ $addon->id }}">
                               <span>
-                                <p class="show d-inline text-primary text-decoration-none cursor-pointer" id="{{ $addon->id }}" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" data-bs-original-title="Více informací o standardu {{ $addon->description }}"
-                                  style="margin-bottom: 0;">
+                                <p class="@if (substr($addon->file, strpos($addon->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else d-inline text-muted text-decoration-none @endif"
+                                  id="{{ $addon->id }}" data-bs-toggle="tooltip" data-bs-placement="top"
+                                  @if (substr($addon->file, strpos($addon->file, '.') + 1) == 'pdf') data-bs-original-title="Více informací o dokumentu {{ $addon->description }}" style="margin-bottom: 0;" @endif>
                                   {{ $addon->description }}
                                 </p>
                               </span>
