@@ -106,13 +106,14 @@
                   </svg>
                 </div>
                 <div>
-                  <h2 class="ms-2 col-auto mb-0">{{ $categorie->category_name }} na období od {{ $from }} do {{ $to }}</h2>
+                  <h2 class="ms-2 col-auto mb-0">{{ $categorie->category_name }} na období od dnešního dne {{ \Carbon\Carbon::now()->format('d. m. Y') }} do
+                    {{ \Carbon\Carbon::now()->addMonth()->format('d. m. Y') }}</h2>
                 </div>
               </div>
             </div>
             <div class="card-body card-body-scrollable card-body-scrollable-shadow">
               <div class="divide-y">
-                @foreach ($daylist as $day)
+                @foreach ($all as $day)
                   <div>
                     <div class="row">
                       <div class="d-flex align-items-center justify-content-start col-1">

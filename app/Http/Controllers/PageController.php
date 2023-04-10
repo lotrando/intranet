@@ -591,6 +591,11 @@ class PageController extends Controller
             ->where('date', '<=', $monthEndDate)
             ->get();
 
+        $all = DB::table('calendar')
+            ->where('date', '>=', Carbon::now()->format('Y-m-d'))
+            ->where('date', '<=', Carbon::now()->addMonth()->format('Y-m-d'))
+            ->get();
+
         $daylistNext = DB::table('calendar')
             ->where('date', '>=', $now->endOfMonth()->addMonth()->format('Y-m-d'))
             ->where('date', '<', $now->endOfMonth()->format('Y-m-d'))
@@ -614,7 +619,8 @@ class PageController extends Controller
             'doctorsAll'        => $doctorsAll,
             'from'              => $from,
             'to'                => $to,
-            'today'             => $today
+            'today'             => $today,
+            'all'               => $all
         ]);
     }
 
