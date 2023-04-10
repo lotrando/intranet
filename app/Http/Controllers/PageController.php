@@ -9,7 +9,6 @@ use App\Models\Document;
 use App\Models\Employee;
 use App\Models\Food;
 use App\Models\Notification;
-use App\Models\Paint;
 use App\Models\Type;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -156,12 +155,10 @@ class PageController extends Controller
     {
         $food           = Food::orderBy('name')->get();
         $now            = Carbon::now();
-        $weekStartDate  = $now->startOfWeek()->format('Y-m-d');
+        $weekStartDate  = $now->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
         $weekEndDate    = $now->endOfWeek()->addWeek()->format('Y-m-d');
-        $from           = $now->startOfWeek()->format('d. m.');
-        $to             = $now->endOfWeek()->format('d. m.');
 
-        $daylist        = DB::table('calendar')
+        $daylist = DB::table('calendar')
             ->where('date', '>=', $weekStartDate)
             ->where('date', '<=', $weekEndDate)
             ->simplePaginate(7);
@@ -170,8 +167,6 @@ class PageController extends Controller
             'pretitle'  => 'Stravování',
             'title'     => 'Nabídka kantýny',
             'daylist'   => $daylist,
-            'od'        => $from,
-            'do'        => $to,
             'food'      => $food
         ]);
     }
@@ -190,7 +185,7 @@ class PageController extends Controller
         Alert::toast('Polevka uložena!', 'success')->position('center');
     }
 
-    // Plánování j9dlo A
+    // Plánování jídlo A
     public function changeJidloA(Request $request)
     {
         if (request()->ajax()) {
@@ -204,7 +199,7 @@ class PageController extends Controller
         Alert::toast('Jídlo uloženo!', 'success')->position('center');
     }
 
-    // Plánování j9dlo A
+    // Plánování jídlo A
     public function changeJidloB(Request $request)
     {
         if (request()->ajax()) {
@@ -216,6 +211,20 @@ class PageController extends Controller
         }
         return response()->json(['success' => 'Jídlo uloženo!']);
         Alert::toast('Jídlo uloženo!', 'success')->position('center');
+    }
+
+    // Plánování jídlo A
+    public function changeKantyna(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'kantyna'  => $request->kantyna,
+                ]);
+        }
+        return response()->json(['success' => 'Provozní doba uložena!']);
+        Alert::toast('Provozní doba uložena!', 'success')->position('center');
     }
 
     // Akreditacní stadnardy
@@ -563,9 +572,7 @@ class PageController extends Controller
             ->whereStatus('Aktivní')
             ->orderBy('last_name')->get();
 
-        $nutricni = collect([
-            'Marketa'
-        ]);
+        $nutricni = Employee::whereJobId(19)->whereStatus('Aktivní')->get();
 
         $now = Carbon::now();
         $from = $now->startOfMonth()->format('d. m. Y');
@@ -733,7 +740,8 @@ class PageController extends Controller
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'interna'  => $request->interna,
+                    'interna'           => $request->interna,
+                    'interna_mobile'    => $request->interna_mobile
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
@@ -746,7 +754,8 @@ class PageController extends Controller
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'neurologie'  => $request->neurologie,
+                    'neurologie'        => $request->neurologie,
+                    'neurologie_mobile' => $request->neurologie_mobile,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
@@ -761,7 +770,7 @@ class PageController extends Controller
                 ->where('id', $request->id)
                 ->update([
                     'zurnalni_sluzby'   => $request->zurnalni_sluzby,
-                    'mobile'            => $request->mobile
+                    'zurnal_mobile'     => $request->zurnal_mobile
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
@@ -775,10 +784,26 @@ class PageController extends Controller
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'jip' => $request->jip,
+                    'jip'           => $request->jip,
+                    'jip_mobile'    => $request->jip_mobile,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
+    }
+
+    // Ortopedie change sluzby
+    public function changeDoctorOrtopedie(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'ortopedie'         => $request->ortopedie,
+                    'ortopedie_mobile'  => $request->ortopedie_mobile
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
     }
 
     // OS change sluzby
@@ -788,7 +813,8 @@ class PageController extends Controller
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'operacni_saly'               => $request->operacni_saly,
+                    'operacni_saly' => $request->operacni_saly,
+                    'os_mobile'     => $request->os_mobile,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
@@ -802,21 +828,38 @@ class PageController extends Controller
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'rdg' => $request->rdg,
+                    'rdg'           => $request->rdg,
+                    'rdg_mobile'    => $request->rdg_mobile,
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);
         Alert::toast('Služba upravena!', 'success')->position('center');
     }
 
-    // RDG change sluzby
+    // P59jmov8 ambulance change sluzby
     public function changeDoctorPrijmovka(Request $request)
     {
         if (request()->ajax()) {
             DB::table('calendar')
                 ->where('id', $request->id)
                 ->update([
-                    'prijmova_ambulance' => $request->prijmovka,
+                    'prijmova_ambulance'    => $request->prijmova_ambulance,
+                    'prijmovka_mobile'      => $request->prijmovka_mobile,
+                ]);
+        }
+        return response()->json(['success' => 'Služba upravena!']);
+        Alert::toast('Služba upravena!', 'success')->position('center');
+    }
+
+    // Nutriční change sluzby
+    public function changeNutricni(Request $request)
+    {
+        if (request()->ajax()) {
+            DB::table('calendar')
+                ->where('id', $request->id)
+                ->update([
+                    'nutricni_terapeuti'   => $request->nutricni_terapeuti,
+                    'nutricni_mobile'     => $request->nutricni_mobile
                 ]);
         }
         return response()->json(['success' => 'Služba upravena!']);

@@ -710,13 +710,25 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'category_file' => 'rozpisy-sluzeb',
             'category_type' => 'rozpisy-sluzeb',
+            'category_name' => 'Ortopedie',
+            'folder_name'   => 'ortopedie',
+            'category_icon' => 'ortopedie.png',
+            'svg_icon'      => '<svg class="icon text-orange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 3a3 3 0 0 1 3 3a3 3 0 1 1 -2.12 5.122l-4.758 4.758a3 3 0 1 1 -5.117 2.297l0 -.177l-.176 0a3 3 0 1 1 2.298 -5.115l4.758 -4.758a3 3 0 0 1 2.12 -5.122z"></path></svg>',
+            'fa_icon'       => null,
+            'button'        => 'ortopedie',
+            'color'         => 'orange'
+        ]);
+
+        DB::table('categories')->insert([
+            'category_file' => 'rozpisy-sluzeb',
+            'category_type' => 'rozpisy-sluzeb',
             'category_name' => 'Operační sály',
             'folder_name'   => 'operacni-saly',
             'category_icon' => 'operacni-saly.png',
-            'svg_icon'      => '<svg class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l15 -15l3 3l-6 6l2 2a14 14 0 0 1 -14 4"></path></svg>',
+            'svg_icon'      => '<svg class="icon text-reha" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l15 -15l3 3l-6 6l2 2a14 14 0 0 1 -14 4"></path></svg>',
             'fa_icon'       => null,
             'button'        => 'operacni-saly',
-            'color'         => 'yellow'
+            'color'         => 'reha'
         ]);
 
         DB::table('categories')->insert([
@@ -794,12 +806,13 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'category_file' => 'rozpisy-sluzeb',
             'category_type' => 'rozpisy-sluzeb',
-            'category_name' => 'Včechny oddělení',
-            'folder_name'   => 'vsechny',
-            'category_icon' => 'vsechny.png',
+            'category_name' => 'Všechna oddělení',
+            'folder_name'   => 'vsechna',
+            'category_icon' => 'vsechna.png',
             'svg_icon'      => '<svg class="icon text-red" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l11 0"></path><path d="M9 12l11 0"></path><path d="M9 18l11 0"></path><path d="M5 6l0 .01"></path><path d="M5 12l0 .01"></path><path d="M5 18l0 .01"></path></svg>',
             'fa_icon'       => null,
-            'button'        => 'vsechny',
+            'button'        => 'vsechna',
             'color'         => 'red'
         ]);
     }
+}

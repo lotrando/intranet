@@ -50,7 +50,7 @@
                   </svg>
                 </div>
                 <div>
-                  <h2 class="ms-2 col-auto mb-0">Nabídka teplých jídel - {{ $od }} - {{ $do }}</small></h2>
+                  <h2 class="ms-2 col-auto mb-0">Nabídka teplých jídel</h2>
                 </div>
               </div>
             </div>
@@ -271,48 +271,47 @@
               <div class="divide-y">
                 @foreach ($daylist as $day)
                   <div>
-                    <div class="row">
-                      <div class="col-3 d-flex align-items-center justify-content-start pt-1">
+                    <div class="row d-flex align-items-center justify-content-between">
+                      <div class="col-auto">
                         @if (date('N', strtotime($day->date)) >= 6)
                           <span class="avatar bg-pink-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
                           <span class="avatar bg-lime-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @else
-                          <span class="avatar bg-azure-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
+                          <span class="avatar bg-blue-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-4 d-flex align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="col-4 d-flex align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="col-4 d-flex align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-azure">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
-                      @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-4 d-flex align-items-center justify-content-end">
-                          <div class="text-truncate text-pink">
-                            14:30 - 17:30
-                          </div>
+                      @auth
+                        <div class="col-12 col-lg-2">
+                          <div class="text-blue"> {{ $day->kantyna }}</div>
+                        </div>
+                        <div class="col-12 col-lg-7">
+                          <input class="form-control kantyna" type="text" name="kantyna[{{ $day->id }}]" data-id="{{ $day->id }}">
                         </div>
                       @else
-                        <div class="col-4 d-flex align-items-center justify-content-end">
-                          <div class="text-truncate fw-bold">
-                            6:30 - 17:00
-                          </div>
+                        <div class="col-7 d-flex align-items-center justify-content-start">
+                          <div class="text-truncate fw-bold">{{ $day->kantyna }}</div>
                         </div>
-                      @endif
+                      @endauth
                     </div>
                   </div>
                 @endforeach
@@ -382,6 +381,28 @@
           url: "/stravovani/jidlob/update/" + id,
           data: {
             jidlo_b: value,
+            id: id
+          },
+          dataType: "json",
+          success: function(data) {
+            console.log('success')
+            location.reload()
+          }
+
+        })
+      })
+
+      $('.kantyna').on('change', function() {
+        var value = $(this).val()
+        var id = $(this).data('id')
+        $.ajax({
+          type: 'POST',
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          },
+          url: "/stravovani/kantyna/update/" + id,
+          data: {
+            kantyna: value,
             id: id
           },
           dataType: "json",

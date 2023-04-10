@@ -12,7 +12,7 @@
         {{-- category buttons --}}
         <div class="row g-1 d-flex justify-content-center">
           @foreach ($rozpisy as $category)
-            <div class="col-auto">
+            <div class="col-1">
               <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-original-title="{{ __('' . $category->category_name . '') }}"
                 href="/{{ $category->category_file }}/{{ $category->folder_name . '/' . $category->id }}">
@@ -114,8 +114,8 @@
               <div class="divide-y">
                 @foreach ($daylist as $day)
                   <div>
-                    <div class="row">
-                      <div class="col-2 d-flex align-items-center justify-content-start">
+                    <div class="row d-flex align-items-center justify-content-between">
+                      <div class="col-auto">
                         @if (date('N', strtotime($day->date)) >= 6)
                           <span class="avatar bg-pink-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
@@ -125,41 +125,55 @@
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-azure">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
                       @auth
-                        <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->prijmova_ambulance }}</label>
-                          <select class="form-select edit" name="prijmovka[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                        <div class="col-12 col-lg-4">
+                          <div class="text-blue"> {{ $day->prijmova_ambulance }}</div>
+                          <div class="text-azure">{{ $day->prijmovka_mobile }}</div>
+                        </div>
+                        <div class="col-12 col-lg-5">
+                          <select class="form-select edit" name="prijmova-ambulance[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsAll as $doctor)
-                              <option data-phone="{{ $doctor->mobile }}" value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}"
-                                @if (old('neurologie[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('prijmova-ambulance[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
+                                data-mobile="{{ $doctor->mobile }}">
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }}
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
-                        <div class="col-7 d-flex align-items-center justify-content-start">
+                        <div class="d-flex-column align-items-center justify-content-center col-3">
                           <div class="text-truncate fw-bold">
-                            {{ $day->prijmova_ambulance }}
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
+                        </div>
+                        <div class="d-flex-column align-items-center justify-content-start col-5">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
                           </div>
                         </div>
                       @endauth
@@ -195,8 +209,8 @@
               <div class="divide-y">
                 @foreach ($daylistPrev as $day)
                   <div>
-                    <div class="row">
-                      <div class="col-2 d-flex align-items-center justify-content-start">
+                    <div class="row d-flex align-items-center justify-content-between">
+                      <div class="col-auto">
                         @if (date('N', strtotime($day->date)) >= 6)
                           <span class="avatar bg-pink-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
@@ -206,41 +220,55 @@
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-azure">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
                       @auth
-                        <div class="col-12 col-lg-8 mb-2">
-                          <label class="text-blue">Původní sloužící lékař: {{ $day->prijmova_ambulance }}</label>
-                          <select class="form-select edit" name="prijmovka[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                        <div class="col-12 col-lg-4">
+                          <div class="text-blue"> {{ $day->prijmova_ambulance }}</div>
+                          <div class="text-azure">{{ $day->prijmovka_mobile }}</div>
+                        </div>
+                        <div class="col-12 col-lg-5">
+                          <select class="form-select edit" name="prijmova-ambulance[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsAll as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('neurologie[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                date-phone="{{ $doctor->phone }}">
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('prijmova-ambulance[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
+                                data-mobile="{{ $doctor->mobile }}">
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }}
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
-                        <div class="col-7 d-flex align-items-center justify-content-start">
+                        <div class="d-flex-column align-items-center justify-content-center col-3">
                           <div class="text-truncate fw-bold">
-                            {{ $day->prijmova_ambulance }}
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
+                        </div>
+                        <div class="d-flex-column align-items-center justify-content-start col-5">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
                           </div>
                         </div>
                       @endauth
@@ -276,8 +304,8 @@
               <div class="divide-y">
                 @foreach ($daylistNext as $day)
                   <div>
-                    <div class="row">
-                      <div class="col-2 d-flex align-items-center justify-content-start">
+                    <div class="row d-flex align-items-center justify-content-between">
+                      <div class="col-auto">
                         @if (date('N', strtotime($day->date)) >= 6)
                           <span class="avatar bg-pink-lt"><strong>{{ Carbon\Carbon::parse($day->date)->format('d|m') }}</strong></span>
                         @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
@@ -287,48 +315,55 @@
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="col-2 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-1">
                           <span>
                             <div class="text-azure">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
                       @auth
-                        <div class="col-12 col-lg-8 mb-2">
-                          @if ($day->prijmova_ambulance == '')
-                            <label class="text-red">Původní sloužící lékař: NEZADÁNO</label>
-                          @else
-                            <label class="text-blue">Původní sloužící lékař: {{ $day->prijmova_ambulance }}</label>
-                          @endif
-                          <select class="form-select edit" name="prijmovka[{{ $day->id }}]" data-id="{{ $day->id }}">
-                            <option value="">Vyber lékaře</option>
+                        <div class="col-12 col-lg-4">
+                          <div class="text-blue"> {{ $day->prijmova_ambulance }}</div>
+                          <div class="text-azure">{{ $day->prijmovka_mobile }}</div>
+                        </div>
+                        <div class="col-12 col-lg-5">
+                          <select class="form-select edit" name="prijmova-ambulance[{{ $day->id }}]" data-id="{{ $day->id }}">
+                            <option value="">Změnit lékaře</option>
                             @foreach ($doctorsAll as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('prijmovka[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif>
+                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('prijmova-ambulance[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
+                                data-mobile="{{ $doctor->mobile }}">
                                 {{ $doctor->title_preffix }} {{ $doctor->last_name }}
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
-                        <div class="col-7 d-flex align-items-center justify-content-start">
+                        <div class="d-flex-column align-items-center justify-content-center col-3">
                           <div class="text-truncate fw-bold">
-                            @if ($day->prijmova_ambulance == '')
-                              <span class="text-red">Nevyplněno</span>
-                            @else
-                              {{ $day->prijmova_ambulance }}
-                            @endif
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
+                        </div>
+                        <div class="d-flex-column align-items-center justify-content-start col-5">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
                           </div>
                         </div>
                       @endauth
@@ -350,6 +385,7 @@
   <script>
     $('.edit').on('change', function() {
       var value = $(this).val();
+      var mobile = $(this).find(":selected").data('mobile');
       var id = $(this).data('id');
       $.ajax({
         type: 'POST',
@@ -358,7 +394,8 @@
         },
         url: "/sluzby/prijmovka/update/" + id,
         data: {
-          prijmovka: value,
+          prijmovka_mobile: mobile,
+          prijmova_ambulance: value,
           id: id
         },
         dataType: "json",

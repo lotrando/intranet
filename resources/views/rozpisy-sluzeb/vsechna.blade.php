@@ -12,7 +12,7 @@
         {{-- category buttons --}}
         <div class="row g-1 d-flex justify-content-center">
           @foreach ($rozpisy as $category)
-            <div class="col-auto">
+            <div class="col-1">
               <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-original-title="{{ __('' . $category->category_name . '') }}"
                 href="/{{ $category->category_file }}/{{ $category->folder_name . '/' . $category->id }}">
@@ -125,28 +125,49 @@
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="col-1 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="col-1 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="col-1 d-flex align-items-center justify-content-start">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-blue">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
+                      <div class="d-flex-column align-items-center justify-content-center col-1">
+                        <div class="description text-pink text-center">Žurnalní služby</div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->zurnalni_sluzby }}
+                        </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->zurnal_mobile }}
+                        </div>
+                      </div>
                       <div class="d-flex-column col-1 align-items-center justify-content-center">
                         <div class="description text-lime text-center">JIP</div>
                         <div class="text-truncate description text-center">
                           {{ $day->jip }}
+                        </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->jip_mobile }}
+                        </div>
+                      </div>
+                      <div class="d-flex-column col-1 align-items-center justify-content-center">
+                        <div class="description text-orange text-center">Ortopedie</div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->ortopedie }}
+                        </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->ortopedie_mobile }}
                         </div>
                       </div>
                       <div class="d-flex-column col-1 align-items-center justify-content-center">
@@ -154,11 +175,17 @@
                         <div class="text-truncate description text-center">
                           {{ $day->operacni_saly }}
                         </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->os_mobile }}
+                        </div>
                       </div>
                       <div class="d-flex-column col-1 align-items-center justify-content-center">
                         <div class="description text-blue text-center">Interna</div>
                         <div class="description text-truncate text-center">
                           {{ $day->interna }}
+                        </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->interna_mobile }}
                         </div>
                       </div>
                       <div class="d-flex-column col-1 align-items-center justify-content-center">
@@ -166,35 +193,35 @@
                         <div class="text-truncate description text-center">
                           {{ $day->neurologie }}
                         </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->neurologie_mobile }}
+                        </div>
                       </div>
                       <div class="d-flex-column col-1 align-items-center justify-content-center">
                         <div class="description text-red text-center">RDG</div>
                         <div class="text-truncate description text-center">
                           {{ $day->rdg }}
                         </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->rdg_mobile }}
+                        </div>
                       </div>
-                      {{-- <div class="d-flex-column col-1 align-items-center justify-content-center p-2">
+                      <div class="d-flex-column col-1 align-items-center justify-content-center">
                         <div class="description text-azure text-center">Příjmová ambulance</div>
                         <div class="text-truncate description text-center">
                           {{ $day->prijmova_ambulance }}
                         </div>
+                        <div class="text-truncate description text-center">
+                          {{ $day->prijmovka_mobile }}
+                        </div>
                       </div>
-                      <div class="d-flex-column col-1 align-items-center justify-content-center p-2">
-                        <div class="description text-orange text-center">Nutriční terapeuti</div>
+                      <div class="d-flex-column col-1 align-items-center justify-content-center">
+                        <div class="description text-orange text-center">Nutriční terapeut</div>
                         <div class="text-truncate description text-center">
                           {{ $day->nutricni_terapeuti }}
                         </div>
-                      </div> --}}
-                      <div class="d-flex-column align-items-center justify-content-center col-1">
-                        <div class="description text-pink text-center">Žurnalní služby</div>
                         <div class="text-truncate description text-center">
-                          {{ $day->zurnalni_sluzby }}
-                        </div>
-                      </div>
-                      <div class="d-flex-column align-items-center justify-content-center col-1">
-                        <div class="description text-pink text-center">Žurnální telefon</div>
-                        <div class="text-truncate description text-center">
-                          {{ $day->mobile }}
+                          {{ $day->nutricni_mobile }}
                         </div>
                       </div>
                     </div>

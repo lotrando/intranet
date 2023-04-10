@@ -55,6 +55,8 @@ Route::prefix('stravovani')->name('stravovani.')->group(function () {
     Route::post('jidloa/update/{id}', [PageController::class, 'changeJidloA'])->name('kantyna.jidloa.update');
     // Jídlo B
     Route::post('jidlob/update/{id}', [PageController::class, 'changeJidloB'])->name('kantyna.jidlob.update');
+    // Kantýna
+    Route::post('kantyna/update/{id}', [PageController::class, 'changeKantyna'])->name('kantyna.kantyna.update');
 });
 
 // Dokumentace
@@ -144,6 +146,7 @@ Route::prefix('bozp')->name('bozp.')->group(function () {
 // Rozpisy služeb
 Route::prefix('rozpisy-sluzeb')->name('rozpisy-sluzeb.')->group(function () {
     Route::get('jip/{id}', [PageController::class, 'rozpisSluzeb'])->name('jip');
+    Route::get('ortopedie/{id}', [PageController::class, 'rozpisSluzeb'])->name('ortopedie');
     Route::get('operacni-saly/{id}', [PageController::class, 'rozpisSluzeb'])->name('operacni-saly');
     Route::get('interna/{id}', [PageController::class, 'rozpisSluzeb'])->name('interna');
     Route::get('neurologie/{id}', [PageController::class, 'rozpisSluzeb'])->name('neurologie');
@@ -151,7 +154,7 @@ Route::prefix('rozpisy-sluzeb')->name('rozpisy-sluzeb.')->group(function () {
     Route::get('prijmova-ambulance/{id}', [PageController::class, 'rozpisSluzeb'])->name('prijmova-ambulance');
     Route::get('zurnalni-sluzby/{id}', [PageController::class, 'rozpisSluzeb'])->name('zurnalni-sluzby');
     Route::get('nutricni-terapeuti/{id}', [PageController::class, 'rozpisSluzeb'])->name('nutricni-terapeuti');
-    Route::get('vsechny/{id}', [PageController::class, 'rozpisSluzeb'])->name('vsechny');
+    Route::get('vsechna/{id}', [PageController::class, 'rozpisSluzeb'])->name('vsechna');
 });
 
 // Indikátory kvality
@@ -277,6 +280,7 @@ Route::get('vcards', [EmployeeController::class, 'vcards'])->name('employees.vca
 Route::get('search', [EmployeeController::class, 'vcardSearch'])->name('employees.search');
 
 Route::post('sluzby/jip/update/{id}', [PageController::class, 'changeDoctorJip'])->name('sluzby.jip.update');
+Route::post('sluzby/ortopedie/update/{id}', [PageController::class, 'changeDoctorOrtopedie'])->name('sluzby.ortopedie.update');
 Route::post('sluzby/operacni-saly/update/{id}', [PageController::class, 'changeDoctorOperacniSaly'])->name('sluzby.operacni-saly.update');
 Route::post('sluzby/interna/update/{id}', [PageController::class, 'changeDoctorInterna'])->name('sluzby.interna.update');
 Route::post('sluzby/neurologie/update/{id}', [PageController::class, 'changeDoctorNeurologie'])->name('sluzby.neurologie.update');

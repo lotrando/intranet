@@ -145,24 +145,24 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-4">
-                          <div class="text-blue"> {{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-blue"> {{ $day->ortopedie }}</div>
+                          <div class="text-azure">{{ $day->ortopedie_mobile }}</div>
                         </div>
                         <div class="col-12 col-lg-5">
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Změnit lékaře</option>
-                            @foreach ($doctors as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                data-mobile="{{ $doctor->mobile }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                            @foreach ($doctorsAll as $doctor)
+                              <option value="{{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}."
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . substr($doctor->first_name, 0, 1) . '.') selected @endif data-mobile="{{ $doctor->mobile }}">
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}.
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
-                          <div class="text-truncate fw-bold">{{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-truncate fw-bold">{{ $day->ortopedie }}</div>
+                          <div class="text-azure">{{ $day->ortopedie_mobile }}</div>
                         </div>
                       @endauth
                     </div>
@@ -228,24 +228,24 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-4">
-                          <div class="text-blue"> {{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-blue"> {{ $day->jip }}</div>
+                          <div class="text-azure">{{ $day->jip_mobile }}</div>
                         </div>
                         <div class="col-12 col-lg-5">
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
+                          <select class="form-select edit" name="jip[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Změnit lékaře</option>
-                            @foreach ($doctors as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                data-mobile="{{ $doctor->mobile }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                            @foreach ($doctorsJip as $doctor)
+                              <option value="{{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}."
+                                @if (old('jip[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . substr($doctor->first_name, 0, 1) . '.') selected @endif data-mobile="{{ $doctor->mobile }}">
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}.
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
-                          <div class="text-truncate fw-bold">{{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-truncate fw-bold">{{ $day->jip }}</div>
+                          <div class="text-azure">{{ $day->jip_mobile }}</div>
                         </div>
                       @endauth
                     </div>
@@ -311,24 +311,24 @@
                       @endif
                       @auth
                         <div class="col-12 col-lg-4">
-                          <div class="text-blue"> {{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-blue"> {{ $day->ortopedie }}</div>
+                          <div class="text-azure">{{ $day->ortopedie_mobile }}</div>
                         </div>
                         <div class="col-12 col-lg-5">
-                          <select class="form-select edit" name="interna[{{ $day->id }}]" data-id="{{ $day->id }}">
+                          <select class="form-select edit" name="ortopedie[{{ $day->id }}]" data-id="{{ $day->id }}">
                             <option value="">Změnit lékaře</option>
-                            @foreach ($doctors as $doctor)
-                              <option value="{{ $doctor->title_preffix . ' ' . $doctor->last_name }}" @if (old('interna[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name) selected @endif
-                                data-mobile="{{ $doctor->mobile }}">
-                                {{ $doctor->title_preffix }} {{ $doctor->last_name }}
+                            @foreach ($doctorsAll as $doctor)
+                              <option value="{{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}."
+                                @if (old('ortopedie[' . $day->id . ']') == $doctor->title_preffix . ' ' . $doctor->last_name . ' ' . substr($doctor->first_name, 0, 1) . '.') selected @endif data-mobile="{{ $doctor->mobile }}">
+                                {{ $doctor->title_preffix }} {{ $doctor->last_name }} {{ substr($doctor->first_name, 0, 1) }}.
                               </option>
                             @endforeach
                           </select>
                         </div>
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
-                          <div class="text-truncate fw-bold">{{ $day->interna }}</div>
-                          <div class="text-azure">{{ $day->interna_mobile }}</div>
+                          <div class="text-truncate fw-bold">{{ $day->ortopedie }}</div>
+                          <div class="text-azure">{{ $day->ortopedie_mobile }}</div>
                         </div>
                       @endauth
                     </div>
@@ -356,10 +356,10 @@
         headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
-        url: "/sluzby/interna/update/" + id,
+        url: "/sluzby/ortopedie/update/" + id,
         data: {
-          interna_mobile: mobile,
-          interna: value,
+          ortopedie_mobile: mobile,
+          ortopedie: value,
           id: id
         },
         dataType: "json",
@@ -367,7 +367,6 @@
           console.log('success')
           location.reload()
         }
-
       });
     });
   </script>

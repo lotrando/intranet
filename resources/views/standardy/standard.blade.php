@@ -9,41 +9,30 @@
 @endsection
 
 @section('content')
-  {{-- Page Wrapper Start --}}
   <div class="page-wrapper">
-
+    {{-- Page header --}}
     <div class="page-header d-print-none">
-
       <div class="container-fluid">
-        <div class="row align-items-center">
+        {{-- category buttons --}}
+        <div class="row g-1 d-flex justify-content-center">
           @foreach ($stands as $category)
-            <div class="col-2 col-sm-2 col-md-2 col-xl-2 col-xxl-2 ps-0 m-0">
-              <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100 m-1" data-bs-toggle="tooltip" data-bs-placement="top"
+            <div class="col-1">
+              <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-original-title="{{ __('' . $category->category_name . '') }}"
                 href="/{{ $category->category_file }}/{{ $category->folder_name . '/' . $category->id }}">
-                <span class="d-inline d-sm-inline d-md-none d-lg-inline d-xl-inline">{!! $category->svg_icon !!}</span>
-                <span class="d-none d-md-inline d-lg-inline d-xl-inline pe-1">{{ $category->category_name }}</span>
-                <span class="text-small">
+                <span class="d-inline d-sm-inline d-md-none d-lg-inline d-xl-inline pe-0">{!! $category->svg_icon !!}</span>
+                <span class="d-none d-md-inline d-lg-inline d-xl-inline pe-0">{{ $category->category_name }}</span>
+                {{-- <span class="text-small">
                   {{ $category->documents->count() }}
-                </span>
+                </span> --}}
               </a>
             </div>
           @endforeach
-          <div class="col-12">
-            @if ($allDocuments->count() > 0)
-              <div class="progress mt-2">
-                @foreach ($stands as $category)
-                  <div class="progress-bar progress-sm bg-{{ $category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="{{ $category->category_name . ' ' . round(($category->documents->count() * 100) / $allDocuments->count()) . '%' }}"
-                    role="progressbar" aria-label="{{ $category->category_name }}"
-                    style="width: {{ ($category->documents->count() * 100) / $allDocuments->count() }}%">
-                  </div>
-                @endforeach
-              </div>
-            @endif
-          </div>
-
-          <div class="col-12 mt-2">
+        </div>
+        {{-- Searchers --}}
+        <div class="row g-1 mt-2">
+          {{-- Document search --}}
+          <div class="col-6">
             <form autocomplete="off">
               <div class="input-icon">
                 <span class="input-icon-addon">
@@ -54,7 +43,24 @@
                     <path d="M21 21l-6 -6"></path>
                   </svg>
                 </span>
-                <input class="form-control" id="search" type="text" style="width:100%" placeholder="{{ __('v dokumentech ...') }}">
+                <input class="form-control" id="search" type="text" placeholder="{{ __('v dokumentech ...') }}">
+              </div>
+            </form>
+          </div>
+
+          {{-- Employees search --}}
+          <div class="col-6">
+            <form autocomplete="off">
+              <div class="input-icon">
+                <span class="input-icon-addon">
+                  <svg class="icon text-azure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                    <path d="M21 21l-6 -6"></path>
+                  </svg>
+                </span>
+                <input class="form-control" id="search-employee" type="text" placeholder="{{ __('v zaměstnancích ...') }}">
               </div>
             </form>
           </div>
@@ -64,7 +70,9 @@
             <div class="display mt-2 mb-1" id="display"></div>
           </div>
 
-          {{-- Page title --}}
+        </div>
+        {{-- Title --}}
+        <div class="row align-items-center mx-1 mt-1">
           <div class="col">
             {{-- Page Pretitle --}}
             <div class="page-pretitle text-primary">
@@ -75,36 +83,40 @@
               {{ __(ucfirst($categorie->category_name)) ?? '' }}
             </h2>
           </div>
-
-          <!-- Page title actions buttons -->
+          {{-- Page buttons --}}
           <div class="ms-auto d-print-none col-auto">
             <div class="btn-list">
-              <div class="d-flex justify-content-end">
 
-                @auth
-                  <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
-                    data-bs-original-title="{{ __('Vytvoří nový ' . $categorie->category_type . '') }}">
-                    <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
-                      </path>
-                      <rect x="9" y="3" width="6" height="4" rx="2">
-                      </rect>
-                      <path d="M10 14h4"></path>
-                      <path d="M12 12v4"></path>
-                    </svg>
-                    <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nový') }}</span>
-                  </button>
-                @endauth
-              </div>
+              @auth
+                <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
+                  data-bs-original-title="{{ __('Vytvoří nový ' . $categorie->category_type . '') }}">
+                  <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2">
+                    </path>
+                    <rect x="9" y="3" width="6" height="4" rx="2">
+                    </rect>
+                    <path d="M10 14h4"></path>
+                    <path d="M12 12v4"></path>
+                  </svg>
+                  <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nový') }}</span>
+                </button>
+              @endauth
+
             </div>
           </div>
-          <!-- Page Title Buttons End -->
         </div>
+        {{-- Title End --}}
+      </div>
+      {{-- Container End --}}
+    </div>
+    {{-- Page header End --}}
 
-        <!-- Page -->
-        <div class="row">
+    {{-- Page body --}}
+    <div class="page-body">
+      <div class="container-fluid">
+        <div class="row p-2">
           <div class="col-12">
             {{-- documents --}}
             @foreach ($documents as $document)

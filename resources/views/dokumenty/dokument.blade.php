@@ -16,7 +16,7 @@
         {{-- category buttons --}}
         <div class="row g-1 d-flex justify-content-center">
           @foreach ($docs as $category)
-            <div class="col-2 col-md-auto">
+            <div class="col-1">
               <a class="btn bg-{{ $category->color }}-lt hover-shadow-sm w-100" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-original-title="{{ __('' . $category->category_name . '') }}"
                 href="/{{ $category->category_file }}/{{ $category->folder_name . '/' . $category->id }}">
