@@ -15,11 +15,9 @@ class CategorySeeder extends Seeder
     public function run()
     {
         // Clear table
-
         DB::table('categories')->truncate();
 
         // Standards categories
-
         DB::table('categories')->insert([
             'category_file' => 'standardy',
             'category_type' => 'standard',
@@ -805,4 +803,3 @@ class CategorySeeder extends Seeder
             'color'         => 'red'
         ]);
     }
-}
