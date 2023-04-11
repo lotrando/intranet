@@ -151,13 +151,15 @@
                             </div>
                             <div class="col text-truncate" id="{{ $document->id }}">
                               <span>
-                                <p class="@if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else d-inline text-muted text-decoration-none @endif"
-                                  id="{{ $document->id }}" data-bs-toggle="tooltip" data-bs-placement="top"
-                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') data-bs-original-title="Více informací o dokumentu {{ $document->description }}" style="margin-bottom: 0;" @endif>
+                                <p class="@if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') show text-primary cursor-pointer @else text-azure text-decoration-none @endif mb-0 block"
+                                  id="{{ $document->id }}">
                                   @if ($categorie->id != 3)
                                     {{ $i++ . '.' }}
                                   @endif
-                                  {{ $document->name }}
+                                  <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-original-title="
+                                    @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') Náhled souboru *.pdf @else Náhled souboru typu MS Office není možný @endif"
+                                    style="margin-bottom: 0;">{{ $document->name }}</span>
                                   @if ($document->addons->count() > 0)
                                     <span class="description text-blue text-truncate"> - celkem příloh ({{ $document->addons->count() }})</span>
                                   @endif
