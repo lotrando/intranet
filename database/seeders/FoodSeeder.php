@@ -35,7 +35,7 @@ class FoodSeeder extends Seeder
         ]);
 
         DB::table('food')->insert([
-            'name'     => 'Čočková polévka',
+            'name'     => 'Čočková polévka s uzeninou',
             'type'     => 'soup',
         ]);
 
@@ -143,6 +143,11 @@ class FoodSeeder extends Seeder
 
         DB::table('food')->insert([
             'name'     => 'Pečené kuře',
+            'type'     => 'food',
+        ]);
+
+        DB::table('food')->insert([
+            'name'     => 'Bramboráky',
             'type'     => 'food',
         ]);
 
@@ -258,6 +263,11 @@ class FoodSeeder extends Seeder
 
         DB::table('food')->insert([
             'name'     => 'Vepřový guláš',
+            'type'     => 'food',
+        ]);
+
+        DB::table('food')->insert([
+            'name'     => 'Halušky s nivou',
             'type'     => 'food',
         ]);
     }

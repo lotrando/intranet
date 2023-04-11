@@ -168,7 +168,7 @@
                             {{ $day->jip_mobile }}
                           </div>
                         </div>
-                        <div class="d-flex-column align-items-center justify-content-start col-5">
+                        <div class="d-flex-column align-items-center justify-content-start col-4">
                           <div class="text-truncate fw-bold">
                             {{ $day->jip }}
                           </div>
@@ -255,9 +255,21 @@
                           </select>
                         </div>
                       @else
-                        <div class="col-7 d-flex align-items-center justify-content-start">
-                          <div class="text-truncate fw-bold">{{ $day->jip }}</div>
-                          <div class="text-azure">{{ $day->jip_mobile }}</div>
+                        <div class="d-flex-column align-items-center justify-content-center col-3">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
+                        </div>
+                        <div class="d-flex-column align-items-center justify-content-start col-4">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
                         </div>
                       @endauth
                     </div>
@@ -338,9 +350,21 @@
                           </select>
                         </div>
                       @else
-                        <div class="col-7 d-flex align-items-center justify-content-start">
-                          <div class="text-truncate fw-bold">{{ $day->jip }}</div>
-                          <div class="text-azure">{{ $day->jip_mobile }}</div>
+                        <div class="d-flex-column align-items-center justify-content-center col-3">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
+                        </div>
+                        <div class="d-flex-column align-items-center justify-content-start col-4">
+                          <div class="text-truncate fw-bold">
+                            {{ $day->jip }}
+                          </div>
+                          <div class="text-azure text-start">
+                            {{ $day->jip_mobile }}
+                          </div>
                         </div>
                       @endauth
                     </div>

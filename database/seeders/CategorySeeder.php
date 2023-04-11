@@ -150,6 +150,18 @@ class CategorySeeder extends Seeder
             'color'         => 'cyan'
         ]);
 
+        DB::table('categories')->insert([
+            'category_file' => 'standardy',
+            'category_type' => 'standard',
+            'category_name' => 'Logopedické',
+            'folder_name'   => 'logopedicke',
+            'category_icon' => 'logopedicke.png',
+            'svg_icon'      => '<svg class="icon icon-tabler icon-tabler-messages text-teal" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10"></path><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2"></path></svg>',
+            'fa_icon'       => null,
+            'button'        => 'logopedický',
+            'color'         => 'cyan'
+        ]);
+
         // Documents Data
 
         DB::table('categories')->insert([
@@ -270,6 +282,18 @@ class CategorySeeder extends Seeder
             'fa_icon'       => null,
             'button'        => 'vyhodnocovací',
             'color'         => 'lime'
+        ]);
+
+        DB::table('categories')->insert([
+            'category_file' => 'dokumenty',
+            'category_type' => 'dokument',
+            'category_name' => 'Postupová',
+            'folder_name'   => 'navody',
+            'category_icon' => 'navody.png',
+            'svg_icon'      => '<svg class="icon text-teal" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="17" x2="12" y2="17.01"></line><path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4"></path></svg>',
+            'fa_icon'       => null,
+            'button'        => 'postupový',
+            'color'         => 'teal'
         ]);
 
         DB::table('categories')->insert([

@@ -127,8 +127,9 @@
                             @if (date('N', strtotime($day->date)) < 6)
                               <div class="col-12 col-lg-6">
                                 <select class="form-select edit-polevka mb-1 p-1" name="polevka[{{ $day->id }}]" data-id="{{ $day->id }}">
-                                  <option value="-">Vyber polévku</option>
-                                  <option value="Svátek - Dnes se nevaří">Svátek - Dnes se nevaří</option>
+                                  <option value="">Vyber polévku</option>
+                                  <option value="*">*</option>
+                                  <option value="* Svátek - Dnes se nevaří">* Svátek - Dnes se nevaří</option>
                                   @foreach ($food->where('type', '=', 'soup') as $polevka)
                                     <option value="{{ $polevka->name }}" @if ($day->polevka == $polevka->name) selected @endif>
                                       {{ $polevka->name }}
@@ -136,8 +137,9 @@
                                   @endforeach
                                 </select>
                                 <select class="form-select edit-jidlo-a mb-1 p-1" name="jidlo_a[{{ $day->id }}]" data-id="{{ $day->id }}">
-                                  <option value="-">Vyber jídlo</option>
-                                  <option value="Svátek - Dnes se nevaří">Svátek - Dnes se nevaří</option>
+                                  <option value="">Vyber polévku</option>
+                                  <option value="*">*</option>
+                                  <option value="* Svátek - Dnes se nevaří">* Svátek - Dnes se nevaří</option>
                                   @foreach ($food->where('type', 'food') as $jidlo)
                                     <option value="{{ $jidlo->name }}" @if ($day->jidlo_a == $jidlo->name) selected @endif>
                                       {{ $jidlo->name }}
@@ -146,8 +148,9 @@
                                 </select>
 
                                 <select class="form-select edit-jidlo-b p-1" name="jidlo_b[{{ $day->id }}]" data-id="{{ $day->id }}">
-                                  <option value="-">Vyber jídlo</option>
-                                  <option value="Svátek - Dnes se nevaří">Svátek - Dnes se nevaří</option>
+                                  <option value="">Vyber polévku</option>
+                                  <option value="*">*</option>
+                                  <option value="* Svátek - Dnes se nevaří">* Svátek - Dnes se nevaří</option>
                                   @foreach ($food->where('type', 'food') as $jidlo)
                                     <option value="{{ $jidlo->name }}" @if ($day->jidlo_b == $jidlo->name) selected @endif>
                                       {{ $jidlo->name }}
@@ -203,32 +206,34 @@
                         @endif
                       </div>
                       @if (date('N', strtotime($day->date)) >= 6)
-                        <div class="d-flex align-items-center justify-content-start col-1">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-pink">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @elseif (Carbon\Carbon::parse($day->date) == Carbon\Carbon::today())
-                        <div class="d-flex align-items-center justify-content-start col-1">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-lime">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @else
-                        <div class="d-flex align-items-center justify-content-start col-1">
+                        <div class="d-flex align-items-center justify-content-start col-2">
                           <span>
                             <div class="text-azure">{{ Carbon\Carbon::parse($day->date)->locale('cs')->dayName }}</div>
                           </span>
                         </div>
                       @endif
                       @auth
-                        <div class="col-12 col-lg-2">
+                        <div class="col-12 col-lg-3">
                           <div class="text-blue"> {{ $day->kantyna }}</div>
                         </div>
-                        <div class="col-12 col-lg-7">
-                          <input class="form-control kantyna" type="text" name="kantyna[{{ $day->id }}]" data-id="{{ $day->id }}"
-                            value="{{ $day->kantyna }}">
-                        </div>
+                        @if (Auth::user()->role == 'kantyna' or Auth::user()->role == 'admin')
+                          <div class="col-12 col-lg-7">
+                            <input class="form-control kantyna" type="text" name="kantyna[{{ $day->id }}]" data-id="{{ $day->id }}"
+                              value="{{ $day->kantyna }}">
+                          </div>
+                        @endif
                       @else
                         <div class="col-7 d-flex align-items-center justify-content-start">
                           <div class="text-truncate fw-bold">{{ $day->kantyna }}</div>
