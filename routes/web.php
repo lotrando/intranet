@@ -309,6 +309,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Document Events
     Route::post('documents/update', [DocumentController::class, 'update'])->name('documents.update');
+    Route::post('documents/sklad', [DocumentController::class, 'sklad'])->name('documents.sklad');
     Route::get('documents/destroy/{id}', [DocumentController::class, 'destroy']);
 
     // Document Events

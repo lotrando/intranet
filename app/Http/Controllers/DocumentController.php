@@ -23,9 +23,40 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function sklad(Request $request)
     {
-        return $request;
+        $rules = [
+            'accordion_name'        => 'nullable',
+            'accordion_group'       => 'nullable',
+            'name'                  => 'required',
+            'description'           => 'required',
+            'position'              => 'required|numeric',
+            'category_id'           => 'required',
+            'link'                  => 'required'
+        ];
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = [
+            'name'                  => $request->name,
+            'description'           => $request->description,
+            'position'              => $request->position,
+            'category_id'           => $request->category_id,
+            'accordion_name'        => '0',
+            'file'                  => $request->link,
+            'revision'              => '1',
+            'user_id'               => Auth::user()->id
+        ];
+
+        Document::create($form_data);
+
+        Alert::toast('Multimedia link uložen!', 'success')->position('center');
+
+        return response()->json(['success' => 'Multimedia link uložen!']);
     }
 
     /**
