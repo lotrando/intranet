@@ -158,7 +158,7 @@
                                   @endif
                                   <span data-bs-toggle="tooltip" data-bs-placement="top"
                                     data-bs-original-title="
-                                    @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') Náhled souboru *.pdf @else Náhled souboru typu MS Office není možný @endif"
+                                    @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') Náhled souboru .pdf @else Náhled souboru typu MS Office není možný @endif"
                                     style="margin-bottom: 0;">{{ $document->name }}</span>
                                   @if ($document->addons->count() > 0)
                                     <span class="description text-blue text-truncate"> - celkem příloh ({{ $document->addons->count() }})</span>
