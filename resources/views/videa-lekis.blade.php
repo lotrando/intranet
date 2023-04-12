@@ -1,7 +1,7 @@
 @extends('layouts.blank')
 
 @section('favicon')
-  <link type="image/png" href="{{ asset('img/videa.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/bozppo.png') }}" rel="shortcut icon">
 @endsection
 
 @section('content')
@@ -41,18 +41,20 @@
     {{-- Page body --}}
     <div class="page-body">
       <div class="container-fluid">
-        <div class="row row-cards">
-          <div class="col-lg-4">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">Lekis</h3>
-                <video width="100%" controls>
-                  <source src="{{ asset('videa/jak_hasit.mp4') }}" type="video/mp4">
-                  Váš prohlížeč nepodporuje přehrávání videí
-                </video>
+        <div class="row row-cards g-2">
+          @foreach ($videos as $video)
+            <div class="col-12 col-lg-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h3 class="card-title">{{ $video->name }}</h3>
+                  <video poster="{{ asset($video->image) }}" width="100%" controls>
+                    <source src="{{ asset($video->video) }}" type="video/mp4">
+                    Váš prohlížeč nepodporuje přehrávání videí
+                  </video>
+                </div>
               </div>
             </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

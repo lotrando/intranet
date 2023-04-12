@@ -41,18 +41,20 @@
     {{-- Page body --}}
     <div class="page-body">
       <div class="container-fluid">
-        <div class="row row-cards">
-          <div class="col-12 col-lg-4">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h3 class="card-title">Hasit umí a může každý ( jak hasit )</h3>
-                <video poster="{{ asset('videa/jak_hasit.jpg') }}" width="100%" controls>
-                  <source src="{{ asset('videa/jak_hasit.mp4') }}" type="video/mp4">
-                  Váš prohlížeč nepodporuje přehrávání videí
-                </video>
+        <div class="row row-cards g-2">
+          @foreach ($videos as $video)
+            <div class="col-12 col-lg-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h3 class="card-title">{{ $video->name }}</h3>
+                  <video poster="{{ asset($video->image) }}" width="100%" controls>
+                    <source src="{{ asset($video->video) }}" type="video/mp4">
+                    Váš prohlížeč nepodporuje přehrávání videí
+                  </video>
+                </div>
               </div>
             </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

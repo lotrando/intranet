@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Food;
 use App\Models\Notification;
 use App\Models\Type;
+use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -664,22 +665,40 @@ class PageController extends Controller
         return redirect()->away('http://192.168.81.121:8000/radio.m3u');
     }
 
-    // Video
+    // Videa-edukativní
     public function video()
     {
-        return view('videa', ['pretitle' => 'Média', 'title' => 'Videa']);
+        $videos = Video::whereCategory('edukace')->get();
+
+        return view('videa', [
+            'pretitle' => 'Média',
+            'title' => 'Videa',
+            'videos' => $videos
+        ]);
     }
 
-    // Video-lekis
+    // Videa Lekis
     public function videoLekis()
     {
-        return view('videa-lekis', ['pretitle' => 'Média', 'title' => 'Lekis']);
+        $videos = Video::whereCategory('lekis')->get();
+
+        return view('videa', [
+            'pretitle' => 'Média',
+            'title' => 'Lekis',
+            'videos' => $videos
+        ]);
     }
 
-    // Video-bozp
+    // Videa BOZP
     public function videoBozp()
     {
-        return view('videa-bozp', ['pretitle' => 'Média', 'title' => 'BOZP']);
+        $videos = Video::whereCategory('bozp')->get();
+
+        return view('videa', [
+            'pretitle' => 'Média',
+            'title' => 'BOZP',
+            'videos' => $videos
+        ]);
     }
 
     // Edukační materiály

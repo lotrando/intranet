@@ -767,3 +767,24 @@ namespace App\Models{
 	class User extends \Eloquent {}
 }
 
+namespace App\Models{
+/**
+ * App\Models\Video
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $image
+ * @property string $video
+ * @property string $category
+ * @method static \Illuminate\Database\Eloquent\Builder|Video newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Video newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Video query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereVideo($value)
+ */
+	class Video extends \Eloquent {}
+}
+

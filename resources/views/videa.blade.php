@@ -1,86 +1,65 @@
 @extends('layouts.blank')
 
 @section('favicon')
-<link type="image/png" href="{{ asset('img/videa.png') }}" rel="shortcut icon">
+  <link type="image/png" href="{{ asset('img/bozppo.png') }}" rel="shortcut icon">
 @endsection
 
 @section('content')
-{{-- Page wrapper --}}
-<div class="page-wrapper">
+  {{-- Page wrapper --}}
+  <div class="page-wrapper">
 
-  {{-- Page header --}}
-  <div class="page-header d-print-none">
-    <div class="container-fluid">
-      <div class="row align-items-center">
+    {{-- Page header --}}
+    <div class="page-header d-print-none">
+      <div class="container-fluid">
+        <div class="row align-items-center">
 
-        {{-- Page pre-title --}}
-        <div class="col">
-          <div class="page-pretitle text-primary">
-            {{ __($pretitle) ?? '' }}
+          {{-- Page pre-title --}}
+          <div class="col">
+            <div class="page-pretitle text-primary">
+              {{ __($pretitle) ?? '' }}
+            </div>
+            <h2 class="page-title text-primary">
+              {{ __($title) ?? '' }}
+            </h2>
           </div>
-          <h2 class="page-title text-primary">
-            {{ __($title) ?? '' }}
-          </h2>
-        </div>
-        {{-- End Page pre-title --}}
+          {{-- End Page pre-title --}}
 
-        {{-- Page buttons --}}
-        <div class="ms-auto d-print-none col-auto">
-          <div class="btn-list">
-            <div class="d-flex justify-content-end">
-              {{-- Buttons --}}
+          {{-- Page buttons --}}
+          <div class="ms-auto d-print-none col-auto">
+            <div class="btn-list">
+              <div class="d-flex justify-content-end">
+                {{-- Buttons --}}
+              </div>
             </div>
           </div>
-        </div>
-        {{-- End Page buttons --}}
+          {{-- End Page buttons --}}
 
-      </div>
-    </div>
-  </div>
-
-  {{-- Page body --}}
-  <div class="page-body">
-    <div class="container-fluid">
-      <div class="row row-cards">
-        <div class="col-lg-6">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h3 class="card-title">Evanescence - Zombie | Sax Cover | Alexandra Ilieva</h3>
-              <div id="player-youtube" data-plyr-provider="youtube" data-plyr-embed-id="eWkvojhw0eo"></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h3 class="card-title">Vimeo Player</h3>
-              <div id="player-vimeo" data-plyr-provider="vimeo" data-plyr-embed-id="707012696"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+
+    {{-- Page body --}}
+    <div class="page-body">
+      <div class="container-fluid">
+        <div class="row row-cards g-2">
+          @foreach ($videos as $video)
+            <div class="col-12 col-lg-4">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h3 class="card-title">{{ $video->name }}</h3>
+                  <video poster="{{ asset($video->image) }}" width="100%" controls>
+                    <source src="{{ asset($video->video) }}" type="video/mp4">
+                    Váš prohlížeč nepodporuje přehrávání videí
+                  </video>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+    {{-- End Page body --}}
+
   </div>
-  {{-- End Page body --}}
-
-</div>
-<!-- Wrapper End -->
-@endsection
-
-@section('scripts')
-<script>
-  // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-        window.Plyr && (new Plyr('#player-youtube'));
-      });
-      // @formatter:on
-</script>
-
-<script>
-  // @formatter:off
-      document.addEventListener("DOMContentLoaded", function () {
-        window.Plyr && (new Plyr('#player-vimeo'));
-      });
-      // @formatter:on
-</script>
+  <!-- Wrapper End -->
 @endsection
