@@ -8,6 +8,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaintController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -249,6 +250,9 @@ Route::prefix('media')->name('media.')->group(function () {
     Route::get('videa/bozp', [PageController::class, 'videoBozp'])->name('videa-bozp');
 });
 
+// Vide CRUD
+Route::resource('video', VideoController::class);
+
 // Edukace
 Route::prefix('edukace')->name('edukace.')->group(function () {
     Route::get('edukacni-materialy/{id}', [PageController::class, 'edukace'])->name('edukacni-materialy');
@@ -319,6 +323,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Paint Events
     Route::post('paints/update', [PaintController::class, 'update'])->name('paint.update');
     Route::get('paints/destroy/{id}', [PaintController::class, 'destroy']);
+
     // Paint Events
     Route::resource('paints', PaintController::class)->except(['update', 'show', 'destroy']);
 

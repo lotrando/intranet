@@ -988,7 +988,7 @@
           $('#download-btn').attr("href", "/soubory/bozp/" + html.data.id + "")
           PDFObject.embed("../../soubory/" + html.data.file + "#toolbar=0",
             "#pdf-preview-show", {
-              height: "43rem"
+              height: "40rem"
             })
         }
       })

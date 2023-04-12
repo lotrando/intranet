@@ -776,13 +776,19 @@ namespace App\Models{
  * @property string $image
  * @property string $video
  * @property string $category
+ * @property string|null $content
+ * @property string $status
+ * @property int|null $user_id
  * @method static \Illuminate\Database\Eloquent\Builder|Video newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Video newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Video query()
  * @method static \Illuminate\Database\Eloquent\Builder|Video whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Video whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Video whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Video whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Video whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Video whereVideo($value)
  */
 	class Video extends \Eloquent {}

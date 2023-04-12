@@ -14,6 +14,9 @@
           alt="Logo Intranetu KHN a.s." target="_blank">
       </a>
     </h1>
+    <a class="text-muted mx-3" href="http://intranet2" target="_blank">
+      Původní intranetové stránky
+    </a>
 
     <div class="nav-text">
       Dnes je {{ \Carbon\Carbon::parse(now())->locale('cs')->dayName }}
