@@ -88,6 +88,20 @@
             <div class="btn-list">
 
               @auth
+<<<<<<< HEAD
+=======
+                <button class="btn btn-yellow d-inline-block me-2" id="openSkladModal" data-bs-toggle="tooltip" data-bs-placement="left"
+                  data-bs-original-title="{{ __('Vytvoří nový odkaz') }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M9 15l6 -6"></path>
+                    <path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"></path>
+                    <path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"></path>
+                  </svg>
+                  <span class="d-xs-none d-sm-inline d-md-inline d-lg-inline">{{ __('Nový odkaz') }}</span>
+                </button>
+>>>>>>> 958c195b47749d1ba403ad6072875353d1a1b5ed
                 <button class="btn btn-lime d-inline-block me-2" id="openCreateModal" data-bs-toggle="tooltip" data-bs-placement="left"
                   data-bs-original-title="{{ __('Vytvoří nový ' . $categorie->category_type . '') }}">
                   <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -134,6 +148,7 @@
                               </div>
                             </div>
                             <div class="col-auto">
+<<<<<<< HEAD
                               <a href="{{ route('soubory.' . $document->category->category_type . '.download', $document->id) }}" target="_blank">
                                 <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
                                   data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
@@ -147,6 +162,29 @@
                                     <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
                                   @endif
                                 </span>
+=======
+                              @if ($document->unique_code)
+                                <a href="{{ route('soubory.' . $document->category->category_type . '.download', $document->id) }}" target="_blank">
+                                  <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    data-bs-original-title="Stáhnout soubor">
+                                  @else
+                                    <a href="{{ url($document->file) }}" target="_blank">
+                                      <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        data-bs-original-title="Odkaz">
+                              @endif
+                              @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                              @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                              @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                              @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                              @elseif($document->accordion_name == 0)
+                                <img src="{{ asset('img/files/link.png') }}" alt="SKLAD" height="32px">
+                              @endif
+                              </span>
+>>>>>>> 958c195b47749d1ba403ad6072875353d1a1b5ed
                               </a>
                             </div>
                             <div class="col text-truncate" id="{{ $document->id }}">
@@ -158,7 +196,7 @@
                                   @endif
                                   <span data-bs-toggle="tooltip" data-bs-placement="top"
                                     data-bs-original-title="
-                                    @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') Náhled souboru .pdf @else Náhled souboru typu MS Office není možný @endif"
+                                    @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf') Náhled souboru @else Náhled souboru Office nebo odkazu není možný @endif"
                                     style="margin-bottom: 0;">{{ $document->name }}</span>
                                   @if ($document->addons->count() > 0)
                                     <span class="description text-blue text-truncate"> - celkem příloh ({{ $document->addons->count() }})</span>
@@ -1025,6 +1063,89 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+=======
+  {{-- Sklad Form Modal --}}
+  <div class="modal fade" id="skladModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content shadow-lg">
+        <div class="modal-header bg-muted-lt">
+          <h5 class="modal-title"></h5>
+          <div class="avatar avatar-transparent bg-muted-lt">
+            <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+              <path d="M10 10l4 4m0 -4l-4 4"></path>
+            </svg>
+          </div>
+        </div>
+        <form id="skladInputForm" action="{{ route('documents.sklad') }}">
+          @csrf
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <span id="sklad_form_result_modal"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2 mb-2">
+                <label class="form-label">{{ __('Position') }} č:</label>
+                <input class="form-control" id="sklad_position" name="position" type="text">
+              </div>
+              <div class="col-10 mb-2">
+                <label class="form-label">{{ __('Name') }} <small class="text-azure">usnadní vyhledávání</small></label>
+                <input class="form-control" id="sklad_name" name="name" type="text" placeholder="{{ __('Název dokumentu') }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-2">
+                <label class="form-label">{{ __('Popis') }} <small class="text-azure">usnadní vyhledávání</small></label>
+                <input class="form-control" id="sklad_description" name="description" type="text" placeholder="{{ __('Popis dokumentu') }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-10 mb-2">
+                <label class="form-label">{{ __('Link') }}</label>
+                <input class="form-control" id="sklad_link" name="link" type="text" placeholder="{{ __('Externí nebo interní link') }}">
+              </div>
+            </div>
+            <input id="sklad_action" name="sklad_action" type="hidden" />
+            <input id="sklad_category_id" name="category_id" type="hidden">
+            <input id="sklad_folder_name" name="folder_name" type="hidden" />
+            <input id="sklad_category_file" name="category_file" type="hidden" />
+            <input id="sklad_user_id" name="user_id" type="hidden" />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-muted hover-shadow" data-bs-dismiss="modal" type="button">
+              <svg class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <path d="M10 10l4 4m0 -4l-4 4"></path>
+              </svg>
+              {{ __('Close') }}
+            </button>
+            <div class="align-content-end flex">
+              <button class="btn btn-primary ms-auto hover-shadow" id="action_button" name="action_button" type="submit">
+                <svg class="icon icon-tabler icon-tabler-book-upload" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5"></path>
+                  <path d="M11 16h-5a2 2 0 0 0 -2 2"></path>
+                  <path d="M15 16l3 -3l3 3"></path>
+                  <path d="M18 13v9"></path>
+                </svg>
+                Vytvořit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+>>>>>>> 958c195b47749d1ba403ad6072875353d1a1b5ed
   {{-- Document Show Modal --}}
   <div class="modal fade" id="showModal" role="dialog" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -1596,5 +1717,88 @@
         })
       })
     })
+<<<<<<< HEAD
+=======
+
+    $('#skladInputForm').on('submit', function(event) {
+      event.preventDefault(event);
+      if ($('#sklad_action').val() === 'Add') {
+        $.ajax({
+          url: "{{ route('documents.sklad') }}",
+          method: "POST",
+          data: new FormData(this),
+          contentType: false,
+          cache: false,
+          processData: false,
+          dataType: "json",
+          success: function(data) {
+            var html = '';
+            if (data.errors) {
+              html = '<div class="alert alert-danger text-danger shadow-sm"><ul> ';
+              for (var count = 0; count < data.errors.length; count++) {
+                html += '<li>' + data.errors[count] + '</li>';
+              }
+              html +=
+                '</ul><a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a></div>';
+              $('#sklad_form_result_modal').html(html);
+            }
+            if (data.success) {
+              html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                data.success +
+                '</li></ul></div>';
+              $('#skladModal').modal('hide')
+              $('#skladInputForm')[0].reset();
+              location.reload()
+              $('#sklad_form_result_window').html(html);
+            }
+          }
+        })
+      }
+
+      if ($('#sklad_action').val() === "Edit") {
+        event.preventDefault();
+        $.ajax({
+          url: "",
+          method: "POST",
+          data: new FormData(this),
+          contentType: false,
+          cache: false,
+          processData: false,
+          dataType: "json",
+          success: function(data) {
+            var html = '';
+            if (data.errors) {
+              html = '<div class="alert alert-danger text-danger shadow-sm"><ul>';
+              for (var count = 0; count < data.errors.length; count++) {
+                html += '<li>' + data.errors[count] + '</li>';
+              }
+              html += '</ul></div>';
+              $('#sklad_form_result_modal').html(html);
+            }
+            if (data.success) {
+              html = '<div class="alert alert-success text-success shadow-sm"><ul><li>' +
+                data.success + '</li></ul></div>';
+              $('#sklad_form_result_window').html(html);
+              location.reload();
+              $('#skladModal').modal('hide');
+            }
+          }
+        });
+      }
+    })
+
+    $('#openSkladModal').click(function() {
+      $('#skladInputForm')[0].reset()
+      $("#sklad_action_button").removeClass('d-none')
+      $('#sklad_category_id').val('{{ $categorie->id }}')
+      $('#skladModal').modal('show')
+      $('#sklad_action_button, .modal-title').text("{{ __('Create new') }} {{ $categorie->button }} {{ $categorie->category_type }}")
+      $('#sklad_folder_name').val("{{ $categorie->folder_name }}")
+      $('#sklad_user_id').val('{{ auth()->user()->id ?? null }}')
+      $('#sklad_user_name').val('{{ auth()->user()->name ?? 'Guest' }}')
+      $('#sklad_action_button, .modal-title').text("{{ __('Vytvořit novou položku s odkazem') }}")
+      $('#sklad_action').val("Add")
+    })
+>>>>>>> 958c195b47749d1ba403ad6072875353d1a1b5ed
   </script>
 @endsection
