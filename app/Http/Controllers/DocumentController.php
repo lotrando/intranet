@@ -23,11 +23,6 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function index()
-    {
-        //
-=======
     public function sklad(Request $request)
     {
         $rules = [
@@ -62,7 +57,6 @@ class DocumentController extends Controller
         Alert::toast('Multimedia link uložen!', 'success')->position('center');
 
         return response()->json(['success' => 'Multimedia link uložen!']);
->>>>>>> 958c195b47749d1ba403ad6072875353d1a1b5ed
     }
 
     /**

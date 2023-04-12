@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /public/soubory
+/public/videa
 /vendor
 .env
 .env.backup
