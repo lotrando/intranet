@@ -653,19 +653,18 @@
                           </div>
                           <div class="col-auto">
                             <a href="/soubory/{{ $document->category->category_type }}/priloha/{{ $add->id }}">
-                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="Stáhnout soubor .{{ substr($add->file, strpos($add->file, '.') + 1) }}">
-                                @if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf')
-                                  <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'xlsx')
-                                  <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'docx')
-                                  <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'pptx')
-                                  <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
-                                @endif
-                              </span>
-                            </a>
+                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                    <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                    <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                    <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                    <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                                  @endif
+                                </span>
+                              </a>
                           </div>
                           <div class="col text-truncate" id="{{ $add->id }}">
                             <span>
@@ -975,19 +974,18 @@
                           </div>
                           <div class="col-auto">
                             <a href="/soubory/{{ $document->category->category_type }}/priloha/{{ $add->id }}">
-                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-original-title="Stáhnout soubor .{{ substr($add->file, strpos($add->file, '.') + 1) }}">
-                                @if (substr($add->file, strpos($add->file, '.') + 1) == 'pdf')
-                                  <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'xlsx')
-                                  <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'docx')
-                                  <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
-                                @elseif(substr($add->file, strpos($add->file, '.') + 1) == 'pptx')
-                                  <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
-                                @endif
-                              </span>
-                            </a>
+                              <span class="avatar bg-{{ $document->category->color }}-lt" data-bs-toggle="tooltip" data-bs-placement="top"  data-bs-original-title="Stáhnout soubor .{{ substr($document->file, strpos($document->file, '.') + 1) }}">
+                                  @if (substr($document->file, strpos($document->file, '.') + 1) == 'pdf')
+                                    <img src="{{ asset('img/files/pdf.png') }}" alt="PDF" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'xlsx')
+                                    <img src="{{ asset('img/files/xlsx.png') }}" alt="XLSX" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'docx')
+                                    <img src="{{ asset('img/files/docx.png') }}" alt="DOCX" height="32px">
+                                  @elseif(substr($document->file, strpos($document->file, '.') + 1) == 'pptx')
+                                    <img src="{{ asset('img/files/pptx.png') }}" alt="PPTX" height="32px">
+                                  @endif
+                                </span>
+                              </a>
                           </div>
                           <div class="col text-truncate" id="{{ $add->id }}">
                             <span>
