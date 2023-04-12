@@ -93,23 +93,48 @@
   {{-- Page body --}}
   <div class="page-body">
     <div class="container-fluid">
-      <div class="row row-cards g-2">
+      <div class="row row-cards mx-1">
         @foreach ($videos as $video)
-          <div class="col-12 col-lg-3">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <p class="card-title">{{ $video->name }}</p>
+          <div class="col-12 col-lg-4">
+            <div class="card shadow-sm" style="height: 100%">
+              <div class="card-header bg-blue-lt text-left">
+                <div class="d-flex justify-item-center align-items-center">
+                  <div class="avatar bg-blue-lt col-auto">
+                    <svg class="icon text-blue" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+                      <path d="M8 4l0 16"></path>
+                      <path d="M16 4l0 16"></path>
+                      <path d="M4 8l4 0"></path>
+                      <path d="M4 16l4 0"></path>
+                      <path d="M4 12l16 0"></path>
+                      <path d="M16 8l4 0"></path>
+                      <path d="M16 16l4 0"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="ms-2 col-auto mb-0">{{ $video->name }}</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body d-flex align-items-center">
                 <video poster="{{ asset($video->image) }}" width="100%" controls>
                   <source src="{{ asset($video->video) }}" type="video/mp4">
                   Váš prohlížeč nepodporuje přehrávání videí
                 </video>
-                <p class="text-muted">{{ $video->content }}</p>
               </div>
+              @if ($video->content)
+                <div class="card-footer">
+                  <span class="text-muted">{{ $video->content }}</span>
+                </div>
+              @endif
             </div>
           </div>
         @endforeach
       </div>
     </div>
+  </div>
   </div>
   {{-- End Page body --}}
 
