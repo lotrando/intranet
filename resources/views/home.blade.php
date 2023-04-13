@@ -604,7 +604,7 @@
           });
         }
       });
-      $("#search-employee").keyup(function() {
+      $("#search-employee").bind('EnterPress',function() {
         var name = $('#search-employee').val();
         if (name === "") {
           $("#display").html("");
